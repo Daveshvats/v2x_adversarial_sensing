@@ -1,0 +1,54 @@
+{
+  "model": "DualStreamModel",
+  "num_parameters": 86052,
+  "input_shape": [
+    1,
+    1,
+    65,
+    15
+  ],
+  "device": "cpu",
+  "torch_version": "2.11.0+cpu",
+  "benchmarks": {
+    "cpu_bs1": {
+      "mean_ms": 0.9854,
+      "std_ms": 0.3803,
+      "min_ms": 0.8931,
+      "max_ms": 6.3377,
+      "median_ms": 0.9544,
+      "p95_ms": 1.0033,
+      "p99_ms": 1.0712,
+      "iterations": 200
+    },
+    "cpu_bs4": {
+      "mean_ms": 2.3755,
+      "std_ms": 0.0661,
+      "min_ms": 2.294,
+      "max_ms": 2.7544,
+      "median_ms": 2.3661,
+      "p95_ms": 2.5045,
+      "p99_ms": 2.6017,
+      "iterations": 100
+    },
+    "cpu_bs8": {
+      "mean_ms": 3.9351,
+      "std_ms": 0.0713,
+      "min_ms": 3.8309,
+      "max_ms": 4.319,
+      "median_ms": 3.9228,
+      "p95_ms": 4.0302,
+      "p99_ms": 4.2684,
+      "iterations": 80
+    },
+    "cpu_bs16": {
+      "mean_ms": 19.2688,
+      "std_ms": 3.9625,
+      "min_ms": 13.9649,
+      "max_ms": 32.3131,
+      "median_ms": 18.7394,
+      "p95_ms": 29.3384,
+      "p99_ms": 31.9549,
+      "iterations": 60
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "experiment": "Mobility Scenario Robustness Study",
+  "device": "cuda",
+  "seeds": [42, 123, 456],
+  "scenarios": {
+    "highway": {
+      "description": "120 km/h, Rician K=10 dB, 3-path, ds=0.5 us",
+      "results": {
+        "42": {"clean_acc": 100.0, "fgsm_003": 0.2, "pgd_003": 0.2, "fgsm_005": 1.2, "pgd_005": 1.8, "best_epoch": 17},
+        "123": {"clean_acc": 100.0, "fgsm_003": 1.0, "pgd_003": 1.1, "fgsm_005": 2.6, "pgd_005": 3.2, "best_epoch": 17},
+        "456": {"clean_acc": 100.0, "fgsm_003": 0.2, "pgd_003": 0.2, "fgsm_005": 1.6, "pgd_005": 2.0, "best_epoch": 17}
+      },
+      "averages": {"clean_acc": 100.0, "fgsm_003": 0.5, "pgd_003": 0.5, "fgsm_005": 1.8, "pgd_005": 2.3}
+    },
+    "urban": {
+      "description": "50 km/h, Rayleigh, 6-path, ds=3.0 us",
+      "results": {
+        "42": {"clean_acc": 62.5, "fgsm_003": 44.8, "pgd_003": 47.0, "fgsm_005": 53.8, "pgd_005": 54.8, "best_epoch": 22},
+        "123": {"clean_acc": 61.9, "fgsm_003": 19.0, "pgd_003": 19.2, "fgsm_005": 32.9, "pgd_005": 34.5, "best_epoch": 18},
+        "456": {"clean_acc": 64.5, "fgsm_003": 41.5, "pgd_003": 42.4, "fgsm_005": 57.0, "pgd_005": 59.3, "best_epoch": 22}
+      },
+      "averages": {"clean_acc": 63.0, "fgsm_003": 35.1, "pgd_003": 36.2, "fgsm_005": 47.9, "pgd_005": 49.5}
+    },
+    "rural": {
+      "description": "30 km/h, Rician K=5 dB, 2-path, ds=0.2 us",
+      "results": {
+        "42": {"clean_acc": 100.0, "fgsm_003": 0.1, "pgd_003": 0.2, "fgsm_005": 2.0, "pgd_005": 2.2, "best_epoch": 17},
+        "123": {"clean_acc": 100.0, "fgsm_003": 0.0, "pgd_003": 0.0, "fgsm_005": 0.5, "pgd_005": 0.6, "best_epoch": 17},
+        "456": {"clean_acc": 100.0, "fgsm_003": 0.0, "pgd_003": 0.0, "fgsm_005": 1.2, "pgd_005": 1.5, "best_epoch": 17}
+      },
+      "averages": {"clean_acc": 100.0, "fgsm_003": 0.0, "pgd_003": 0.1, "fgsm_005": 1.2, "pgd_005": 1.4}
+    }
+  }
+}

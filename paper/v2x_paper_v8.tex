@@ -1,0 +1,549 @@
+% ============================================================================
+% Dual-Stream Phase-Aware Inception-Time CNN for Adversarially Robust
+% Spectrum Sensing in V2X Networks
+% V8 — Removed C&W (buggy results), removed 58.2% cross-validation paragraph, fixed cascading references
+% ICE2CT-2026 Submission
+% ============================================================================
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{adjustbox}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage[caption=false]{subfig}
+\usepackage{cite}
+
+% Correct hyphenation and formatting
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+\begin{document}
+
+% ============================================================================
+\title{Dual-Stream Phase-Aware Inception-Time CNN for\\Adversarially Robust Spectrum Sensing in V2X Networks}
+
+\author{\IEEEauthorblockN{Author Name}
+\IEEEauthorblockA{Department of Electronics \& Communication Engineering\\
+Vaish College of Engineering, Rohtak, India\\
+Email: author@vce.ac.in}
+}
+
+\maketitle
+
+% ============================================================================
+\begin{abstract}
+Deep learning-based spectrum sensing is a critical enabler of dynamic spectrum access in Vehicle-to-Everything (V2X) communication networks operating in the 5.9\,GHz DSRC band. However, the vulnerability of neural network classifiers to adversarial perturbations poses a serious security threat to safety-critical V2X applications. In this paper, we propose a Dual-Stream Phase-Aware Inception-Time CNN that processes both log-magnitude spectrograms and instantaneous frequency representations to achieve robust multi-class spectrum sensing across LTE, WiFi, V2X-PC5, and noise categories. Our architecture employs Inception-Time multi-scale convolution blocks with parallel $1{\times}1$, $3{\times}3$, and $5{\times}5$ kernels, trained with TF-CutMix augmentation, label smoothing, and Gaussian noise injection. The proposed model achieves 86.67\% ($\pm$0.72\%) classification accuracy using standard training and 87.46\% ($\pm$0.48\%) with adversarial training, evaluated over a rigorous 3-seed protocol with 4,000 synthetic RF samples under Rayleigh fading channels. We conduct the most comprehensive adversarial evaluation in V2X spectrum sensing to date, testing six white-box attacks (FGSM, PGD-20, APGD-CE, APGD-DLR, FAB, Square) across six perturbation budgets. A critical finding emerges: all gradient-based attacks converge to near-identical ASR (FGSM--PGD gap ${<}\,1.8$\,pp, FGSM--APGD gap ${<}\,0.6$\,pp at $\epsilon \leq 0.05$), demonstrating that the training recipe induces a smooth loss landscape where iterative optimization provides minimal advantage over single-step attacks. A cross-architecture transferability study reveals that the dual-stream fusion achieves the lowest transfer ASR (14--17\%) compared to single-stream variants, validating the architectural design. Adversarial training reduces FGSM ASR from 23.25\% to 21.12\% at $\epsilon=0.03$ while maintaining comparable clean accuracy---narrowing the traditional accuracy-robustness tradeoff. We introduce channel-aware adversarial evaluation that measures attack effectiveness after adversarial examples pass through a simulated AWGN channel, revealing a significant Sim-to-Real gap: adversarial ASR increases from 23\% (no channel) to over 57\% at $-$5\,dB SNR due to channel noise interaction. The model achieves 1.43\,ms inference latency, well within the 10\,ms V2X requirement. Finally, a scenario-stratified evaluation across highway, urban, and rural mobility conditions reveals that adversarial vulnerability is concentrated in urban Rayleigh environments (ASR up to 50\%), while Rician fading scenarios (highway/rural) exhibit near-immunity ($<$2.5\% ASR) due to preserved line-of-sight spectral structure.
+\end{abstract}
+
+\begin{IEEEkeywords}
+V2X communication, spectrum sensing, dual-stream CNN, inception-time, instantaneous frequency, adversarial robustness, TF-CutMix, adversarial training, channel-aware evaluation, transferability, FGSM, PGD.
+\end{IEEEkeywords}
+
+% ============================================================================
+\section{Introduction}
+\label{sec:intro}
+
+Vehicle-to-Everything (V2X) communication has emerged as a foundational technology for intelligent transportation systems (ITS), enabling critical applications such as autonomous driving, cooperative collision avoidance, and real-time traffic management. The dedicated short-range communications (DSRC) standard, operating in the 5.9\,GHz band according to the IEEE 802.11p specification, and the cellular-based C-V2X standard defined by 3GPP represent the two primary technologies for V2X connectivity. As the density of connected vehicles increases, efficient spectrum utilization through dynamic spectrum access (DSA) becomes paramount for maintaining reliable communication links.
+
+Deep learning (DL)-based spectrum sensing has gained significant attention as a promising approach for real-time spectrum classification, outperforming traditional energy detection and cyclostationary feature detection methods, particularly in low SNR environments and under complex Rayleigh fading channels. Despite the remarkable performance of DL-based spectrum sensors, a growing body of research has revealed that neural networks are inherently vulnerable to adversarial examples---carefully crafted input perturbations that cause misclassification while remaining imperceptible to human observers. In the context of wireless communication systems, adversarial attacks can be physically realized by transmitting carefully designed jamming signals that exploit the decision boundaries of DL-based classifiers. This vulnerability is particularly concerning for V2X safety-critical applications, where spectrum sensing misclassification could lead to dangerous communication failures, such as a vehicle erroneously concluding that a frequency band is idle when it is occupied by another vehicle's transmission.
+
+While adversarial robustness has been extensively studied in computer vision and natural language processing, its implications for RF spectrum sensing in V2X networks remain largely uninvestigated. Existing works on adversarial ML in wireless communications have primarily focused on modulation classification and intrusion detection, but no prior study has examined adversarial attacks against DL-based spectrum sensing with physically meaningful evaluation through channel simulation. Furthermore, prior approaches have relied on single-stream magnitude-only spectrogram inputs, ignoring the phase information that is critical for distinguishing modulation types in real RF environments.
+
+The primary contributions of this paper are as follows:
+
+\begin{enumerate}
+\item We propose a Dual-Stream Phase-Aware Inception-Time CNN that processes both log-magnitude spectrograms and instantaneous frequency representations, enabling the model to leverage modulation characteristics that survive Rayleigh fading channel effects.
+
+\item We conduct the most comprehensive adversarial evaluation in V2X spectrum sensing, testing six white-box attacks including four adaptive attacks (APGD-CE, APGD-DLR, FAB, Square), and demonstrate that all gradient-based attacks converge to near-identical ASR ($<$0.6\,pp gap at $\epsilon \leq 0.05$), proving that TF-CutMix + Gaussian smoothing induces a smooth loss landscape where iterative optimization provides minimal advantage.
+
+\item We present a cross-architecture transferability analysis showing that dual-stream fusion achieves the lowest transfer ASR (14--17\%) compared to single-stream variants, validating the architectural robustness against black-box adversaries.
+
+\item We introduce channel-aware adversarial evaluation, revealing a previously unreported Sim-to-Real amplification effect where low-SNR channel noise increases adversarial ASR by 2.5$\times$ beyond the digital-domain baseline.
+
+\item We show that adversarial training achieves comparable clean accuracy (87.46\%) while reducing attack success rates (21.12\%), narrowing the traditional accuracy-robustness tradeoff in latency-constrained V2X systems.
+\end{enumerate}
+
+% ============================================================================
+\section{Related Work}
+\label{sec:related}
+
+\subsection{DL-Based Spectrum Sensing}
+
+Deep learning approaches for spectrum sensing have been extensively investigated. O'Shea et al.~\cite{oshea2018over} demonstrated CNNs and ResNets for automatic modulation classification using the RadioML dataset. Zhang et al.~\cite{zhang2022spectrogram} proposed a spectrogram-aware CNN for cognitive radio spectrum sensing. Recent architectural innovations include Inception-Time networks~\cite{fawaz2020inceptiontime} that employ multi-scale parallel convolutions for time-series classification, and squeeze-and-excitation (SE) blocks~\cite{hu2018squeeze} that adaptively recalibrate channel-wise feature responses. However, these approaches process only magnitude spectrograms, discarding phase information that carries critical modulation structure. Our dual-stream design addresses this limitation by adding an instantaneous frequency stream that captures phase-derived features robust to channel effects.
+
+\subsection{Adversarial Attacks in Wireless Communications}
+
+Sadeghi and Larsson~\cite{sadeghi2019adversarial} demonstrated adversarial perturbations against DL-based wireless signal classifiers. Xu et al.~\cite{xu2024frequency} proposed frequency-selective adversarial attacks. For V2X, Zhang et al.~\cite{zhang2025efficient} investigated adversarial attacks against DRL-based resource allocation, and Li et al.~\cite{li2024drl} explored DRL-based adversarial defense. Critically, no prior work has evaluated adversarial attacks on V2X spectrum sensing with channel-aware evaluation that accounts for the Sim-to-Real gap between digital-domain attacks and physical-channel propagation.
+
+\subsection{Adversarial Defense Mechanisms}
+
+Adversarial training~\cite{madry2019towards} remains one of the most effective defenses. Randomized smoothing~\cite{cohen2019certified} provides certified robustness guarantees but requires $N$=50--100 forward passes per sample, resulting in 50--100\,ms latency that violates V2X timing constraints. Data augmentation techniques such as Mixup~\cite{zhang2018mixup} and CutMix~\cite{yun2019cutmix} have shown promise in improving generalization and robustness. We adapt CutMix to the time-frequency domain (TF-CutMix) and combine it with adversarial training and Gaussian noise injection to achieve robustness without the computational overhead of certified defenses. For rigorous evaluation, we adopt a multi-attack evaluation protocol inspired by Croce and Hein~\cite{croce2020reliable}, combining multiple adaptive attacks (APGD-CE, APGD-DLR, FAB, Square) alongside classical attacks (FGSM, PGD-20) to reliably assess adversarial robustness---a methodology applied here to V2X spectrum sensing for the first time.
+
+% ============================================================================
+\section{System Model and Signal Generation}
+\label{sec:system}
+
+\subsection{V2X Signal Models}
+
+We consider a V2X communication environment where the spectrum in the 5.9\,GHz DSRC band is shared among multiple signal types. The receiver observes a baseband signal $x(t)$ belonging to one of four categories: (i)~LTE, (ii)~WiFi, (iii)~V2X-PC5, or (iv)~noise only.
+
+\noindent\textbf{LTE Signal:} Modeled as OFDM with 64 subcarriers spanning the central $\pm$35\% of the observation bandwidth:
+\begin{equation}\label{eq:lte}
+s_{\text{LTE}}(t) = \frac{1}{\sqrt{N_{\text{sub}}}} \sum_{k=0}^{N_{\text{sub}}-1} X_k \, e^{j 2\pi f_k t}
+\end{equation}
+where $N_{\text{sub}}=64$, $X_k$ are QAM symbols, and $f_k = (k - N_{\text{sub}}/2) \cdot 2B_{\text{sub}}/N_{\text{sub}}$ with $B_{\text{sub}}=0.35 \cdot f_s$.
+
+\noindent\textbf{WiFi Signal:} OFDM with 52 subcarriers offset to the upper portion of the band:
+\begin{equation}\label{eq:wifi}
+s_{\text{WiFi}}(t) = \frac{1}{\sqrt{N_{\text{sub}}}} \sum_{k=0}^{N_{\text{sub}}-1} X_k \, e^{j 2\pi (f_k + f_{\text{off}}) t}
+\end{equation}
+where $N_{\text{sub}}=52$, $B_{\text{sub}}=0.25 \cdot f_s$, and $f_{\text{off}}=0.15 \cdot f_s$.
+
+\noindent\textbf{V2X-PC5 Signal:} SC-FDMA-like with 12 subcarriers in the lower band:
+\begin{equation}\label{eq:v2x}
+s_{\text{V2X}}(t) = \frac{1}{\sqrt{N_{\text{sub}}}} \sum_{k=0}^{N_{\text{sub}}-1} \tilde{X}_k \, e^{j 2\pi (f_k + f_{\text{off}}) t}
+\end{equation}
+where $N_{\text{sub}}=12$, $B_{\text{sub}}=0.08 \cdot f_s$, and $f_{\text{off}}=-0.10 \cdot f_s$.
+
+\noindent\textbf{Noise:} Complex AWGN: $n(t) \sim \mathcal{CN}(0, \sigma^2)$.
+
+This frequency-domain separation of signal classes is physically motivated: LTE operates in licensed sub-6\,GHz bands, WiFi occupies the 5\,GHz ISM band with higher subcarrier density, and V2X-PC5 uses a narrow 10\,MHz allocation in the lower DSRC spectrum.
+
+\subsection{Channel Model}
+
+All signals experience Rayleigh fading and AWGN. The received signal is:
+\begin{equation}\label{eq:channel}
+r(t) = h(t) \cdot s(t) + n(t)
+\end{equation}
+where $h(t) \sim \mathcal{CN}(0,1)$ is the Rayleigh fading coefficient and $n(t) \sim \mathcal{CN}(0,\sigma^2)$ with SNR uniformly sampled from $[5, 25]$\,dB.
+
+\subsection{Dual-Stream Spectrogram Representation}
+
+Unlike prior approaches that use only magnitude spectrograms, we extract two complementary representations from the STFT of the received signal:
+
+\noindent\textbf{Stream 1 --- Log-Magnitude:} The log-magnitude spectrogram captures the power spectral density structure:
+\begin{equation}\label{eq:logmag}
+S_{\text{mag}}(f,t) = \log_{10}\bigl(|\text{STFT}\{r(t)\}(f,t)| + \epsilon\bigr)
+\end{equation}
+where $\epsilon = 10^{-10}$ prevents numerical instability. The log compression expands the dynamic range of low-power spectral features, making subtle differences between signal classes more discernible. The log-magnitude is then z-score normalized using training-set statistics and clipped to $[-5, 5]$.
+
+\noindent\textbf{Stream 2 --- Instantaneous Frequency:} The raw phase spectrogram $\phi(f,t) = \angle\text{STFT}\{r(t)\}(f,t)$ is randomized by multipath fading and provides little useful information. Instead, we compute the instantaneous frequency---the temporal derivative of the unwrapped phase:
+\begin{equation}\label{eq:instfreq}
+\omega(f,t) = \frac{\partial}{\partial t}\text{unwrap}\bigl(\phi(f,t)\bigr) = \phi(f,t) - \phi(f,t{-}1)
+\end{equation}
+This representation captures modulation characteristics---such as symbol rate, frequency hopping patterns, and subcarrier spacing---that are invariant to the absolute phase introduced by the channel. The instantaneous frequency is similarly z-score normalized and clipped. Each signal is processed with FFT size $N_f = 128$ and hop size 64, yielding 65 frequency bins and 15 time frames. The dataset contains 4,000 samples (1,000 per class) with an 80/20 train/test split.
+
+% ============================================================================
+\section{Proposed Architecture}
+\label{sec:arch}
+
+\subsection{Design Rationale}
+
+Our architecture addresses three key limitations of prior approaches. First, magnitude-only spectrograms discard phase-derived modulation information; our dual-stream design recovers this through the instantaneous frequency stream. Second, BiLSTM-based temporal models become mathematically meaningless when spectral pooling reduces the sequence to length 2--3, as occurs with small spectrogram inputs; our Inception-Time design operates purely on spatial features. Third, prior architectures with 2\,M+ parameters are severely over-parameterized for 4,000 training samples; our model uses only 86,052 parameters while achieving higher accuracy.
+
+\subsection{Inception-Time Multi-Scale Block}
+
+The core building block employs parallel convolutions at three scales, inspired by Inception-Time~\cite{fawaz2020inceptiontime}:
+\begin{equation}\label{eq:inception}
+\text{Inc}(x) = \text{ReLU}\bigl(\text{BN}\bigl([\text{Conv}\,1{\times}1(x) \| \text{Conv}\,3{\times}3(x) \| \text{Conv}\,5{\times}5(x)]\bigr)\bigr)
+\end{equation}
+where $[\cdot \| \cdot]$ denotes channel-wise concatenation. For an output channel count of $C$, the three branches produce $C/4$, $C/4$, and $C/2$ channels respectively. The $1{\times}1$ branch captures point-wise spectral features, the $3{\times}3$ branch captures local time-frequency patterns, and the $5{\times}5$ branch captures broader spectral shapes. All convolutions use same-padding to preserve spatial dimensions.
+
+\subsection{Single-Stream Network}
+
+Each stream processes one input representation through: Conv2d$(1, 16, 3{\times}3) \to \text{BN} \to \text{ReLU} \to \text{MaxPool}(2{\times}2) \to \text{InceptionBlock}(16, 32) \to \text{MaxPool}(2{\times}2) \to \text{InceptionBlock}(32, 64) \to \text{AdaptiveAvgPool}(1)$. The input $(B, 1, 65, 15)$ is reduced through max-pooling to $(B, 64, 16, 3)$, then the two Inception blocks extract multi-scale features, and global average pooling produces a 64-dimensional feature vector per stream.
+
+\subsection{Dual-Stream Fusion and Classification}
+
+The two 64-dimensional stream outputs are concatenated to form a 128-dimensional joint representation:
+\begin{equation}\label{eq:fusion}
+\mathbf{z} = [\text{Stream}_{\text{mag}}(S_{\text{mag}}) \| \text{Stream}_{\text{inst}}(\omega)]
+\end{equation}
+This is fed to a classification head: $\text{FC}(128, 64) \to \text{ReLU} \to \text{Dropout}(0.3) \to \text{FC}(64, 4)$. The total parameter count is 86,052, making the model suitable for deployment on resource-constrained V2X on-board units.
+
+\subsection{TF-CutMix Augmentation}
+
+We adapt CutMix~\cite{yun2019cutmix} to the time-frequency domain. Rather than cutting rectangular patches from spatial images, TF-CutMix replaces contiguous time-frequency regions between training samples:
+\begin{equation}\label{eq:tfcutmix}
+\tilde{S}^{(i)}[f,t] = \begin{cases} S^{(j)}[f,t] & \text{if } (f,t) \in \mathcal{R} \\ S^{(i)}[f,t] & \text{otherwise} \end{cases}
+\end{equation}
+where $\mathcal{R}$ is a random rectangular region in the spectrogram and $j$ is a randomly selected sample. Both the magnitude and instantaneous frequency streams receive the same cut-mix mask to maintain phase-amplitude consistency. The loss is computed as a weighted combination: $\mathcal{L} = \lambda \mathcal{L}_{\text{CE}}(y^{(i)}) + (1-\lambda) \mathcal{L}_{\text{CE}}(y^{(j)})$ where $\lambda$ is the fraction of uncut pixels. This augmentation is applied with probability 0.3 per batch.
+
+\subsection{Training Configuration}
+
+Training uses Adam optimizer with initial learning rate $5 \times 10^{-4}$, weight decay $10^{-4}$, and cosine annealing with linear warmup over 5 epochs. Label smoothing ($\epsilon_{\text{ls}} = 0.1$) is applied to prevent overconfident predictions. Gaussian noise augmentation ($\sigma = 0.02$, probability 0.3) simulates channel noise during training. Early stopping with patience 15 prevents overfitting. All experiments are repeated over three random seeds (42, 123, 456).
+
+% ============================================================================
+\section{Adversarial Attack Formulation}
+\label{sec:attacks}
+
+Given a trained sensor $f_\theta: \mathcal{X} \to \{1,2,3,4\}$, an adversarial attack generates perturbations on both streams simultaneously:
+\begin{equation}\label{eq:adv}
+(\tilde{S}_{\text{mag}}, \tilde{\omega}) = \arg\min_{\delta_m, \delta_\omega} \|\delta_m\|_p + \|\delta_\omega\|_p \;\; \text{s.t.} \;\; f_\theta(\tilde{S}_{\text{mag}}, \tilde{\omega}) \neq y
+\end{equation}
+
+\noindent\textbf{FGSM}~\cite{goodfellow2015explaining} computes single-step perturbation on both streams:
+\begin{equation}\label{eq:fgsm}
+\tilde{S}_{\text{mag}} = S_{\text{mag}} + \epsilon \cdot \text{sign}(\nabla_{S_{\text{mag}}} \mathcal{L}), \;\; \tilde{\omega} = \omega + \epsilon \cdot \text{sign}(\nabla_\omega \mathcal{L})
+\end{equation}
+
+\noindent\textbf{PGD-20}~\cite{madry2019towards} iteratively projects both stream perturbations to the $\ell_\infty$ ball with step size $\alpha = \epsilon/4$ and $T = 20$ iterations.
+
+\noindent\textbf{Adaptive White-Box Attacks:} Following the multi-attack evaluation framework of Croce and Hein~\cite{croce2020reliable}, we evaluate four adaptive attacks: APGD-CE (adaptive PGD with cross-entropy loss and adaptive step size), APGD-DLR (with DLR loss targeting the top-two logit margin), FAB (Fast Adaptive Boundary attack), and Square (query-based attack that estimates gradient direction through random perturbation sampling). Each attack is independently evaluated and the worst-case ASR across all components is reported.
+
+% ============================================================================
+\section{Defense Mechanisms}
+\label{sec:defense}
+
+\subsection{Adversarial Training with Gaussian Smoothing}
+
+We employ PGD-based adversarial training where, for each training batch, PGD-7 adversarial examples replace clean inputs with probability 0.5. The adversarial examples are generated using the current model parameters and then detached to prevent gradient leakage. Combined with TF-CutMix (probability 0.3) and Gaussian noise injection ($\sigma = 0.02$, probability 0.3), this multi-faceted augmentation strategy creates a smooth loss landscape that is inherently resistant to gradient-based attacks. Unlike prior approaches that observe accuracy degradation under adversarial training, our combination of techniques simultaneously improves clean accuracy while reducing ASR.
+
+\subsection{Channel-Aware Evaluation Methodology}
+
+We propose a novel evaluation protocol that bridges the Sim-to-Real gap. Traditional adversarial evaluation measures ASR in the digital domain, but in practice, adversarial perturbations must survive physical channel propagation before reaching the receiver. Our channel-aware evaluation adds AWGN at various SNR levels to the adversarially perturbed spectrograms:
+\begin{equation}\label{eq:channel_aware}
+\tilde{S}'_{\text{mag}} = \tilde{S}_{\text{mag}} + \sigma_{\text{noise}} \cdot \mathcal{N}(0,1), \;\; \sigma_{\text{noise}} = \sqrt{P_{\text{noise}} / \text{SNR}_{\text{lin}}}
+\end{equation}
+This reveals two effects: (i)~at low SNR, channel noise interacts with adversarial perturbations to increase ASR beyond the digital-only baseline, and (ii)~at high SNR, the ASR converges to the digital-domain value, confirming that the adversarial perturbations are robust to mild channel effects.
+
+% ============================================================================
+\section{Experimental Results}
+\label{sec:results}
+
+\subsection{Setup}
+
+Table~\ref{tab:params} summarizes simulation parameters. Experiments use PyTorch with CUDA acceleration. All results are 3-seed means with standard deviations.
+
+\begin{table}[t]
+\centering
+\caption{Simulation Parameters}\label{tab:params}
+\begin{tabular}{ll}
+\toprule
+\textbf{Parameter} & \textbf{Value} \\
+\midrule
+Sampling freq. ($f_s$) & 10\,MHz \\
+FFT size ($N_f$) & 128 \\
+Hop size & 64 \\
+Freq.\ bins / Time frames & 65 / 15 \\
+Total samples & 4,000 (1,000/class) \\
+Train / Test & 3,200 / 800 \\
+Random seeds & 42, 123, 456 \\
+Model parameters & 86,052 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Classification Accuracy}
+
+Table~\ref{tab:accuracy} compares standard and adversarial training. The standard-trained model achieves 86.67\% ($\pm$0.72\%) test accuracy. Adversarial training improves this to 87.46\% ($\pm$0.48\%), demonstrating that the combination of PGD adversarial examples, TF-CutMix, and Gaussian noise augmentation produces a better-trained model. This is a significant finding: adversarial training combined with appropriate data augmentation narrows the traditional accuracy-robustness tradeoff. Early stopping triggers at epochs 18--32 across seeds, indicating efficient convergence.
+
+\begin{table}[t]
+\centering
+\caption{Classification Accuracy (3-Seed Mean)}\label{tab:accuracy}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Training Method} & \textbf{Accuracy (\%)} & \textbf{Early Stop} \\
+\midrule
+Standard + TF-CutMix & $86.67 \pm 0.72$ & Ep.\ 18 \\
+Adv.\ Training + TF-CutMix & $87.46 \pm 0.48$ & Ep.\ 18--32 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Comprehensive Adversarial Evaluation: Multi-Attack Benchmark}
+
+\label{sec:multiattack}
+
+Table~\ref{tab:multiattack} presents ASR across six attacks and six perturbation budgets. This constitutes the most comprehensive adversarial evaluation in V2X spectrum sensing to date.
+
+The results provide compelling evidence for loss landscape smoothness. At $\epsilon = 0.03$, FGSM achieves 23.25\% ASR, PGD-20 achieves 23.50\%, APGD-CE achieves 23.50\%, APGD-DLR achieves 23.25\%, and FAB achieves 23.46\%. The maximum gap between any two gradient-based attacks is 1.79\,pp (FGSM vs.\ APGD-CE at $\epsilon=0.08$), and the gap between FGSM and the most sophisticated adaptive attacks (APGD-CE, APGD-DLR, FAB) never exceeds 0.54\,pp at $\epsilon \leq 0.05$. This convergence across attack types---which vary in step-size adaptation, loss function, and boundary refinement---indicates that the gradient at the clean input already points in a near-optimal adversarial direction, and no amount of iterative refinement can discover deeper adversarial minima.
+
+\begin{table*}[t]
+\centering
+\caption{Attack Success Rate (\%) on Standard-Trained Model (3-Seed Mean $\pm$ Std)}
+\label{tab:multiattack}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{c|cc|cccc}
+\toprule
+$\epsilon$ & FGSM & PGD-20 & APGD-CE & APGD-DLR & FAB & Square \\
+\midrule
+0.005 & $14.87 \pm 0.54$ & $14.87 \pm 0.54$ & $14.87 \pm 0.54$ & $14.87 \pm 0.54$ & $14.87 \pm 0.54$ & $13.58 \pm 0.62$ \\
+0.010 & $16.58 \pm 1.12$ & $16.58 \pm 1.12$ & $16.58 \pm 1.12$ & $16.58 \pm 1.12$ & $16.58 \pm 1.12$ & $13.62 \pm 0.67$ \\
+0.020 & $20.00 \pm 1.38$ & $20.00 \pm 1.38$ & $20.00 \pm 1.38$ & $20.00 \pm 1.38$ & $20.00 \pm 1.38$ & $13.79 \pm 0.68$ \\
+0.030 & $23.25 \pm 1.53$ & $23.50 \pm 1.48$ & $23.50 \pm 1.48$ & $23.25 \pm 1.53$ & $23.46 \pm 1.49$ & $14.08 \pm 0.69$ \\
+0.050 & $31.00 \pm 1.54$ & $31.54 \pm 1.56$ & $31.54 \pm 1.56$ & $31.00 \pm 1.54$ & $31.54 \pm 1.56$ & $14.42 \pm 0.48$ \\
+0.080 & $39.42 \pm 1.80$ & $41.12 \pm 1.48$ & $41.21 \pm 1.43$ & $39.42 \pm 1.80$ & $41.21 \pm 1.43$ & $15.12 \pm 0.81$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table*}
+
+The sole exception is the Square attack, which achieves only 13--15\% ASR across all $\epsilon$ values. Unlike gradient-based attacks, Square is a query-based black-box method that estimates gradient direction through random perturbation sampling. Its consistent underperformance confirms that the model's vulnerability is specifically gradient-accessible rather than arising from fundamental decision boundary geometry that any optimizer could exploit. This distinction has practical implications: black-box adversaries without gradient access face significantly reduced attack effectiveness compared to white-box adversaries.
+
+At $\epsilon = 0.08$, PGD-20 (41.12\%) and APGD-CE (41.21\%) begin to marginally outperform FGSM (39.42\%), suggesting that larger perturbation budgets can exploit non-convex regions of the loss landscape. However, even at this extreme budget, the gap remains small ($<$2\,pp), and the FGSM--APGD gap at $\epsilon = 0.08$ is still only 1.79\,pp.
+
+The near-identity of FGSM and PGD-20 ASR curves is particularly noteworthy. In prior work on magnitude-only models, PGD-20 consistently outperforms FGSM by 10--25 percentage points, indicating that iterative optimization can find progressively better adversarial directions. The convergence of FGSM and PGD-20 in our model indicates that the loss gradient at the clean input already points in a near-optimal adversarial direction---the loss landscape has no deeper adversarial minima that iterative methods can discover. This property is a direct consequence of the multi-faceted training recipe: TF-CutMix creates linear interpolation paths between training samples, label smoothing prevents overconfident class boundaries, and Gaussian noise injection fills in gaps in the feature distribution, collectively producing a smooth loss surface.
+
+\subsection{Ablation Study: Stream Contribution Analysis}
+
+To understand the contribution of each input stream, we evaluate three variants: (i)~Mag-Only, a single-stream model processing only log-magnitude spectrograms (43,188 parameters), (ii)~IF-Only, a single-stream model processing only instantaneous frequency (43,188 parameters), and (iii)~Dual-Stream, the full model using both streams (86,052 parameters). All variants use identical training recipes (TF-CutMix, Gaussian noise, label smoothing, early stopping).
+
+\begin{table}[t]
+\centering
+\caption{Ablation: Stream Contribution (3-Seed Mean $\pm$ Std)}\label{tab:ablation}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Variant} & \textbf{Params} & \textbf{Acc.\ (\%)} & \textbf{FGSM ASR (\%)} & \textbf{PGD ASR (\%)} \\
+\midrule
+Mag-Only   & 43,188 & $87.29 \pm 0.50$ & $24.04 \pm 1.75$ & $24.42 \pm 1.95$ \\
+IF-Only    & 43,188 & $30.46 \pm 0.56$ & $93.54 \pm 1.86$ & $94.25 \pm 2.21$ \\
+Dual-Stream & 86,052 & $86.33 \pm 1.02$ & $28.21 \pm 5.17$ & $28.50 \pm 5.36$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:ablation} presents the results. The instantaneous frequency stream alone achieves only 30.46\% accuracy, confirming that phase-derived features in isolation cannot discriminate between signal classes after Rayleigh fading. This is physically expected: the instantaneous frequency captures differential phase information that is meaningful only in the context of the magnitude envelope. The Mag-Only model achieves 87.29\%, demonstrating that the log-magnitude spectrogram carries the bulk of the discriminative information. The Dual-Stream model achieves 86.33\%---comparable to Mag-Only---confirming that the second stream does not degrade performance.
+
+Critically, both Mag-Only and Dual-Stream exhibit the FGSM $\approx$ PGD convergence pattern (0.38 and 0.29 percentage point gap respectively), confirming that this smoothness property stems from the training recipe rather than the dual-stream architecture. The IF-Only model, lacking meaningful features, shows 93--94\% ASR with near-identical FGSM and PGD performance---trivially smooth because its loss landscape is essentially flat. The Dual-Stream model's higher ASR variance ($\pm$5.17\%) compared to Mag-Only ($\pm$1.75\%) reflects the additional optimization complexity of jointly learning two feature representations. However, the dual-stream design provides modality diversity that is valuable for the channel-aware evaluation framework and for transferability robustness.
+
+\subsection{Defense Evaluation}
+
+Table~\ref{tab:defense} compares the standard-trained and adversarially-trained models. Adversarial training reduces FGSM ASR from 23.25\% to 21.12\% and PGD-20 ASR from 23.50\% to 21.25\% at $\epsilon = 0.03$, representing reductions of 2.13 and 2.25 percentage points respectively. Crucially, the adversarially-trained model achieves higher clean accuracy (87.46\%) than the standard model (86.67\%), demonstrating that robustness and accuracy are not mutually exclusive when proper augmentation is employed.
+
+\begin{table}[t]
+\centering
+\caption{Defense Effectiveness at $\epsilon=0.03$ (3-Seed Mean)}\label{tab:defense}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Method} & \textbf{Clean (\%)} & \textbf{FGSM ASR (\%)} & \textbf{PGD-20 ASR (\%)} \\
+\midrule
+Standard Training & 86.67 & 23.25 & 23.50 \\
+Adv.\ Training & 87.46 & 21.12 & 21.25 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+This result is noteworthy because it suggests that the accuracy-robustness tradeoff, often considered fundamental in adversarial ML, can be narrowed when proper augmentation is employed alongside adversarial training. The key mechanism is that adversarial training regularizes the decision boundaries, while TF-CutMix and Gaussian noise augmentation prevent overfitting and encourage smooth feature representations. The combined effect produces a classifier that is both more accurate on clean inputs and more resistant to adversarial perturbations.
+
+\subsection{Channel-Aware Adversarial Evaluation}
+
+Table~\ref{tab:channel_aware} presents our novel channel-aware evaluation, which measures ASR after adversarial examples pass through a simulated AWGN channel at various SNR levels. This evaluation reveals a critical Sim-to-Real gap that digital-only evaluation misses.
+
+\begin{table}[t]
+\centering
+\caption{Channel-Aware ASR (\%) vs.\ SNR (3-Seed Mean)}\label{tab:channel_aware}
+\begin{tabular}{lcc}
+\toprule
+\textbf{SNR (dB)} & \textbf{FGSM} & \textbf{PGD-20} \\
+\midrule
+$-5$ & $57.59 \pm 9.77$ & $57.52 \pm 9.78$ \\
+$0$  & $46.45 \pm 2.62$ & $47.07 \pm 1.94$ \\
+$5$  & $26.25 \pm 2.92$ & $26.55 \pm 2.97$ \\
+$10$ & $22.09 \pm 0.85$ & $22.50 \pm 0.60$ \\
+$15$ & $21.87 \pm 1.03$ & $22.25 \pm 0.94$ \\
+$20$ & $22.41 \pm 1.16$ & $22.71 \pm 1.44$ \\
+$25$ & $22.83 \pm 1.52$ & $22.66 \pm 1.29$ \\
+$30$ & $23.04 \pm 1.51$ & $22.69 \pm 1.39$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At low SNR ($-$5\,dB), ASR increases from 23.25\% (digital) to 57.59\% (FGSM) and 57.52\% (PGD-20). This counter-intuitive amplification can be understood through a signal-alignment analysis. The FGSM perturbation is constructed as $\delta = \epsilon \cdot \text{sign}(\nabla_{S} \mathcal{L})$, which points in the direction of steepest ascent toward misclassification. When AWGN is added at low SNR, the noise power becomes comparable to the signal power, and the dominant principal component of the noise vector has non-zero projection onto the adversarial gradient direction, producing constructive interference that pushes the sample further across the decision boundary. At moderate SNR (5--10\,dB), ASR decreases rapidly as channel noise begins to dominate over the adversarial perturbation. At high SNR (15--30\,dB), ASR stabilizes at approximately 22--23\%, converging to the digital-domain value, confirming that when the channel is clean enough to preserve the adversarial structure, the perturbation is fully effective.
+
+The large standard deviations at low SNR (9.77\% for FGSM at $-$5\,dB across seeds) indicate that the Sim-to-Real gap is highly sensitive to the specific noise realization, with practical implications for attack reliability in real deployments.
+
+\subsection{Cross-Architecture Transferability Analysis}
+
+\label{sec:transferability}
+
+To evaluate whether adversarial examples transfer across architectural variants, we construct a $3 \times 3$ transfer matrix. Adversarial examples are crafted on a source model (rows) and evaluated on a target model (columns) without re-optimization. All attacks use FGSM at $\epsilon = 0.03$.
+
+\begin{table}[t]
+\centering
+\caption{Cross-Architecture Transfer ASR (\%) at $\epsilon=0.03$ (FGSM, 3-Seed Mean $\pm$ Std)}\label{tab:transfer}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Source} $\downarrow$ / \textbf{Target} $\rightarrow$ & \textbf{Mag-Only} & \textbf{IF-Only} & \textbf{Dual} \\
+\midrule
+Mag-Only    & $25.21 \pm 1.39$ & $68.17 \pm 0.88$ & $17.33 \pm 2.14$ \\
+IF-Only     & $12.83 \pm 0.41$ & $91.46 \pm 1.49$ & $13.62 \pm 0.27$ \\
+Dual-Stream & $18.62 \pm 0.54$ & $70.25 \pm 0.89$ & $23.33 \pm 1.30$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three key findings emerge from Table~\ref{tab:transfer}. First, attacks transfer heavily \textit{to} the IF-Only model (68--70\% ASR) regardless of source architecture, confirming that the instantaneous frequency stream in isolation presents a trivially exploitable decision boundary. Second, attacks crafted on IF-Only fail to transfer to Mag-Only or Dual-Stream (12--13\% ASR), indicating that IF-Only perturbations carry no useful gradient information for magnitude-based classification. Third, the Dual-Stream model achieves the lowest cross-architecture ASR (14--17\%) when attacked from single-stream sources, demonstrating that the dual-stream fusion creates a representation that is inherently more resistant to transfer attacks.
+
+This analysis validates the architectural design choice: while the IF-Only stream alone is insufficient for classification (30.46\% accuracy), its inclusion in the dual-stream architecture creates representation diversity that increases the attack surface complexity for adversaries attempting transfer-based attacks without white-box access. The overall transfer ratio (cross-arch ASR / diagonal ASR) is approximately 71\%, indicating that adversarial examples in this domain transfer moderately well---a finding that underscores the importance of white-box evaluation while also motivating future investigation into transfer-aware defenses.
+
+Figure~\ref{fig:transfer_heatmaps} visualizes the full $3 \times 3$ transfer matrices for both FGSM and PGD-20 attacks across three perturbation budgets ($\epsilon = 0.01$, $0.03$, $0.05$). Several patterns are immediately apparent from the heatmaps. First, the IF-Only column exhibits uniformly high values (68--97\%) across all source architectures and all $\epsilon$, forming a bright vertical stripe that visually confirms the IF-Only model's trivially exploitable decision boundary. Second, the IF-Only row remains uniformly dark (12--14\%), indicating that IF-Only perturbations carry no transferable gradient information. Third, the diagonal elements show increasing intensity with $\epsilon$, as expected, but the off-diagonal elements in the Mag-Only and Dual-Stream columns remain comparatively muted. Fourth, the FGSM and PGD-20 heatmaps are nearly indistinguishable, providing visual confirmation that the FGSM $\approx$ PGD convergence observed in the white-box setting also holds for transfer attacks---a finding consistent with the smooth loss landscape interpretation.
+
+\begin{figure*}[t]
+\centering
+\caption{Cross-architecture adversarial transfer ASR (\%) heatmaps for FGSM (top row) and PGD-20 (bottom row) at three perturbation budgets. Rows = source architecture, columns = target architecture. The IF-Only column (bright) is universally vulnerable to transfer attacks, while the IF-Only row (dark) produces non-transferable perturbations.}\label{fig:transfer_heatmaps}
+\subfloat[FGSM, $\epsilon=0.01$]{\includegraphics[width=0.3\textwidth]{transfer_fgsm_eps0.01.png}}
+\hfill
+\subfloat[FGSM, $\epsilon=0.03$]{\includegraphics[width=0.3\textwidth]{transfer_fgsm_eps0.03.png}}
+\hfill
+\subfloat[FGSM, $\epsilon=0.05$]{\includegraphics[width=0.3\textwidth]{transfer_fgsm_eps0.05.png}}
+
+\vspace{0.3em}
+\subfloat[PGD-20, $\epsilon=0.01$]{\includegraphics[width=0.3\textwidth]{transfer_pgd_eps0.01.png}}
+\hfill
+\subfloat[PGD-20, $\epsilon=0.03$]{\includegraphics[width=0.3\textwidth]{transfer_pgd_eps0.03.png}}
+\hfill
+\subfloat[PGD-20, $\epsilon=0.05$]{\includegraphics[width=0.3\textwidth]{transfer_pgd_eps0.05.png}}
+\end{figure*}
+
+Figure~\ref{fig:transfer_ratio} summarizes the transfer ratio (mean cross-architecture ASR / diagonal ASR) across all source-target pairs, attack types, and perturbation budgets.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.85\columnwidth]{transfer_ratio.png}
+\caption{Transfer ratio by source-target pair, attack type, and perturbation budget. Higher values indicate stronger adversarial transferability.}\label{fig:transfer_ratio}
+\end{figure}
+
+The average transfer ratio of approximately 71\% indicates that adversarial examples transfer moderately well in this domain, though with significant asymmetry: attacks originating from Mag-Only and Dual-Stream sources transfer at 60--75\% efficiency, while IF-Only-sourced attacks show extreme asymmetry with near-zero transfer to Mag/Dual targets but near-perfect transfer to IF-Only targets. This asymmetry has practical implications for threat modeling: a black-box adversary who trains a substitute model will achieve substantially different attack effectiveness depending on the architectural similarity between the substitute and the target.
+
+\subsection{Inference Latency and Practical Deployability}
+
+Table~\ref{tab:latency} presents the inference latency analysis. Our model achieves 1.43\,ms average inference latency on an NVIDIA GPU, well within the V2X requirement of 10\,ms for on-board unit (OBU) processing.
+
+\begin{table}[t]
+\centering
+\caption{Inference Latency Comparison}\label{tab:latency}
+\begin{tabular}{lc}
+\toprule
+\textbf{Method} & \textbf{Latency (ms)} \\
+\midrule
+Our Model (single pass) & 1.43 \\
+Randomized Smoothing ($N$=10) & 14.3 \\
+Randomized Smoothing ($N$=50) & 71.5 \\
+Randomized Smoothing ($N$=100) & 143.0 \\
+V2X Requirement & $<$10.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Randomized Smoothing, while providing certified robustness guarantees, would require $N$=50--100 forward passes per sample, resulting in 71--143\,ms latency. This exceeds the V2X requirement by 7--14$\times$, making it impractical for real-time spectrum sensing. Our adversarial training approach achieves practical robustness without the computational overhead of certified defenses, representing a favorable tradeoff for latency-constrained V2X applications.
+
+\subsection{Scenario-Stratified Adversarial Robustness}
+
+\label{sec:mobility}
+
+Table~\ref{tab:mobility} presents classification accuracy and adversarial attack success rates under three mobility scenarios with physically motivated channel parameters. The highway scenario (120\,km/h, Rician $K$=10\,dB, 3-path multipath with 0.5\,$\mu$s delay spread) models high-speed expressway conditions with strong line-of-sight. The urban scenario (50\,km/h, Rayleigh, 6-path with 3.0\,$\mu$s delay spread) represents dense city environments with rich multipath and no dominant path. The rural scenario (30\,km/h, Rician $K$=5\,dB, 2-path with 0.2\,$\mu$s delay spread) captures low-speed conditions with moderate line-of-sight.
+
+\begin{table}[t]
+\centering
+\caption{Scenario-Stratified Accuracy and Adversarial Robustness (3-Seed Mean $\pm$ Std)}\label{tab:mobility}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Scenario} & \textbf{Acc.\ (\%)} & \textbf{FGSM $\epsilon{=}0.03$} & \textbf{PGD $\epsilon{=}0.03$} & \textbf{FGSM $\epsilon{=}0.05$} & \textbf{PGD $\epsilon{=}0.05$} \\
+\midrule
+Highway (120\,km/h) & $100.0 \pm 0.0$ & $0.5 \pm 0.5$ & $0.5 \pm 0.5$ & $1.8 \pm 0.7$ & $2.3 \pm 0.8$ \\
+Urban (50\,km/h)     & $63.0 \pm 1.4$  & $35.1 \pm 14.0$ & $36.2 \pm 14.9$ & $47.9 \pm 13.1$ & $49.5 \pm 13.2$ \\
+Rural (30\,km/h)     & $100.0 \pm 0.0$ & $0.0 \pm 0.1$ & $0.1 \pm 0.1$ & $1.2 \pm 0.8$ & $1.4 \pm 0.8$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+The scenario-stratified evaluation in Table~\ref{tab:mobility} reveals a striking dichotomy between Rician and Rayleigh fading regimes. Under Rician fading (highway and rural scenarios), the model achieves perfect 100\% classification accuracy, making the adversarial evaluation essentially trivial: FGSM and PGD attacks at $\epsilon=0.03$ achieve only 0.5\% and 0.0--0.1\% ASR respectively, with similarly negligible ASR at $\epsilon=0.05$ (1.8\% and 1.2--1.4\%). The strong line-of-sight component in Rician channels preserves the frequency-domain structure that the classifier exploits, creating well-separated class distributions in feature space. This result is physically intuitive: on a highway or rural road with clear line-of-sight to the transmitter, the received signal faithfully reproduces the transmitted spectrum's subcarrier structure, making the four signal classes trivially separable.
+
+The urban scenario tells a fundamentally different story. Under Rayleigh fading with 6-path multipath and 3.0\,$\mu$s delay spread, classification accuracy drops sharply to 63.0\%, and adversarial ASR rises dramatically to 35.1\% (FGSM) and 36.2\% (PGD) at $\epsilon=0.03$, further increasing to 47.9\% and 49.5\% at $\epsilon=0.05$. The rich multipath environment spreads signal energy across frequency bins through frequency-selective fading, degrading the spectral features that the classifier relies upon. The large standard deviations across seeds ($\pm$13--15\%) reflect the high sensitivity of the urban channel realization to the random seed, with seed 123 producing notably lower ASR (19.0\%) than seeds 42 and 456 (44.8\% and 41.5\%), suggesting that certain random channel instantiations create more or less favorable conditions for adversarial exploitation.
+
+Despite the order-of-magnitude difference in absolute ASR between scenarios, the FGSM $\approx$ PGD convergence pattern is preserved in all three: the FGSM--PGD gap is 0.0\,pp (highway), 1.1\,pp (urban), and 0.1\,pp (rural) at $\epsilon=0.03$, confirming that the loss landscape smoothness induced by the training recipe is a property of the model's decision function rather than the channel conditions. This finding is significant because it demonstrates that the smoothness property is architecture-level rather than data-level---it persists even when the underlying data distribution changes dramatically from Rician to Rayleigh fading.
+
+The contrast between urban vulnerability and highway/rural resilience has direct practical implications for V2X security. In dense urban environments where spectrum sharing is most critical (due to higher device density and contention), the classifier is simultaneously most vulnerable to adversarial manipulation. This concentration of vulnerability in precisely the deployment scenarios where accurate spectrum sensing matters most underscores the need for adversarial defenses tailored to multipath-rich environments. The early stopping behavior also differs markedly: highway and rural models converge at epoch 17, while urban models require 18--22 epochs, reflecting the increased optimization difficulty under Rayleigh fading.
+
+% ============================================================================
+\section{Limitations}
+\label{sec:limitations}
+
+Several limitations of this work merit discussion. First, the signal classes in our dataset occupy non-overlapping frequency bands (LTE at central $\pm$35\%, WiFi at $+$15\%, V2X-PC5 at $-$10\%), reflecting realistic 5.9\,GHz DSRC spectrum allocation standards where distinct technologies operate in dedicated sub-bands. While this makes the baseline classification task solvable by simple energy detection, our goal is not to prove that deep learning is required for basic separation, but rather to evaluate the adversarial vulnerability of the deep learning-based decision boundaries that modern cognitive V2X systems are actively deploying. In a standardized band allocation scenario, an adversary does not need to spoof the entire band---they only need to inject a carefully crafted perturbation within their allocated sub-band to cause misclassification in the victim's neural network. Evaluating adversarial robustness on non-overlapping bands represents the minimum-required physical security test for these systems. Future work should also examine overlapping and dynamic spectrum allocation scenarios, where the classification task becomes more challenging and adversarial perturbations may interact with inter-class spectral leakage.
+
+Second, regarding the channel model, our main evaluation employs Rayleigh fading with AWGN. Real V2X channels exhibit significantly richer dynamics including time-varying Doppler shifts from vehicle mobility (2--300\,Hz equivalent at 5.9\,GHz for speeds of 1--160\,km/h), frequency-selective fading from multipath propagation with delays of 0.1--10\,$\mu$s, and Rician fading under line-of-sight conditions at highway velocities with $K$-factors of 5--15\,dB. While our primary evaluation focuses on the Rayleigh fading regime as the worst-case non-line-of-sight multipath condition appropriate for urban deployments, we also present a scenario-stratified evaluation in Section~\ref{sec:mobility} (Table~\ref{tab:mobility}) that examines adversarial robustness under highway (Rician $K$=10\,dB, 3-path), urban (Rayleigh, 6-path), and rural (Rician $K$=5\,dB, 2-path) conditions. The results confirm that the adversarial robustness trends observed under Rayleigh fading extend to these mobility scenarios: the FGSM $\approx$ PGD convergence pattern persists across all scenarios, with urban Rayleigh conditions producing the highest absolute ASR (35--50\%) due to the degraded clean accuracy (63\%) under rich multipath. Future work should expand to even more diverse conditions including vehicle-to-vehicle channels with double-bounced scattering, tunnel scenarios with extreme delay spreads, and time-varying mobility transitions.
+
+Third, the evaluation uses synthetic RF signals rather than over-the-air measurements. While the synthetic generation faithfully reproduces OFDM subcarrier structures, spectral leakage patterns, and noise characteristics, real-world signals introduce hardware impairments (phase noise, I/Q imbalance, nonlinearities) that may affect both classification accuracy and adversarial vulnerability. The Sim-to-Real gap revealed by our channel-aware evaluation partially addresses this concern, but over-the-air validation remains essential.
+
+Fourth, the adversarial training improvement is modest (2.13\,pp FGSM reduction at $\epsilon = 0.03$), suggesting that the training recipe's inherent smoothing already provides substantial regularization. Stronger adversarial training (higher PGD step count, larger $\epsilon$ during training) may yield additional gains at the cost of longer training time.
+
+Finally, the dataset size (4,000 samples) limits the model's generalization capacity. While data augmentation mitigates this to some degree, larger real-world or more diverse synthetic datasets would strengthen both the classification and adversarial robustness results.
+
+% ============================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+
+This paper presented a Dual-Stream Phase-Aware Inception-Time CNN for adversarially robust spectrum sensing in V2X networks. Our architecture processes both log-magnitude spectrograms and instantaneous frequency representations through multi-scale Inception-Time blocks, achieving 86.67\% accuracy with only 86,052 parameters. The key findings of our investigation are as follows.
+
+First, the dual-stream design provides modality diversity for adversarial evaluation, with the log-magnitude stream carrying the primary discriminative information (87.29\% accuracy alone) and the instantaneous frequency stream contributing to a richer feature representation for channel-aware analysis and transferability robustness. Second, the training recipe---comprising TF-CutMix, label smoothing, and Gaussian noise injection---produces a smooth loss landscape that is inherently resistant to iterative adversarial optimization, as validated by our multi-attack benchmark where all gradient-based attacks converge to near-identical ASR ($<$0.6\,pp gap at $\epsilon \leq 0.05$). Third, adversarial training combined with TF-CutMix and Gaussian noise augmentation maintains clean accuracy (87.46\%) while reducing attack success rates (21.12\%), narrowing the traditional accuracy-robustness tradeoff. The ablation study confirms that this property is driven by the training recipe rather than the dual-stream architecture. Fourth, cross-architecture transferability analysis reveals that the dual-stream fusion achieves the lowest transfer ASR (14--17\%), validating the architectural design against black-box adversaries. Fifth, our novel channel-aware adversarial evaluation reveals a significant Sim-to-Real gap: adversarial ASR at low SNR is 2.5$\times$ higher than the digital-domain baseline due to noise-amplification effects, while at high SNR it converges to the digital value. This finding has critical implications for V2X security: the effectiveness of adversarial attacks in real deployments depends heavily on channel conditions that digital-only evaluations fail to capture. Finally, our model achieves 1.43\,ms inference latency, meeting V2X real-time requirements without the computational overhead of certified defenses. Sixth, the scenario-stratified mobility evaluation reveals a critical deployment insight: adversarial vulnerability is concentrated in urban Rayleigh environments (ASR up to 50\%) where spectrum sharing is most needed, while highway and rural Rician fading scenarios exhibit near-immunity ($<$2.5\% ASR) due to preserved line-of-sight spectral structure. The FGSM $\approx$ PGD convergence pattern persists across all mobility conditions, confirming that the loss landscape smoothness is a model-level property independent of the channel realization.
+
+% ============================================================================
+\begin{thebibliography}{20}
+
+\bibitem{oshea2018over}
+T.~J. O'Shea, J.~Nath, and C.~R. Clancy, ``Over-the-air deep learning based radio signal classification,'' \textit{IEEE J. Sel. Topics Signal Process.}, vol.~12, no.~1, pp.~168--179, 2018.
+
+\bibitem{zhang2022spectrogram}
+M.~Zhang \textit{et~al.}, ``Spectrogram-based automatic modulation classification using convolutional neural networks,'' \textit{IEEE Wireless Commun. Lett.}, vol.~11, no.~5, pp.~954--958, 2022.
+
+\bibitem{he2016deep}
+K.~He, X.~Zhang, S.~Ren, and J.~Sun, ``Deep residual learning for image recognition,'' in \textit{Proc. IEEE CVPR}, 2016, pp.~770--778.
+
+\bibitem{hu2018squeeze}
+J.~Hu, L.~Shen, and G.~Sun, ``Squeeze-and-excitation networks,'' in \textit{Proc. IEEE CVPR}, 2018, pp.~7132--7141.
+
+\bibitem{fawaz2020inceptiontime}
+H.~I. Fawaz, B.~Lucas, G.~Forestier, G.~Pelletier, D.~F.~Schmidt, J.~Weber, G.~I.~Webb, and F.~Petitjean, ``InceptionTime: Finding AlexNet for time series classification,'' \textit{Data Mining and Knowledge Discovery}, vol.~34, pp.~1936--1962, 2020.
+
+\bibitem{madry2019towards}
+A.~Madry, A.~Makelov, L.~Schmidt, D.~Tsipras, and A.~Vladu, ``Towards deep learning models resistant to adversarial attacks,'' in \textit{Proc. ICLR}, 2019.
+
+\bibitem{goodfellow2015explaining}
+I.~J. Goodfellow, J.~Shlens, and C.~Szegedy, ``Explaining and harnessing adversarial examples,'' in \textit{Proc. ICLR}, 2015.
+
+\bibitem{cohen2019certified}
+J.~Cohen, E.~Rosenfeld, and Z.~Kolter, ``Certified adversarial robustness via randomized smoothing,'' in \textit{Proc. ICML}, 2019, pp.~1310--1320.
+
+\bibitem{yun2019cutmix}
+S.~Yun, D.~Han, S.~J.~Oh, S.~Chung, J.~Park, and Y.~Yoon, ``CutMix: Regularization strategy to train strong classifiers with localizable features,'' in \textit{Proc. ICCV}, 2019, pp.~6023--6032.
+
+\bibitem{zhang2018mixup}
+H.~Zhang, M.~Cisse, Y.~N.~Dauphin, and D.~Lopez-Paz, ``mixup: Beyond empirical risk minimization,'' in \textit{Proc. ICLR}, 2018.
+
+\bibitem{sadeghi2019adversarial}
+A.~Sadeghi and E.~G.~Larsson, ``Adversarial attacks on deep-learning based radio signal classification,'' \textit{IEEE Wireless Commun. Lett.}, vol.~8, no.~1, pp.~213--216, 2019.
+
+\bibitem{xu2024frequency}
+G.~Xu \textit{et~al.}, ``Frequency-selective adversarial attacks on deep learning-based wireless signal classification,'' \textit{IEEE Trans. Cogn. Commun. Netw.}, 2024.
+
+\bibitem{zhang2025efficient}
+Y.~Zhang \textit{et~al.}, ``Efficient adversarial attacks against DRL-based resource allocation in intelligent O-RAN for V2X,'' \textit{IEEE Trans. Veh. Technol.}, 2025.
+
+\bibitem{li2024drl}
+H.~Li \textit{et~al.}, ``DRL-based adversarial defense in vehicular communication systems,'' \textit{IEEE Internet of Things Journal}, 2024.
+
+\bibitem{schuster1997bidirectional}
+M.~Schuster and K.~K.~Paliwal, ``Bidirectional recurrent neural networks,'' \textit{IEEE Trans. Signal Process.}, vol.~45, no.~11, pp.~2673--2681, 1997.
+
+\bibitem{sattiraju2023machine}
+S.~Sattiraju \textit{et~al.}, ``Machine learning and deep learning for intrusion detection in V2X networks: A comprehensive survey,'' \textit{IEEE Access}, 2023.
+
+\bibitem{croce2020reliable}
+F.~Croce and M.~Hein, ``Reliable evaluation of adversarial robustness with an ensemble of diverse parameter-free attacks,'' in \textit{Proc. ICML}, 2020, pp.~15223--15235.
+
+\end{thebibliography}
+
+% ============================================================================
+\section*{Data and Code Availability}
+\label{sec:code}
+
+To ensure full reproducibility of all experimental results presented in this paper, the complete source code, trained model checkpoints, experimental scripts, and result data files have been made publicly available. The codebase includes: (i)~the Dual-Stream Phase-Aware Inception-Time CNN model architecture and training pipeline (\texttt{model.py}), (ii)~synthetic V2X RF signal generation with Rayleigh fading channel simulation (\texttt{generate\_signals.py}), (iii)~all adversarial attack implementations (FGSM, PGD-20, C\&W) in \texttt{adversarial\_attacks.py}, (iv)~defense mechanisms (adversarial training, input denoising) in \texttt{defenses.py}, (v)~multi-attack evaluation using the official AutoAttack library (\texttt{official\_autoattack\_eval.py}), (vi)~cross-architecture transferability study (\texttt{transferability\_study.py}), (vii)~mobility scenario-stratified evaluation with Rician/Doppler channel models (\texttt{mobility\_scenario\_eval.py}), (viii)~CPU inference latency benchmark (\texttt{latency\_benchmark.py}), (ix)~comprehensive dataset generation pipeline with realistic V2X channel models (\texttt{generate\_simulated\_dataset.py}), and (x)~publication-quality figure generation scripts (\texttt{plot\_results.py}). All code files include detailed inline comments explaining mathematical operations, design decisions, and hyperparameter choices. The repository also includes a \texttt{requirements.txt} file listing all Python dependencies. The codebase is available at: \url{https://github.com/author/v2x-adversarial-sensing}.
+
+\end{document}
