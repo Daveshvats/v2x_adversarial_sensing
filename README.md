@@ -223,7 +223,7 @@ If you use this code or find this work helpful, please cite:
 ```bibtex
 @inproceedings{v2x_adversarial_sensing_2026,
   title={Dual-Stream Phase-Aware Inception-Time CNN for Adversarially Robust Spectrum Sensing in V2X Networks},
-  author={Author Name},
+  author={Parveen Dhankhar, Davesh vats},
   booktitle={Proceedings of the International Conference on Computing, Communication, and Technologies (ICE2CT-2026)},
   year={2026},
   organization={IEEE}
