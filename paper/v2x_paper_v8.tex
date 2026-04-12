@@ -17,6 +17,7 @@
 \usepackage{algorithm}
 \usepackage[caption=false]{subfig}
 \usepackage{cite}
+\usepackage{url}
 
 % Correct hyphenation and formatting
 \hyphenation{op-tical net-works semi-conduc-tor}
@@ -26,10 +27,10 @@
 % ============================================================================
 \title{Dual-Stream Phase-Aware Inception-Time CNN for\\Adversarially Robust Spectrum Sensing in V2X Networks}
 
-\author{\IEEEauthorblockN{Author Name}
-\IEEEauthorblockA{Department of Electronics \& Communication Engineering\\
-Vaish College of Engineering, Rohtak, India\\
-Email: author@vce.ac.in}
+\author{
+\IEEEauthorblockN{Parveen Dhankhar\IEEEauthorrefmark{1}~~Davesh Vats\IEEEauthorrefmark{1}}
+\IEEEauthorblockA{\IEEEauthorrefmark{1}Department of Computer Science and Engineering, Vaish College of Engineering, Rohtak, India\\
+Email: parveendhankhar2005@gmail.com, vatsdavesh@gmail.com}
 }
 
 \maketitle
@@ -149,7 +150,7 @@ Our architecture addresses three key limitations of prior approaches. First, mag
 
 The core building block employs parallel convolutions at three scales, inspired by Inception-Time~\cite{fawaz2020inceptiontime}:
 \begin{equation}\label{eq:inception}
-\text{Inc}(x) = \text{ReLU}\bigl(\text{BN}\bigl([\text{Conv}\,1{\times}1(x) \| \text{Conv}\,3{\times}3(x) \| \text{Conv}\,5{\times}5(x)]\bigr)\bigr)
+\text{Inc}(x) = \text{ReLU}\!\left(\text{BN}\!\left([\text{Conv}_{1\!\times\!1}\!\| \text{Conv}_{3\!\times\!3}\!\| \text{Conv}_{5\!\times\!5}]\right)\right)
 \end{equation}
 where $[\cdot \| \cdot]$ denotes channel-wise concatenation. For an output channel count of $C$, the three branches produce $C/4$, $C/4$, and $C/2$ channels respectively. The $1{\times}1$ branch captures point-wise spectral features, the $3{\times}3$ branch captures local time-frequency patterns, and the $5{\times}5$ branch captures broader spectral shapes. All convolutions use same-padding to preserve spatial dimensions.
 
@@ -296,6 +297,7 @@ To understand the contribution of each input stream, we evaluate three variants:
 \begin{table}[t]
 \centering
 \caption{Ablation: Stream Contribution (3-Seed Mean $\pm$ Std)}\label{tab:ablation}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Variant} & \textbf{Params} & \textbf{Acc.\ (\%)} & \textbf{FGSM ASR (\%)} & \textbf{PGD ASR (\%)} \\
@@ -305,6 +307,7 @@ IF-Only    & 43,188 & $30.46 \pm 0.56$ & $93.54 \pm 1.86$ & $94.25 \pm 2.21$ \\
 Dual-Stream & 86,052 & $86.33 \pm 1.02$ & $28.21 \pm 5.17$ & $28.50 \pm 5.36$ \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 Table~\ref{tab:ablation} presents the results. The instantaneous frequency stream alone achieves only 30.46\% accuracy, confirming that phase-derived features in isolation cannot discriminate between signal classes after Rayleigh fading. This is physically expected: the instantaneous frequency captures differential phase information that is meaningful only in the context of the magnitude envelope. The Mag-Only model achieves 87.29\%, demonstrating that the log-magnitude spectrogram carries the bulk of the discriminative information. The Dual-Stream model achieves 86.33\%---comparable to Mag-Only---confirming that the second stream does not degrade performance.
@@ -318,6 +321,7 @@ Table~\ref{tab:defense} compares the standard-trained and adversarially-trained 
 \begin{table}[t]
 \centering
 \caption{Defense Effectiveness at $\epsilon=0.03$ (3-Seed Mean)}\label{tab:defense}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{lccc}
 \toprule
 \textbf{Method} & \textbf{Clean (\%)} & \textbf{FGSM ASR (\%)} & \textbf{PGD-20 ASR (\%)} \\
@@ -326,6 +330,7 @@ Standard Training & 86.67 & 23.25 & 23.50 \\
 Adv.\ Training & 87.46 & 21.12 & 21.25 \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 This result is noteworthy because it suggests that the accuracy-robustness tradeoff, often considered fundamental in adversarial ML, can be narrowed when proper augmentation is employed alongside adversarial training. The key mechanism is that adversarial training regularizes the decision boundaries, while TF-CutMix and Gaussian noise augmentation prevent overfitting and encourage smooth feature representations. The combined effect produces a classifier that is both more accurate on clean inputs and more resistant to adversarial perturbations.
@@ -366,6 +371,7 @@ To evaluate whether adversarial examples transfer across architectural variants,
 \begin{table}[t]
 \centering
 \caption{Cross-Architecture Transfer ASR (\%) at $\epsilon=0.03$ (FGSM, 3-Seed Mean $\pm$ Std)}\label{tab:transfer}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{lccc}
 \toprule
 \textbf{Source} $\downarrow$ / \textbf{Target} $\rightarrow$ & \textbf{Mag-Only} & \textbf{IF-Only} & \textbf{Dual} \\
@@ -375,6 +381,7 @@ IF-Only     & $12.83 \pm 0.41$ & $91.46 \pm 1.49$ & $13.62 \pm 0.27$ \\
 Dual-Stream & $18.62 \pm 0.54$ & $70.25 \pm 0.89$ & $23.33 \pm 1.30$ \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 Three key findings emerge from Table~\ref{tab:transfer}. First, attacks transfer heavily \textit{to} the IF-Only model (68--70\% ASR) regardless of source architecture, confirming that the instantaneous frequency stream in isolation presents a trivially exploitable decision boundary. Second, attacks crafted on IF-Only fail to transfer to Mag-Only or Dual-Stream (12--13\% ASR), indicating that IF-Only perturbations carry no useful gradient information for magnitude-based classification. Third, the Dual-Stream model achieves the lowest cross-architecture ASR (14--17\%) when attacked from single-stream sources, demonstrating that the dual-stream fusion creates a representation that is inherently more resistant to transfer attacks.
@@ -544,6 +551,6 @@ F.~Croce and M.~Hein, ``Reliable evaluation of adversarial robustness with an en
 \section*{Data and Code Availability}
 \label{sec:code}
 
-To ensure full reproducibility of all experimental results presented in this paper, the complete source code, trained model checkpoints, experimental scripts, and result data files have been made publicly available. The codebase includes: (i)~the Dual-Stream Phase-Aware Inception-Time CNN model architecture and training pipeline (\texttt{model.py}), (ii)~synthetic V2X RF signal generation with Rayleigh fading channel simulation (\texttt{generate\_signals.py}), (iii)~all adversarial attack implementations (FGSM, PGD-20, C\&W) in \texttt{adversarial\_attacks.py}, (iv)~defense mechanisms (adversarial training, input denoising) in \texttt{defenses.py}, (v)~multi-attack evaluation using the official AutoAttack library (\texttt{official\_autoattack\_eval.py}), (vi)~cross-architecture transferability study (\texttt{transferability\_study.py}), (vii)~mobility scenario-stratified evaluation with Rician/Doppler channel models (\texttt{mobility\_scenario\_eval.py}), (viii)~CPU inference latency benchmark (\texttt{latency\_benchmark.py}), (ix)~comprehensive dataset generation pipeline with realistic V2X channel models (\texttt{generate\_simulated\_dataset.py}), and (x)~publication-quality figure generation scripts (\texttt{plot\_results.py}). All code files include detailed inline comments explaining mathematical operations, design decisions, and hyperparameter choices. The repository also includes a \texttt{requirements.txt} file listing all Python dependencies. The codebase is available at: \url{https://github.com/author/v2x-adversarial-sensing}.
+To ensure full reproducibility of all experimental results presented in this paper, the complete source code, trained model checkpoints, experimental scripts, and result data files have been made publicly available. The codebase includes: (i)~the Dual-Stream Phase-Aware Inception-Time CNN model architecture and training pipeline (\texttt{model.py}), (ii)~synthetic V2X RF signal generation with Rayleigh fading channel simulation (\texttt{generate\_signals.py}), (iii)~all adversarial attack implementations (FGSM, PGD-20) in \texttt{adversarial\_attacks.py}, (iv)~defense mechanisms (adversarial training, input denoising) in \texttt{defenses.py}, (v)~multi-attack evaluation using the official AutoAttack library (\texttt{official\_autoattack\_eval.py}), (vi)~cross-architecture transferability study (\texttt{transferability\_study.py}), (vii)~mobility scenario-stratified evaluation with Rician/Doppler channel models (\texttt{mobility\_scenario\_eval.py}), (viii)~CPU inference latency benchmark (\texttt{latency\_benchmark.py}), (ix)~comprehensive dataset generation pipeline with realistic V2X channel models (\texttt{generate\_simulated\_dataset.py}), and (x)~publication-quality figure generation scripts (\texttt{plot\_results.py}). All code files include detailed inline comments explaining mathematical operations, design decisions, and hyperparameter choices. The repository also includes a \texttt{requirements.txt} file listing all Python dependencies. The codebase is available at: \url{https://github.com/Daveshvats/v2x_adversarial_sensing}.
 
 \end{document}
