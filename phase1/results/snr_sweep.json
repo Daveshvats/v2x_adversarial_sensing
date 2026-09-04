@@ -1,0 +1,48 @@
+{
+  "experiment": "clean-task SNR sweep (C4): CNN vs energy-LR",
+  "config": {
+    "n_per_class": 250,
+    "seed": 42,
+    "scenario": "urban",
+    "snr_ranges": [
+      [
+        -10.0,
+        0.0
+      ],
+      [
+        0.0,
+        10.0
+      ],
+      [
+        10.0,
+        20.0
+      ],
+      [
+        5.0,
+        25.0
+      ]
+    ]
+  },
+  "per_range": {
+    "snr=[-10.0,0.0]": {
+      "cnn_acc": 25.6,
+      "cnn_pc5_11p_pair_acc": 37.8,
+      "energy_lr_acc": 25.0
+    },
+    "snr=[0.0,10.0]": {
+      "cnn_acc": 73.0,
+      "cnn_pc5_11p_pair_acc": 63.6,
+      "energy_lr_acc": 62.6
+    },
+    "snr=[10.0,20.0]": {
+      "cnn_acc": 99.9,
+      "cnn_pc5_11p_pair_acc": 100.0,
+      "energy_lr_acc": 86.1
+    },
+    "snr=[5.0,25.0]": {
+      "cnn_acc": 99.8,
+      "cnn_pc5_11p_pair_acc": 99.8,
+      "energy_lr_acc": 86.3
+    }
+  }
+}

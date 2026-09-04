@@ -1,0 +1,135 @@
+{
+  "experiment": "attacker CSI-error robustness (C13)",
+  "config": {
+    "scenario": "urban",
+    "mode": "untargeted",
+    "seed": 7,
+    "steps": 10,
+    "psd_margin": 2.0,
+    "n_eval": 300,
+    "csi_error": "0.3 relative additive",
+    "no_csi": "independent draw from same scenario"
+  },
+  "runs": {
+    "perfect_csi/genie/psr=-30dB": {
+      "cond_asr": 88.0,
+      "n_eligible": 300
+    },
+    "perfect_csi/genie/psr=-25dB": {
+      "cond_asr": 98.67,
+      "n_eligible": 300
+    },
+    "perfect_csi/genie/psr=-20dB": {
+      "cond_asr": 100.0,
+      "n_eligible": 300
+    },
+    "perfect_csi/genie/psr=-15dB": {
+      "cond_asr": 100.0,
+      "n_eligible": 300
+    },
+    "perfect_csi/genie/psr=-10dB": {
+      "cond_asr": 100.0,
+      "n_eligible": 300
+    },
+    "perfect_csi/cv2x_mask/psr=-30dB": {
+      "cond_asr": 39.33,
+      "n_eligible": 300
+    },
+    "perfect_csi/cv2x_mask/psr=-25dB": {
+      "cond_asr": 58.33,
+      "n_eligible": 300
+    },
+    "perfect_csi/cv2x_mask/psr=-20dB": {
+      "cond_asr": 78.0,
+      "n_eligible": 300
+    },
+    "perfect_csi/cv2x_mask/psr=-15dB": {
+      "cond_asr": 88.33,
+      "n_eligible": 300
+    },
+    "perfect_csi/cv2x_mask/psr=-10dB": {
+      "cond_asr": 96.67,
+      "n_eligible": 300
+    },
+    "csi_err_0.3/genie/psr=-30dB": {
+      "cond_asr": 85.67,
+      "n_eligible": 300
+    },
+    "csi_err_0.3/genie/psr=-25dB": {
+      "cond_asr": 96.0,
+      "n_eligible": 300
+    },
+    "csi_err_0.3/genie/psr=-20dB": {
+      "cond_asr": 100.0,
+      "n_eligible": 300
+    },
+    "csi_err_0.3/genie/psr=-15dB": {
+      "cond_asr": 100.0,
+      "n_eligible": 300
+    },
+    "csi_err_0.3/genie/psr=-10dB": {
+      "cond_asr": 100.0,
+      "n_eligible": 300
+    },
+    "csi_err_0.3/cv2x_mask/psr=-30dB": {
+      "cond_asr": 37.0,
+      "n_eligible": 300
+    },
+    "csi_err_0.3/cv2x_mask/psr=-25dB": {
+      "cond_asr": 56.33,
+      "n_eligible": 300
+    },
+    "csi_err_0.3/cv2x_mask/psr=-20dB": {
+      "cond_asr": 76.0,
+      "n_eligible": 300
+    },
+    "csi_err_0.3/cv2x_mask/psr=-15dB": {
+      "cond_asr": 87.67,
+      "n_eligible": 300
+    },
+    "csi_err_0.3/cv2x_mask/psr=-10dB": {
+      "cond_asr": 95.67,
+      "n_eligible": 300
+    },
+    "no_csi/genie/psr=-30dB": {
+      "cond_asr": 13.67,
+      "n_eligible": 300
+    },
+    "no_csi/genie/psr=-25dB": {
+      "cond_asr": 24.33,
+      "n_eligible": 300
+    },
+    "no_csi/genie/psr=-20dB": {
+      "cond_asr": 37.33,
+      "n_eligible": 300
+    },
+    "no_csi/genie/psr=-15dB": {
+      "cond_asr": 52.0,
+      "n_eligible": 300
+    },
+    "no_csi/genie/psr=-10dB": {
+      "cond_asr": 67.33,
+      "n_eligible": 300
+    },
+    "no_csi/cv2x_mask/psr=-30dB": {
+      "cond_asr": 4.33,
+      "n_eligible": 300
+    },
+    "no_csi/cv2x_mask/psr=-25dB": {
+      "cond_asr": 9.33,
+      "n_eligible": 300
+    },
+    "no_csi/cv2x_mask/psr=-20dB": {
+      "cond_asr": 15.0,
+      "n_eligible": 300
+    },
+    "no_csi/cv2x_mask/psr=-15dB": {
+      "cond_asr": 23.0,
+      "n_eligible": 300
+    },
+    "no_csi/cv2x_mask/psr=-10dB": {
+      "cond_asr": 34.67,
+      "n_eligible": 300
+    }
+  }
+}

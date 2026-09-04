@@ -1,0 +1,295 @@
+{
+  "experiment": "mask-matched adversarial training defense evaluation (CLAIMS C16)",
+  "config": {
+    "attack": {
+      "scenario": "urban",
+      "steps": 10,
+      "psd_margin": 2.0,
+      "seed": 7,
+      "n_eval_per_class": 100,
+      "psr_reference": "clean received-signal window energy (pre-noise)",
+      "mask_band_mhz": {
+        "lo": 0.0,
+        "hi": 10.0
+      },
+      "genie": "power-only, no PSD cap",
+      "alpha_frac": 0.25
+    },
+    "at_training": {
+      "seed": 42,
+      "n_train": 3200,
+      "n_val": 800,
+      "epochs": 16,
+      "at_prob": 0.5,
+      "at_steps": 5,
+      "at_psr_db": [
+        -25.0,
+        -5.0
+      ],
+      "psd_margin": 2.0
+    },
+    "at_model": "results/checkpoint_dual_at.pt"
+  },
+  "undefended": {
+    "source": "results/attack_results_merged.json (urban) + results/train_report.json",
+    "clean_acc_val": 1.0,
+    "clean_acc_active_urban": 1.0,
+    "untargeted": {
+      "meap_genie_db": -44.22475707646814,
+      "meap_genie_censor": null,
+      "meap_cv2x_mask_db": -37.08333333333358,
+      "meap_cv2x_mask_censor": null,
+      "price_of_compliance_db": 7.14142374313456,
+      "asr_at_minus10_cv2x_mask": 96.67,
+      "asr_at_minus10_genie": 100.0
+    },
+    "targeted_noise": {
+      "meap_genie_db": -30.8340909090911,
+      "meap_genie_censor": null,
+      "meap_cv2x_mask_db": -14.823684210526325,
+      "meap_cv2x_mask_censor": null,
+      "price_of_compliance_db": 16.010406698564772,
+      "asr_at_minus10_cv2x_mask": 38.33,
+      "asr_at_minus10_genie": 100.0
+    }
+  },
+  "defended": {
+    "model": "DualStreamModel after mask-matched AT (results/checkpoint_dual_at.pt)",
+    "clean_acc": {
+      "eval_active_urban": 1.0,
+      "val_split_seed42": 1.0
+    },
+    "untargeted": {
+      "runs": {
+        "genie": {
+          "psr=-45dB": {
+            "cond_asr": 2.0,
+            "robust_acc": 98.0,
+            "n_eligible": 300
+          },
+          "psr=-40dB": {
+            "cond_asr": 8.33,
+            "robust_acc": 91.67,
+            "n_eligible": 300
+          },
+          "psr=-35dB": {
+            "cond_asr": 31.33,
+            "robust_acc": 68.67,
+            "n_eligible": 300
+          },
+          "psr=-30dB": {
+            "cond_asr": 56.33,
+            "robust_acc": 43.67,
+            "n_eligible": 300
+          },
+          "psr=-25dB": {
+            "cond_asr": 80.67,
+            "robust_acc": 19.33,
+            "n_eligible": 300
+          },
+          "psr=-20dB": {
+            "cond_asr": 92.33,
+            "robust_acc": 7.67,
+            "n_eligible": 300
+          },
+          "psr=-15dB": {
+            "cond_asr": 99.33,
+            "robust_acc": 0.67,
+            "n_eligible": 300
+          },
+          "psr=-10dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          },
+          "psr=-5dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          },
+          "psr=+0dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          }
+        },
+        "cv2x_mask": {
+          "psr=-45dB": {
+            "cond_asr": 0.33,
+            "robust_acc": 99.67,
+            "n_eligible": 300
+          },
+          "psr=-40dB": {
+            "cond_asr": 1.0,
+            "robust_acc": 99.0,
+            "n_eligible": 300
+          },
+          "psr=-35dB": {
+            "cond_asr": 3.67,
+            "robust_acc": 96.33,
+            "n_eligible": 300
+          },
+          "psr=-30dB": {
+            "cond_asr": 9.33,
+            "robust_acc": 90.67,
+            "n_eligible": 300
+          },
+          "psr=-25dB": {
+            "cond_asr": 16.67,
+            "robust_acc": 83.33,
+            "n_eligible": 300
+          },
+          "psr=-20dB": {
+            "cond_asr": 25.33,
+            "robust_acc": 74.67,
+            "n_eligible": 300
+          },
+          "psr=-15dB": {
+            "cond_asr": 40.33,
+            "robust_acc": 59.67,
+            "n_eligible": 300
+          },
+          "psr=-10dB": {
+            "cond_asr": 55.33,
+            "robust_acc": 44.67,
+            "n_eligible": 300
+          },
+          "psr=-5dB": {
+            "cond_asr": 81.33,
+            "robust_acc": 18.67,
+            "n_eligible": 300
+          },
+          "psr=+0dB": {
+            "cond_asr": 94.67,
+            "robust_acc": 5.33,
+            "n_eligible": 300
+          }
+        }
+      },
+      "grid_complete": null,
+      "summary": {
+        "meap_genie_db": -37.46304347826098,
+        "meap_genie_censor": null,
+        "asr_at_minus10_genie": 100.0,
+        "psr_grid_genie": [
+          -45.0,
+          -40.0,
+          -35.0,
+          -30.0,
+          -25.0,
+          -20.0,
+          -15.0,
+          -10.0,
+          -5.0,
+          0.0
+        ],
+        "meap_cv2x_mask_db": -23.07736720554295,
+        "meap_cv2x_mask_censor": null,
+        "asr_at_minus10_cv2x_mask": 55.33,
+        "psr_grid_cv2x_mask": [
+          -45.0,
+          -40.0,
+          -35.0,
+          -30.0,
+          -25.0,
+          -20.0,
+          -15.0,
+          -10.0,
+          -5.0,
+          0.0
+        ],
+        "price_of_compliance_db": 14.38567627271803,
+        "poc_censor": null,
+        "grid_complete": true
+      }
+    },
+    "targeted_noise": {
+      "runs": {
+        "genie": {
+          "psr=-20dB": {
+            "cond_asr": 24.67,
+            "robust_acc": 52.33,
+            "n_eligible": 300
+          },
+          "psr=-10dB": {
+            "cond_asr": 99.67,
+            "robust_acc": 0.33,
+            "n_eligible": 300
+          },
+          "psr=+0dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          }
+        },
+        "cv2x_mask": {
+          "psr=-20dB": {
+            "cond_asr": 0.67,
+            "robust_acc": 94.0,
+            "n_eligible": 300
+          },
+          "psr=-10dB": {
+            "cond_asr": 15.0,
+            "robust_acc": 62.67,
+            "n_eligible": 300
+          },
+          "psr=+0dB": {
+            "cond_asr": 52.67,
+            "robust_acc": 26.33,
+            "n_eligible": 300
+          }
+        }
+      },
+      "grid_complete": null,
+      "summary": {
+        "meap_genie_db": -20.0,
+        "meap_genie_censor": "le",
+        "asr_at_minus10_genie": 99.67,
+        "psr_grid_genie": [
+          -20.0,
+          -10.0,
+          0.0
+        ],
+        "meap_cv2x_mask_db": -8.672683833289124,
+        "meap_cv2x_mask_censor": null,
+        "asr_at_minus10_cv2x_mask": 15.0,
+        "psr_grid_cv2x_mask": [
+          -20.0,
+          -10.0,
+          0.0
+        ],
+        "price_of_compliance_db": 11.327316166710876,
+        "poc_censor": {
+          "genie": "le",
+          "poc_bias": "lower bound (genie MEAP censored at grid floor)"
+        },
+        "grid_complete": true
+      }
+    }
+  },
+  "deltas": {
+    "untargeted": {
+      "meap_genie_db": 6.762,
+      "meap_cv2x_mask_db": 14.006,
+      "price_of_compliance_db": 7.244,
+      "asr_at_minus10_cv2x_mask": -41.34,
+      "asr_at_minus10_genie": 0.0
+    },
+    "clean_acc_val": 0.0,
+    "targeted_noise": {
+      "meap_genie_db": 10.834,
+      "meap_cv2x_mask_db": 6.151,
+      "price_of_compliance_db": -4.683,
+      "asr_at_minus10_cv2x_mask": -23.33,
+      "asr_at_minus10_genie": -0.33
+    }
+  },
+  "notes": {
+    "interpretation": "delta>0 on MEAP = defense pushes the minimum effective attack power UP (good for defense); delta<0 on ASR@-10dB = fewer successful attacks (good for defense). grid_complete flags whether the stored PSR grid covers the baseline grid (MEAP comparable only when True).",
+    "at_training_psr_db": [
+      -25.0,
+      -5.0
+    ],
+    "chunk_elapsed_s": 92.3
+  }
+}

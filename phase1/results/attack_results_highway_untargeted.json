@@ -1,0 +1,200 @@
+{
+  "experiment": "Compliant-Attacker (mask-constrained waveform PGD, corrected PSR axis)",
+  "config": {
+    "steps": 10,
+    "psr_db": [
+      -45.0,
+      -40.0,
+      -35.0,
+      -30.0,
+      -25.0,
+      -20.0,
+      -15.0,
+      -10.0,
+      -5.0,
+      0.0,
+      5.0,
+      10.0
+    ],
+    "n_eval_per_class": 100,
+    "seed": 7,
+    "attack_pgd_alpha_frac": 0.25,
+    "psd_cap_margin": 2.0,
+    "psr_reference": "clean received-signal window energy (sum |r|^2, pre-noise)",
+    "mask_band_mhz": {
+      "lo": 0.0,
+      "hi": 10.0
+    },
+    "genie": "power-only, no PSD cap (corrected 2026-09-05)"
+  },
+  "per_scenario": {
+    "highway": {
+      "clean_acc_active": 1.0,
+      "runs": {
+        "untargeted/genie": {
+          "psr=-45dB": {
+            "cond_asr": 14.67,
+            "robust_acc": 85.33,
+            "n_eligible": 300
+          },
+          "psr=-40dB": {
+            "cond_asr": 39.33,
+            "robust_acc": 60.67,
+            "n_eligible": 300
+          },
+          "psr=-35dB": {
+            "cond_asr": 66.33,
+            "robust_acc": 33.67,
+            "n_eligible": 300
+          },
+          "psr=-30dB": {
+            "cond_asr": 82.67,
+            "robust_acc": 17.33,
+            "n_eligible": 300
+          },
+          "psr=-25dB": {
+            "cond_asr": 96.33,
+            "robust_acc": 3.67,
+            "n_eligible": 300
+          },
+          "psr=-20dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          },
+          "psr=-15dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          },
+          "psr=-10dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          },
+          "psr=-5dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          },
+          "psr=+0dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          },
+          "psr=+5dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          },
+          "psr=+10dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          }
+        },
+        "untargeted/cv2x_mask": {
+          "psr=-45dB": {
+            "cond_asr": 1.33,
+            "robust_acc": 98.67,
+            "n_eligible": 300
+          },
+          "psr=-40dB": {
+            "cond_asr": 12.0,
+            "robust_acc": 88.0,
+            "n_eligible": 300
+          },
+          "psr=-35dB": {
+            "cond_asr": 26.33,
+            "robust_acc": 73.67,
+            "n_eligible": 300
+          },
+          "psr=-30dB": {
+            "cond_asr": 39.67,
+            "robust_acc": 60.33,
+            "n_eligible": 300
+          },
+          "psr=-25dB": {
+            "cond_asr": 52.0,
+            "robust_acc": 48.0,
+            "n_eligible": 300
+          },
+          "psr=-20dB": {
+            "cond_asr": 67.0,
+            "robust_acc": 33.0,
+            "n_eligible": 300
+          },
+          "psr=-15dB": {
+            "cond_asr": 82.33,
+            "robust_acc": 17.67,
+            "n_eligible": 300
+          },
+          "psr=-10dB": {
+            "cond_asr": 92.0,
+            "robust_acc": 8.0,
+            "n_eligible": 300
+          },
+          "psr=-5dB": {
+            "cond_asr": 97.0,
+            "robust_acc": 3.0,
+            "n_eligible": 300
+          },
+          "psr=+0dB": {
+            "cond_asr": 99.67,
+            "robust_acc": 0.33,
+            "n_eligible": 300
+          },
+          "psr=+5dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          },
+          "psr=+10dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          }
+        }
+      },
+      "summary": {
+        "untargeted": {
+          "meap_genie_db": -43.91930251419307,
+          "meap_genie_censor": null,
+          "meap_cv2x_mask_db": -37.20865317515721,
+          "meap_cv2x_mask_censor": null,
+          "price_of_compliance_db": 6.710649339035861,
+          "poc_censor": null,
+          "genie_curve": [
+            14.67,
+            39.33,
+            66.33,
+            82.67,
+            96.33,
+            100.0,
+            100.0,
+            100.0,
+            100.0,
+            100.0,
+            100.0,
+            100.0
+          ],
+          "mask_curve": [
+            1.33,
+            12.0,
+            26.33,
+            39.67,
+            52.0,
+            67.0,
+            82.33,
+            92.0,
+            97.0,
+            99.67,
+            100.0,
+            100.0
+          ]
+        }
+      }
+    }
+  },
+  "elapsed_s": 246.1
+}

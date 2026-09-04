@@ -1,0 +1,217 @@
+{
+  "experiment": "Compliant-Attacker (mask-constrained waveform PGD, corrected PSR axis)",
+  "config": {
+    "steps": 10,
+    "psr_db": [
+      -45.0,
+      -40.0,
+      -35.0,
+      -30.0,
+      -25.0,
+      -20.0,
+      -15.0,
+      -10.0,
+      -5.0,
+      0.0,
+      5.0,
+      10.0
+    ],
+    "n_eval_per_class": 100,
+    "seed": 7,
+    "attack_pgd_alpha_frac": 0.25,
+    "psd_cap_margin": 10.0,
+    "scenario": "urban",
+    "mode": "untargeted",
+    "psr_reference": "clean received-signal window energy (sum |r|^2, pre-noise)",
+    "mask_band_mhz": {
+      "lo": 0.0,
+      "hi": 10.0
+    },
+    "genie": "power-only, no PSD cap (corrected 2026-09-05)",
+    "runner": "w3a_run_attack.py (incremental/resumable; same eval sets + attack code as run_attack.py)"
+  },
+  "per_scenario": {
+    "urban": {
+      "clean_acc_active": 1.0,
+      "runs": {
+        "untargeted/genie": {
+          "psr=-45dB": {
+            "cond_asr": 16.33,
+            "robust_acc": 83.67,
+            "n_eligible": 300
+          },
+          "psr=-40dB": {
+            "cond_asr": 40.0,
+            "robust_acc": 60.0,
+            "n_eligible": 300
+          },
+          "psr=-35dB": {
+            "cond_asr": 71.0,
+            "robust_acc": 29.0,
+            "n_eligible": 300
+          },
+          "psr=-30dB": {
+            "cond_asr": 88.0,
+            "robust_acc": 12.0,
+            "n_eligible": 300
+          },
+          "psr=-25dB": {
+            "cond_asr": 98.67,
+            "robust_acc": 1.33,
+            "n_eligible": 300
+          },
+          "psr=-20dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          },
+          "psr=-15dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          },
+          "psr=-10dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          },
+          "psr=-5dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          },
+          "psr=+0dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          },
+          "psr=+5dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          },
+          "psr=+10dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          }
+        },
+        "untargeted/cv2x_mask": {
+          "psr=-45dB": {
+            "cond_asr": 4.0,
+            "robust_acc": 96.0,
+            "n_eligible": 300
+          },
+          "psr=-40dB": {
+            "cond_asr": 15.33,
+            "robust_acc": 84.67,
+            "n_eligible": 300
+          },
+          "psr=-35dB": {
+            "cond_asr": 27.0,
+            "robust_acc": 73.0,
+            "n_eligible": 300
+          },
+          "psr=-30dB": {
+            "cond_asr": 42.67,
+            "robust_acc": 57.33,
+            "n_eligible": 300
+          },
+          "psr=-25dB": {
+            "cond_asr": 59.67,
+            "robust_acc": 40.33,
+            "n_eligible": 300
+          },
+          "psr=-20dB": {
+            "cond_asr": 78.67,
+            "robust_acc": 21.33,
+            "n_eligible": 300
+          },
+          "psr=-15dB": {
+            "cond_asr": 88.67,
+            "robust_acc": 11.33,
+            "n_eligible": 300
+          },
+          "psr=-10dB": {
+            "cond_asr": 97.0,
+            "robust_acc": 3.0,
+            "n_eligible": 300
+          },
+          "psr=-5dB": {
+            "cond_asr": 99.67,
+            "robust_acc": 0.33,
+            "n_eligible": 300
+          },
+          "psr=+0dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          },
+          "psr=+5dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          },
+          "psr=+10dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          }
+        }
+      },
+      "summary": {
+        "untargeted": {
+          "meap_genie_db": -44.22475707646814,
+          "meap_genie_censor": null,
+          "meap_cv2x_mask_db": -37.999143101971036,
+          "meap_cv2x_mask_censor": null,
+          "price_of_compliance_db": 6.225613974497101,
+          "poc_censor": null,
+          "genie_curve": [
+            16.33,
+            40.0,
+            71.0,
+            88.0,
+            98.67,
+            100.0,
+            100.0,
+            100.0,
+            100.0,
+            100.0,
+            100.0,
+            100.0
+          ],
+          "mask_curve": [
+            4.0,
+            15.33,
+            27.0,
+            42.67,
+            59.67,
+            78.67,
+            88.67,
+            97.0,
+            99.67,
+            100.0,
+            100.0,
+            100.0
+          ],
+          "psr_completed_db": [
+            -45.0,
+            -40.0,
+            -35.0,
+            -30.0,
+            -25.0,
+            -20.0,
+            -15.0,
+            -10.0,
+            -5.0,
+            0.0,
+            5.0,
+            10.0
+          ]
+        }
+      }
+    }
+  },
+  "elapsed_s": 253.7
+}

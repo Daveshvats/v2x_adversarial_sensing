@@ -1,0 +1,173 @@
+{
+  "experiment": "Compliant-Attacker (mask-constrained waveform PGD)",
+  "config": {
+    "steps": 10,
+    "psr_db": [
+      -10.0,
+      -5.0,
+      0.0,
+      5.0,
+      10.0
+    ],
+    "n_eval_per_class": 100,
+    "seed": 7,
+    "attack_pgd_alpha_frac": 0.25,
+    "psd_cap_margin": 2.0
+  },
+  "per_scenario": {
+    "highway": {
+      "clean_acc_active": 1.0,
+      "runs": {
+        "untargeted/genie": {
+          "psr=-10dB": {
+            "cond_asr": 12.67,
+            "robust_acc": 87.33,
+            "n_eligible": 300
+          },
+          "psr=-5dB": {
+            "cond_asr": 29.67,
+            "robust_acc": 70.33,
+            "n_eligible": 300
+          },
+          "psr=+0dB": {
+            "cond_asr": 49.33,
+            "robust_acc": 50.67,
+            "n_eligible": 300
+          },
+          "psr=+5dB": {
+            "cond_asr": 88.0,
+            "robust_acc": 12.0,
+            "n_eligible": 300
+          },
+          "psr=+10dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          }
+        },
+        "untargeted/cv2x_mask": {
+          "psr=-10dB": {
+            "cond_asr": 0.67,
+            "robust_acc": 99.33,
+            "n_eligible": 300
+          },
+          "psr=-5dB": {
+            "cond_asr": 1.33,
+            "robust_acc": 98.67,
+            "n_eligible": 300
+          },
+          "psr=+0dB": {
+            "cond_asr": 5.33,
+            "robust_acc": 94.67,
+            "n_eligible": 300
+          },
+          "psr=+5dB": {
+            "cond_asr": 15.67,
+            "robust_acc": 84.33,
+            "n_eligible": 300
+          },
+          "psr=+10dB": {
+            "cond_asr": 38.0,
+            "robust_acc": 62.0,
+            "n_eligible": 300
+          }
+        },
+        "targeted_noise/genie": {
+          "psr=-10dB": {
+            "cond_asr": 0.33,
+            "robust_acc": 96.67,
+            "n_eligible": 300
+          },
+          "psr=-5dB": {
+            "cond_asr": 2.33,
+            "robust_acc": 90.33,
+            "n_eligible": 300
+          },
+          "psr=+0dB": {
+            "cond_asr": 11.0,
+            "robust_acc": 81.0,
+            "n_eligible": 300
+          },
+          "psr=+5dB": {
+            "cond_asr": 31.67,
+            "robust_acc": 57.33,
+            "n_eligible": 300
+          },
+          "psr=+10dB": {
+            "cond_asr": 72.0,
+            "robust_acc": 19.67,
+            "n_eligible": 300
+          }
+        },
+        "targeted_noise/cv2x_mask": {
+          "psr=-10dB": {
+            "cond_asr": 0.0,
+            "robust_acc": 100.0,
+            "n_eligible": 300
+          },
+          "psr=-5dB": {
+            "cond_asr": 0.0,
+            "robust_acc": 100.0,
+            "n_eligible": 300
+          },
+          "psr=+0dB": {
+            "cond_asr": 1.33,
+            "robust_acc": 98.33,
+            "n_eligible": 300
+          },
+          "psr=+5dB": {
+            "cond_asr": 4.33,
+            "robust_acc": 95.33,
+            "n_eligible": 300
+          },
+          "psr=+10dB": {
+            "cond_asr": 15.33,
+            "robust_acc": 83.0,
+            "n_eligible": 300
+          }
+        }
+      },
+      "summary": {
+        "untargeted": {
+          "meap_genie_db": 10.0,
+          "meap_cv2x_mask_db": 10.0,
+          "price_of_compliance_db": 0.0,
+          "genie_curve": [
+            12.67,
+            29.67,
+            49.33,
+            88.0,
+            100.0
+          ],
+          "mask_curve": [
+            0.67,
+            1.33,
+            5.33,
+            15.67,
+            38.0
+          ]
+        },
+        "targeted_noise": {
+          "meap_genie_db": 10.0,
+          "meap_cv2x_mask_db": -4.248120300752445,
+          "price_of_compliance_db": -14.248120300752445,
+          "genie_curve": [
+            0.33,
+            2.33,
+            11.0,
+            31.67,
+            72.0
+          ],
+          "mask_curve": [
+            0.0,
+            0.0,
+            1.33,
+            4.33,
+            15.33
+          ]
+        }
+      }
+    }
+  },
+  "elapsed_s": 205.0
+}

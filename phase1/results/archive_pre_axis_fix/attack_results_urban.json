@@ -1,0 +1,173 @@
+{
+  "experiment": "Compliant-Attacker (mask-constrained waveform PGD)",
+  "config": {
+    "steps": 10,
+    "psr_db": [
+      -10.0,
+      -5.0,
+      0.0,
+      5.0,
+      10.0
+    ],
+    "n_eval_per_class": 100,
+    "seed": 7,
+    "attack_pgd_alpha_frac": 0.25,
+    "psd_cap_margin": 2.0
+  },
+  "per_scenario": {
+    "urban": {
+      "clean_acc_active": 1.0,
+      "runs": {
+        "untargeted/genie": {
+          "psr=-10dB": {
+            "cond_asr": 11.67,
+            "robust_acc": 88.33,
+            "n_eligible": 300
+          },
+          "psr=-5dB": {
+            "cond_asr": 27.33,
+            "robust_acc": 72.67,
+            "n_eligible": 300
+          },
+          "psr=+0dB": {
+            "cond_asr": 56.67,
+            "robust_acc": 43.33,
+            "n_eligible": 300
+          },
+          "psr=+5dB": {
+            "cond_asr": 84.33,
+            "robust_acc": 15.67,
+            "n_eligible": 300
+          },
+          "psr=+10dB": {
+            "cond_asr": 100.0,
+            "robust_acc": 0.0,
+            "n_eligible": 300
+          }
+        },
+        "untargeted/cv2x_mask": {
+          "psr=-10dB": {
+            "cond_asr": 1.0,
+            "robust_acc": 99.0,
+            "n_eligible": 300
+          },
+          "psr=-5dB": {
+            "cond_asr": 2.33,
+            "robust_acc": 97.67,
+            "n_eligible": 300
+          },
+          "psr=+0dB": {
+            "cond_asr": 7.0,
+            "robust_acc": 93.0,
+            "n_eligible": 300
+          },
+          "psr=+5dB": {
+            "cond_asr": 15.0,
+            "robust_acc": 85.0,
+            "n_eligible": 300
+          },
+          "psr=+10dB": {
+            "cond_asr": 41.33,
+            "robust_acc": 58.67,
+            "n_eligible": 300
+          }
+        },
+        "targeted_noise/genie": {
+          "psr=-10dB": {
+            "cond_asr": 1.0,
+            "robust_acc": 97.33,
+            "n_eligible": 300
+          },
+          "psr=-5dB": {
+            "cond_asr": 2.0,
+            "robust_acc": 91.33,
+            "n_eligible": 300
+          },
+          "psr=+0dB": {
+            "cond_asr": 8.33,
+            "robust_acc": 81.0,
+            "n_eligible": 300
+          },
+          "psr=+5dB": {
+            "cond_asr": 34.33,
+            "robust_acc": 55.67,
+            "n_eligible": 300
+          },
+          "psr=+10dB": {
+            "cond_asr": 73.33,
+            "robust_acc": 20.67,
+            "n_eligible": 300
+          }
+        },
+        "targeted_noise/cv2x_mask": {
+          "psr=-10dB": {
+            "cond_asr": 0.33,
+            "robust_acc": 99.67,
+            "n_eligible": 300
+          },
+          "psr=-5dB": {
+            "cond_asr": 0.33,
+            "robust_acc": 99.67,
+            "n_eligible": 300
+          },
+          "psr=+0dB": {
+            "cond_asr": 1.33,
+            "robust_acc": 98.67,
+            "n_eligible": 300
+          },
+          "psr=+5dB": {
+            "cond_asr": 5.0,
+            "robust_acc": 94.33,
+            "n_eligible": 300
+          },
+          "psr=+10dB": {
+            "cond_asr": 12.33,
+            "robust_acc": 85.33,
+            "n_eligible": 300
+          }
+        }
+      },
+      "summary": {
+        "untargeted": {
+          "meap_genie_db": 10.0,
+          "meap_cv2x_mask_db": 10.0,
+          "price_of_compliance_db": 0.0,
+          "genie_curve": [
+            11.67,
+            27.33,
+            56.67,
+            84.33,
+            100.0
+          ],
+          "mask_curve": [
+            1.0,
+            2.33,
+            7.0,
+            15.0,
+            41.33
+          ]
+        },
+        "targeted_noise": {
+          "meap_genie_db": 10.0,
+          "meap_cv2x_mask_db": 10.0,
+          "price_of_compliance_db": 0.0,
+          "genie_curve": [
+            1.0,
+            2.0,
+            8.33,
+            34.33,
+            73.33
+          ],
+          "mask_curve": [
+            0.33,
+            0.33,
+            1.33,
+            5.0,
+            12.33
+          ]
+        }
+      }
+    }
+  },
+  "elapsed_s": 212.7
+}

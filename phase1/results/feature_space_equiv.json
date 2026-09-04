@@ -1,0 +1,47 @@
+{
+  "experiment": "feature-space threat-model physical equivalence (C14, corrected shifted-layout translation)",
+  "invertibility_interior_rel_err": 8.370136129340787e-07,
+  "method": "Linf (z-units) PGD on the canonical (fftshifted) mag input -> complex STFT-domain magnitude scaling on the same layout -> OLA synthesis -> implied received power; realized (physically-arrived) attack vs intended edit; equal-power transmitted-attack comparison",
+  "fidelity_note": "hann window round trip realizes ~0.5 of the intended per-bin log-change; realized-ASR is what the implied waveform actually achieves",
+  "per_epsilon": {
+    "eps=0.1": {
+      "cond_asr_feature_space_intended": 0.0,
+      "cond_asr_feature_space_realized": 0.0,
+      "median_psr_eq_db": -44.01,
+      "psr_eq_iqr_db": [
+        -44.58,
+        -43.58
+      ],
+      "equal_power_psr_db": -44,
+      "cond_asr_waveform_genie": 21.67,
+      "cond_asr_waveform_mask": 5.0,
+      "n_eligible": 300
+    },
+    "eps=0.3": {
+      "cond_asr_feature_space_intended": 1.67,
+      "cond_asr_feature_space_realized": 0.0,
+      "median_psr_eq_db": -34.44,
+      "psr_eq_iqr_db": [
+        -34.95,
+        -34.07
+      ],
+      "equal_power_psr_db": -34,
+      "cond_asr_waveform_genie": 75.0,
+      "cond_asr_waveform_mask": 27.33,
+      "n_eligible": 300
+    },
+    "eps=1.0": {
+      "cond_asr_feature_space_intended": 71.33,
+      "cond_asr_feature_space_realized": 14.0,
+      "median_psr_eq_db": -24.18,
+      "psr_eq_iqr_db": [
+        -24.55,
+        -23.77
+      ],
+      "equal_power_psr_db": -24,
+      "cond_asr_waveform_genie": 99.33,
+      "cond_asr_waveform_mask": 62.33,
+      "n_eligible": 300
+    }
+  }
+}
