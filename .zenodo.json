@@ -1,0 +1,37 @@
+{
+  "title": "v2x_adversarial_sensing: honest, reproducible release of the Dual-Stream Phase-Aware Inception-Time CNN for adversarially robust V2X spectrum sensing",
+  "description": "<p>Reproducible research artifact for the ICE2CT-2026 paper \u201cDual-Stream Phase-Aware Inception-Time CNN for Adversarially Robust Spectrum Sensing in V2X Networks\u201d (Dhankhar &amp; Vats).</p><p>Includes: the exact 86,052-parameter dual-stream CNN pipeline behind the paper\u2019s Tables II/III/V (synthetic LTE / WiFi / V2X-PC5 / Noise dataset, TF-CutMix training, FGSM / PGD / APGD / FAB / Square attacks); a corrected metrics module reporting robust accuracy and conditional ASR; a one-command CPU reproduction harness; and a full honesty audit (AUDIT.md) that annotates every legacy result file, including one marked INVALID and not citable.</p>",
+  "creators": [
+    {
+      "name": "Dhankhar, Parveen",
+      "affiliation": "Department of Computer Science and Engineering, Vaish College of Engineering, Rohtak, India"
+    },
+    {
+      "name": "Vats, Davesh",
+      "affiliation": "Department of Computer Science and Engineering, Vaish College of Engineering, Rohtak, India"
+    }
+  ],
+  "keywords": [
+    "spectrum sensing",
+    "V2X",
+    "C-V2X",
+    "adversarial machine learning",
+    "adversarial robustness",
+    "wireless security",
+    "deep learning",
+    "PyTorch",
+    "reproducibility"
+  ],
+  "license": "MIT",
+  "language": "eng",
+  "upload_type": "software",
+  "version": "2.0.0",
+  "publication_date": "2026-09-04",
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/Daveshvats/v2x_adversarial_sensing",
+      "relation": "isSupplementTo"
+    }
+  ]
+}

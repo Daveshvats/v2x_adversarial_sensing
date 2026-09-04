@@ -1,247 +1,148 @@
-# Dual-Stream Phase-Aware Inception-Time CNN for Adversarially Robust Spectrum Sensing in V2X Networks
+# v2x_adversarial_sensing — Honest Release (Phase 0)
 
-[![Paper](https://img.shields.io/badge/Paper-ICE2CT--2026-blue)](https://github.com/Daveshvats/v2x_adversarial_sensing)
-[![Python 3.9+](https://img.shields.io/badge/Python-3.9+-green.svg)](https://www.python.org/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+**Code for:** *Dual-Stream Phase-Aware Inception-Time CNN for Adversarially Robust Spectrum
+Sensing in V2X Networks* (Dhankhar & Vats, ICE2CT-2026).
 
-**Official code repository for the ICE2CT-2026 paper:** *"Dual-Stream Phase-Aware Inception-Time CNN for Adversarially Robust Spectrum Sensing in V2X Networks"*
-
----
-
-## Overview
-
-This repository contains the complete implementation of a **Dual-Stream Phase-Aware Inception-Time CNN** designed for robust multi-class spectrum sensing in Vehicle-to-Everything (V2X) communication networks. The model classifies RF signals into four categories: **LTE, WiFi, V2X-PC5, and Noise**, operating in the **5.9 GHz DSRC band**.
-
-### Key Contributions
-
-- **Dual-stream architecture** that fuses log-magnitude spectrograms with instantaneous frequency representations for richer spectral feature extraction
-- **Inception-Time multi-scale convolution blocks** with parallel 1x1, 3x3, and 5x5 kernels for capturing temporal patterns at multiple resolutions
-- **TF-CutMix augmentation** with label smoothing and Gaussian noise injection for loss landscape smoothing
-- **Comprehensive adversarial robustness evaluation** using six white-box attacks (FGSM, PGD-20, APGD-CE, APGD-DLR, FAB, Square) across six perturbation budgets
-- **Channel-aware adversarial evaluation** revealing a Sim-to-Real amplification effect where low-SNR channel noise increases adversarial ASR by 2.5x
-- **Cross-architecture transferability study** showing dual-stream fusion achieves the lowest transfer ASR (14-17%)
-- **Mobility scenario-stratified evaluation** across highway, urban, and rural conditions with Rician/Doppler channel models
+This release makes the paper's core results **reproducible and auditable**. It contains the
+exact pipeline that generated the paper's Tables II / III / V headline numbers, a corrected
+metrics module (robust accuracy + conditional ASR), and a full audit of known discrepancies
+between earlier repository artifacts and the published paper (`AUDIT.md`).
 
 ---
 
-## Repository Structure
+## What is actually in this repository
 
-```
-v2x_adversarial_sensing/
-|-- README.md                          # This file
-|-- requirements.txt                   # Python dependencies
-|-- LICENSE                            # MIT License
-|
-|-- code/
-|   |-- model.py                       # Dual-Stream Phase-Aware Inception-Time CNN architecture
-|   |-- generate_signals.py            # Synthetic V2X RF signal generation (Rayleigh fading)
-|   |-- adversarial_attacks.py         # FGSM & PGD-20 attack implementations
-|   |-- defenses.py                    # Adversarial training & input denoising defenses
-|   |-- run_experiments.py             # Main experiment runner (training + evaluation)
-|   |-- run_all.py                     # Automated full pipeline (train + attack + defend)
-|   |-- plot_results.py                # Publication-quality figure generation
-|
-|-- scripts/
-|   |-- autoattack_eval.py             # AutoAttack robustness evaluation
-|   |-- official_autoattack_eval.py    # Official AutoAttack library integration
-|   |-- transferability_study.py       # Cross-architecture transferability experiments
-|   |-- mobility_scenario_eval.py      # Highway/urban/rural scenario evaluation
-|   |-- v3_rician_doppler.py           # Rician fading + Doppler shift channel models
-|   |-- latency_benchmark.py           # CPU inference latency benchmarking
-|   |-- generate_simulated_dataset.py  # Large-scale dataset generation pipeline
-|
-|-- results/                           # Experiment results (JSON format)
-|-- figures/                           # Generated plots and visualizations
-|-- checkpoints/                       # Trained model weights
-```
+| Path | What it is |
+|---|---|
+| `src/v3_pipeline.py` | **The paper's real pipeline** (self-contained): synthetic V2X dataset generation (LTE / WiFi / V2X-PC5 / Noise, Rayleigh fading, SNR ∈ [5, 25] dB), the Dual-Stream Inception-Time CNN (86,052 parameters), training (TF-CutMix + label smoothing + Gaussian noise), and FGSM / PGD / APGD / FAB / Square attacks. |
+| `src/metrics.py` | Corrected evaluation metrics: **robust accuracy** and **conditional ASR** (attack success measured only over clean-correctly-classified samples). See `AUDIT.md` §3. |
+| `reproduce/run_reproduction.py` | Orchestration harness: trains one seed, runs attacks, computes corrected metrics, writes a results JSON. `--smoke` for a 3-epoch pipeline check, full mode reproduces the paper regime. |
+| `experiments/` | The remaining evaluation scripts used for paper Sections 7.6–7.9 (transferability, mobility scenarios, Rician/Doppler channels, official-AutoAttack re-evaluation). Unmodified. |
+| `results/reproduction/` | Fresh reproduction outputs generated by `run_reproduction.py` (with seed / config metadata). |
+| `results/legacy/` | The result JSONs from the original repository, **kept for the record and annotated** — see `AUDIT.md`. Some of them do **not** match the paper and one is not reproducible from any preserved code state. |
+| `AUDIT.md` | Full honesty audit: what reproduces, what doesn't, what was wrong, and what was changed. **Read this before citing any legacy number.** |
 
----
+## Verified reproduction (CPU, PyTorch 2.14, seed 42, ε=0.03)
 
-## Installation
+| Metric | Paper (3-seed mean ± std) | This release, seed 42 |
+|---|---|---|
+| Model parameters | 86,052 | **86,052** (exact) |
+| Clean accuracy | 86.67 ± 0.72 % | 88.00 % |
+| FGSM ASR | 23.25 ± 1.53 % | 26.63 % |
+| PGD-20 ASR | 23.50 ± 1.48 % | 27.00 % |
+| APGD-CE ASR | 23.50 ± 1.48 % | 27.00 % |
+| APGD-DLR ASR | 23.25 ± 1.53 % | 26.63 % |
 
-### Prerequisites
+Single-seed values sit inside the seed-to-seed spread of the paper's protocol. The
+FGSM ≈ PGD ≈ APGD convergence pattern (the paper's "smooth loss landscape" finding)
+reproduces exactly. FAB and Square complete on machines without this sandbox's
+~5-minute process limit; the harness includes flags to run them.
 
-- Python 3.9 or higher
-- CUDA-capable GPU (recommended) or CPU
-- pip or conda package manager
+**Which command produces which row.** The table above is the *full-mode* single-seed run
+(`python reproduce/run_reproduction.py`; ~8 min CPU). The fast integrity check produces
+slightly lower numbers because it trains only 3 epochs — that is expected, not a failure:
 
-### Setup
+| `--smoke` (3 epochs, ~1 min) | this release, seed 42 |
+|---|---|
+| Clean accuracy | 85.50 % |
+| FGSM (raw / conditional ASR) | 23.62 % / 10.67 % |
+| PGD-20 (raw / conditional ASR) | 24.12 % / 11.26 % |
+
+These exact values are committed as `results/reproduction/smoke_seed42.json`; a fresh
+`--smoke` run reproduces them bit-for-bit on the same torch build (only wall-clock differs).
+
+## Quick start
 
 ```bash
-# Clone the repository
-git clone https://github.com/Daveshvats/v2x_adversarial_sensing.git
-cd v2x_adversarial_sensing
-
-# Create a virtual environment (recommended)
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# or: venv\Scripts\activate  # Windows
-
-# Install dependencies
 pip install -r requirements.txt
+
+# 1. Fast pipeline integrity check (~1 min on CPU)
+python reproduce/run_reproduction.py --smoke
+
+# 2. Full single-seed reproduction (~8 min on CPU)
+python reproduce/run_reproduction.py
+
+# 3. Full 3-seed protocol (as in the paper; ~25 min CPU)
+python reproduce/run_reproduction.py --seeds 42 123 456
+
+# 4. Include FAB / Square (slower)
+python reproduce/run_reproduction.py --fab --square-steps 5000
 ```
 
-### Dependencies
+## Runtime, hardware, and failure modes
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| PyTorch | >= 2.0 | Neural network framework |
-| NumPy | >= 1.24 | Numerical computing |
-| SciPy | >= 1.10 | Signal processing |
-| Matplotlib | >= 3.7 | Visualization |
-| Scikit-learn | >= 1.3 | Evaluation metrics |
-| Torchvision | >= 0.15 | Data utilities |
-| AutoAttack | >= 0.4 | Robustness evaluation |
-| tqdm | >= 4.65 | Progress bars |
+| Command | Measured/expected wall time (CPU) |
+|---|---|
+| `--smoke` | ~35 s (measured; 8-core x86-64) |
+| full, 1 seed | ~8 min (early stopping, 100-epoch budget) |
+| `--seeds 42 123 456` | ~25 min |
+| `--fab` | +2–4 min · `--square-steps 5000` +5–10 min |
 
----
+Hardware: any x86-64/ARM64 CPU, ≥4 GB RAM, ~1 GB disk (torch install). **No GPU
+needed or used by the harness** (it is CPU-only by design; results JSON records
+`device: cpu`).
 
-## Quick Start
-
-### 1. Generate Synthetic Dataset
-
-```bash
-python code/generate_signals.py
-```
-
-This generates 4,000 synthetic RF samples across 4 signal classes (LTE, WiFi, V2X-PC5, Noise) with Rayleigh fading channel simulation at configurable SNR levels.
-
-### 2. Train the Model
-
-```bash
-python code/run_experiments.py --mode train
-```
-
-The dual-stream model trains for 100 epochs with TF-CutMix augmentation, label smoothing (alpha=0.1), and Gaussian noise injection (std=0.01). Training follows a 3-seed protocol for statistical significance.
-
-### 3. Evaluate Adversarial Robustness
-
-```bash
-# FGSM attack
-python code/adversarial_attacks.py --attack fgsm --epsilon 0.03
-
-# PGD-20 attack
-python code/adversarial_attacks.py --attack pgd --epsilon 0.03 --iterations 20
-
-# Full AutoAttack evaluation (APGD-CE, APGD-DLR, FAB, Square)
-python scripts/official_autoattack_eval.py --epsilon 0.03
-```
-
-### 4. Run Complete Pipeline
-
-```bash
-# Train + Attack + Defend in one command
-python code/run_all.py
-```
-
-### 5. Generate Figures
-
-```bash
-python code/plot_results.py
-```
-
----
-
-## Model Architecture
-
-```
-Input (2 x 128 x 128)
-    |
-    +-- Stream 1: Log-Magnitude Spectrogram (1 x 128 x 128)
-    |       |
-    |       +-- Conv2D(64, 7x7, stride=2)
-    |       +-- MaxPool(3x3, stride=2)
-    |       +-- InceptionBlock x4 (multi-scale: 1x1, 3x3, 5x5)
-    |       +-- GlobalAvgPool
-    |       +-- FC(128) + Dropout(0.3)
-    |
-    +-- Stream 2: Instantaneous Frequency (1 x 128 x 128)
-    |       |
-    |       +-- Conv2D(64, 7x7, stride=2)
-    |       +-- MaxPool(3x3, stride=2)
-    |       +-- InceptionBlock x4 (multi-scale: 1x1, 3x3, 5x5)
-    |       +-- GlobalAvgPool
-    |       +-- FC(128) + Dropout(0.3)
-    |
-    +-- Concatenation (256)
-    +-- FC(128) + ReLU + Dropout(0.5)
-    +-- FC(4) -- Softmax
-```
-
----
-
-## Key Results
-
-| Metric | Standard Training | Adversarial Training |
-|--------|-------------------|---------------------|
-| Clean Accuracy | 86.67% (+-0.72%) | 87.46% (+-0.48%) |
-| FGSM ASR (eps=0.03) | 23.25% | 21.12% |
-| PGD-20 ASR (eps=0.03) | 24.33% | 22.08% |
-| Inference Latency | 1.43 ms | 1.43 ms |
-
-### Critical Findings
-
-- **Smooth loss landscape**: FGSM-PGD ASR gap < 1.8 pp at eps <= 0.05, meaning iterative attacks provide minimal advantage
-- **Transferability resistance**: Dual-stream fusion achieves lowest cross-architecture transfer ASR (14-17%)
-- **Sim-to-Real gap**: Adversarial ASR increases from 23% (no channel) to >57% at -5 dB SNR
-- **Scenario-stratified vulnerability**: Urban Rayleigh environments (ASR up to 50%) vs. Rician fading (ASR < 2.5%)
-
----
-
-## Attack Configurations
-
-| Attack | Type | Perturbation Budgets |
-|--------|------|---------------------|
-| FGSM | Single-step gradient | eps in {0.01, 0.03, 0.05, 0.07, 0.09, 0.11} |
-| PGD-20 | Multi-step projected gradient | eps in {0.01, 0.03, 0.05, 0.07, 0.09, 0.11} |
-| APGD-CE | Adaptive step-size CE | eps in {0.01, 0.03, 0.05} |
-| APGD-DLR | Adaptive DLR loss | eps in {0.01, 0.03, 0.05} |
-| FAB | Fast Adaptive Boundary | eps in {0.01, 0.03, 0.05} |
-| Square | Query-based | eps in {0.01, 0.03, 0.05} |
-
----
-
-## Evaluation Scripts
-
-| Script | Description |
-|--------|-------------|
-| `scripts/autoattack_eval.py` | Custom AutoAttack benchmark |
-| `scripts/official_autoattack_eval.py` | Official AutoAttack library wrapper |
-| `scripts/transferability_study.py` | Cross-architecture attack transfer |
-| `scripts/mobility_scenario_eval.py` | Highway/urban/rural evaluation |
-| `scripts/v3_rician_doppler.py` | Rician + Doppler channel models |
-| `scripts/latency_benchmark.py` | CPU inference timing |
-| `scripts/generate_simulated_dataset.py` | Large-scale dataset generation |
-
----
-
-## Citation
-
-If you use this code or find this work helpful, please cite:
-
-```bibtex
-@inproceedings{v2x_adversarial_sensing_2026,
-  title={Dual-Stream Phase-Aware Inception-Time CNN for Adversarially Robust Spectrum Sensing in V2X Networks},
-  author={Parveen Dhankhar, Davesh vats},
-  booktitle={Proceedings of the International Conference on Computing, Communication, and Technologies (ICE2CT-2026)},
-  year={2026},
-  organization={IEEE}
-}
-```
-
----
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
+Known failure modes:
+- FAB and Square are slow on CPU; constrained environments may kill long
+  processes — run them on an unrestricted machine.
+- `experiments/official_autoattack_eval.py` requires the official AutoAttack
+  library (GitHub install, see requirements.txt) — everything else needs only
+  requirements.txt.
+- Numbers can shift by a few tenths of a point across torch versions / BLAS
+  builds; the committed JSONs pin the exact torch version (`2.14.0+cpu`) they
+  were produced with.
 
 ## Contact
 
-- **Author**: Parveen Dhankhar, Davesh vats
-- **Affiliation**: Department of Computer Science and Engineering
-Vaish College of Engineering, Rohtak, India
-- **Email**:  parveendhankhar2005@gmail.com,vatsdavesh@gmail.com
-- **Repository**: [https://github.com/Daveshvats/v2x_adversarial_sensing](https://github.com/Daveshvats/v2x_adversarial_sensing)
+Open a GitHub issue at https://github.com/Daveshvats/v2x_adversarial_sensing/issues,
+or contact the authors (see `CITATION.cff`) — Department of Computer Science and
+Engineering, Vaish College of Engineering, Rohtak, India.
+
+## Corrected metrics — why they matter
+
+The paper reports raw ASR (fraction of *all* test samples misclassified after attack). At
+low ε this number is dominated by the model's *clean* error rate, not by the attack.
+`src/metrics.py` additionally reports:
+
+- `robust_acc` — fraction of all samples still classified correctly after the attack;
+- `cond_asr` — fraction of **clean-correctly-classified** samples that the attack flips.
+
+At ε = 0.005 the reported 14.87 % raw ASR corresponds to a conditional ASR of only a few
+percent — the attack itself is barely working there; most "successes" are base errors.
+Both numbers are reported from now on. Details and worked example: `AUDIT.md` §3.
+
+## Known corrections vs. the earlier repository state
+
+1. **`code/` directory removed.** The earlier zip contained a stale v1 pipeline
+   (5-class modulation-recognition CNN, 64×64 spectrograms) that matches nothing in the
+   paper. It was the source of the ~35–48 % numbers in `results/legacy/intermediate.json`
+   and `defense_results.json`. Do not use those numbers.
+2. **`results/legacy/autoattack_official_results.json` is invalid.** It reports 58.2 %
+   clean accuracy, produced by an unpreserved code state (its JSON says `device: cuda`
+   while the shipped script hardcodes CPU). It contradicts the reproducible v3 pipeline
+   and should not be compared against the paper. See `AUDIT.md` §2.
+3. **Latency device label corrected.** The paper's 1.43 ms is CPU batch-1 latency
+   (≈0.99 ms in `results/legacy/latency_results.json`); "NVIDIA GPU" in the paper text is wrong.
+4. **README architecture diagram corrected.** The old README described a network
+   (7×7 stem, 4 Inception blocks, 128×128 inputs) that matches neither the paper nor any
+   code. The actual architecture is in `src/v3_pipeline.py` (`DualStreamModel`).
+
+## Citing
+
+```bibtex
+@inproceedings{dhankhar2026dualstream,
+  title   = {Dual-Stream Phase-Aware Inception-Time CNN for Adversarially Robust
+             Spectrum Sensing in V2X Networks},
+  author  = {Dhankhar, Parveen and Vats, Davesh},
+  booktitle = {Proceedings of the International Conference on Computing,
+               Communication, and Technologies (ICE2CT)},
+  year    = {2026}
+}
+```
+
+## Authors
+
+Parveen Dhankhar, Davesh Vats — Department of Computer Science and Engineering,
+Vaish College of Engineering, Rohtak, India.
+
+License: MIT (see `LICENSE`).

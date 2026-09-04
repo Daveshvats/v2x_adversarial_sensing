@@ -1,40 +1,11 @@
-# ============================================================================
-# V2X Adversarial Spectrum Sensing - Python Dependencies
-# ============================================================================
-# This file lists all Python packages required to reproduce the experiments
-# in the paper: "Dual-Stream Phase-Aware Inception-Time CNN for Adversarially
-# Robust Spectrum Sensing in V2X Networks" (ICE2CT-2026)
-#
-# Installation:
-#   pip install -r requirements.txt
-#
-# Python version: 3.9+ recommended
-# ============================================================================
-
-# --- Core Deep Learning ---
-torch>=2.0.0
-torchvision>=0.15.0
-
-# --- Scientific Computing ---
-numpy>=1.24.0
-scipy>=1.10.0
-
-# --- Evaluation Metrics ---
-scikit-learn>=1.2.0
-
-# --- Visualization ---
-matplotlib>=3.7.0
-seaborn>=0.12.0
-
-# --- Progress Bars ---
-tqdm>=4.65.0
-
-# --- Official AutoAttack (for official_autoattack_eval.py) ---
-# Install separately after pip install: pip install git+https://github.com/fra31/auto-attack
-autoattack>=0.3
-
-# --- Optional: HDF5 dataset support (for generate_simulated_dataset.py) ---
-h5py>=3.8.0
-
-# --- Optional: Jupyter notebook support ---
-# jupyter>=1.0.0
+torch>=2.0
+numpy>=1.24
+scipy>=1.10
+scikit-learn>=1.3
+matplotlib>=3.7
+tqdm>=4.65
+# NOTE: experiments/official_autoattack_eval.py additionally needs the official
+# AutoAttack library, which is not on PyPI. Only if you run that script:
+#   pip install git+https://github.com/fra31/auto-attack
+# (scipy / scikit-learn / tqdm are kept for paper-environment parity; the release
+#  code itself imports only torch, numpy, and matplotlib.)

@@ -1,0 +1,71 @@
+name: smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache pip wheels
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
+
+      - name: Install CPU-only PyTorch + dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r requirements.txt
+          python -c "import torch; assert torch.cuda.is_available() == False; print('torch', torch.__version__, '(CPU-only OK)')"
+
+      - name: Run deterministic smoke reproduction (seed 42)
+        env:
+          PYTHONHASHSEED: "0"
+          OMP_NUM_THREADS: "2"
+          MKL_NUM_THREADS: "2"
+          OPENBLAS_NUM_THREADS: "2"
+          NUMEXPR_NUM_THREADS: "2"
+        run: |
+          python reproduce/run_reproduction.py --smoke
+
+      - name: Assert expected smoke results (tolerance for runner CPU variance)
+        run: |
+          python - <<'EOF'
+          import json, sys
+          d = json.load(open("results/reproduction/smoke_seed42.json"))
+          assert d["config"]["smoke"] is True
+          assert d["config"]["epochs"] == 3
+          assert d["env"]["device"] == "cpu"
+          s = d["seeds"][0]
+          assert s["seed"] == 42
+          assert s["n_params"] == 86052, f"n_params={s['n_params']}"
+          def close(got, want, tol):
+              assert abs(got - want) <= tol, f"{got} vs {want} +/- {tol}"
+          close(s["clean_acc"] * 100, 85.50, 1.0)
+          f = s["attacks"]["fgsm"]["eps=0.03"]
+          p = s["attacks"]["pgd20"]["eps=0.03"]
+          close(f["raw_asr"], 23.62, 1.0)
+          close(p["raw_asr"], 24.12, 1.0)
+          close(f["cond_asr"], 10.67, 1.0)
+          close(p["cond_asr"], 11.26, 1.0)
+          print("SMOKE ASSERTIONS PASSED:",
+                "clean", s["clean_acc"] * 100,
+                "| fgsm", f["raw_asr"], "cond", f["cond_asr"],
+                "| pgd20", p["raw_asr"], "cond", p["cond_asr"])
+          EOF
