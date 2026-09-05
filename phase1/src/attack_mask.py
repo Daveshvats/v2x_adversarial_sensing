@@ -20,8 +20,10 @@ Threat model
   * Compliance is defined AT THE ATTACKER'S TRANSMIT PORT (projection happens before
     the channel). The finite 102.4 us rectangular sensing window then spreads the
     received adversarial component to about -33.5 dB out-of-band fraction — that is
-    a receiver/window artifact, not a transmit violation. Practical RF impairments
-    (PA ACLR, phase noise, LO leakage) are not modeled.
+    a receiver/window artifact, not a transmit violation. PA spectral regrowth IS
+    now modeled and swept (Wave 11: scripts/run_papr_pa.py — Rapp, IBO sweep,
+    post-PA mask gates, PA-aware re-optimization; see paper Section "Power-amplifier
+    reality check"); phase noise and LO leakage are not.
 
 Attack chain (fully differentiable in torch):
     delta -> complex FIR channel h_a -> + victim signal + noise ->

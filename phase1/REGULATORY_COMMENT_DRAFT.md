@@ -73,6 +73,19 @@ the powers such interferers can lawfully deliver in practice. This is
 analogous in spirit to existing receiver blocking/overload testing, but
 adversarial in the perturbation and worst-case in the waveform.
 
+One additional, verifiable property: our power-amplifier study (Rapp
+nonlinearity, pre-registered protocol) shows the naive mask-compliant
+attack waveform is an RF-statistical outlier — the highest-PAPR signal
+in the band (11.1 dB vs 6.3–9.0 dB for C-V2X/802.11/normal classes) whose
+post-amplifier spectrum violates mask-shoulder limits at ordinary
+operating backoffs (it requires roughly twice the backoff of a compliant
+OFDM transmitter to stay inside a −40 dBr mask). A receiver-robustness
+test at the PA-output port would therefore catch unsophisticated
+compliant attackers with conventional measurement gear — while our
+PA-aware re-optimization result (stronger attack, fully compliant
+post-PA) shows such RF-side screening is a complement to, not a
+substitute for, worst-case receiver testing in power units.
+
 ## Scope and non-claims (stated plainly)
 
 * Single-receiver, differentiable-model scope; no network-level or

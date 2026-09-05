@@ -68,11 +68,20 @@ the compliant-attacker threshold by $+14$\,dB (doubling the price of
 compliance) at no clean-accuracy cost, with robustness honestly bounded by
 its training power range. These conclusions are stress-tested beyond the prototype protocol: three
 training seeds move the compliant threshold by at most 1.1\,dB; replacing
-the WiFi class with real over-the-air 802.11 captures replicates the
+the WiFi class with real over-the-air 802.11 captures (recorded at
+5.24\,GHz in U-NII-2, the OFDM family adjacent to U-NII-4) replicates the
 compliant MEAP within 1.8\,dB while exposing a decision-margin fragility
 that synthetic-only evaluation hides entirely; and a second victim
 architecture (early-fusion ResNet) shifts the threshold by 11.6--15.1\,dB,
-with surrogate-model transfer costing the attacker 11--23\,dB. We propose Minimum Effective Attack Power (MEAP) and
+with surrogate-model transfer costing the attacker 11--23\,dB. A
+power-amplifier reality check then shows what compliance costs beyond
+floating point: the optimized attack waveform has the highest PAPR on the
+air (11.1\,dB vs.\ 6.3--9.0\,dB for the classes it impersonates), and a
+Rapp-model PA only keeps its post-amplifier spectrum inside a
+$-40$\,dBr mask at 13--15\,dB backoff---while the attack itself remains
+effective at any backoff, making post-PA regrowth statistics an RF-side
+tell against the naive attacker; a PA-aware re-optimization closes even
+that tell while gaining 1.2\,dB. We propose Minimum Effective Attack Power (MEAP) and
 Price-of-Compliance (PoC) as physically grounded, transferable security
 metrics, and release the complete framework (waveform generators, channels,
 attack, defenses, checkpoints, result JSONs with embedded seeds and
@@ -95,7 +104,12 @@ decision of its history. In FCC~20-164 (2020), the Commission reallocated the
 band: the upper 30\,MHz (5895--5925\,MHz) is dedicated to C-V2X, while the
 lower 45\,MHz (5850--5895\,MHz) was opened to unlicensed U-NII-4
 operation~\cite{fcc2020}; the 2024 Second Report and Order completed the
-transition rules and set the DSRC sunset in motion~\cite{fcc2024}. During and
+transition rules and set the DSRC sunset in motion~\cite{fcc2024}. The
+transition is no longer prospective: the final rules took effect in
+February~2025 with a two-year DSRC sunset, more than fifty waivers already
+authorize C-V2X operation in the band~\cite{itsa2024}, and the industry
+roadmap projects volume deployment of direct-mode V2X radios in production
+vehicles~\cite{5gaa2024}. During and
 after this transition, coexistence sensing---determining \emph{which}
 technology is transmitting, not merely whether energy is present---becomes a
 safety-relevant function: roadside units and vehicles must distinguish C-V2X
@@ -198,6 +212,25 @@ reliable attack ensembles for robustness evaluation. In the standards world,
 Habler et al.~\cite{habler2025} mapped adversarial-ML threats onto O-RAN
 architectures---the deployment context our metrics target.
 
+\paragraph{Primary-user emulation: the pre-DL ancestor} Constraining the
+\emph{attacker} rather than its perturbation has a long history in a
+neighboring community. Primary-user-emulation attacks (PUEA)---a malicious
+node transmitting so that energy-detection sensors believe the primary user
+is present (denial of service) or absent (spectrum theft)---were formalized
+by Anand et al.~\cite{anand2008} and remain an active detection
+literature~\cite{ambhika2024}. PUEA and the compliant attacker share one
+premise---the adversary transmits a real waveform---but differ in everything
+downstream: the victim (an occupancy threshold vs.\ a deep classifier), the
+mechanism (statistical mimicry of the primary's signal and power geometry
+vs.\ a gradient-optimized perturbation through the receiver's
+front-end), the constraint set (attacker power and distance, but no
+allocation or emission-mask constraint, vs.\ the regulatory feasible set
+here), and the reported quantities (occupancy error rates vs.\ power-domain
+robustness metrics). The compliant-attacker threat model is not a
+rediscovery of PUEA; it is its adversarial-ML descendant, inheriting the
+``real waveform, real power budget'' premise while replacing the victim,
+the optimization, and the measurement.
+
 \paragraph{Positioning} Table~\ref{tab:threat} positions the compliant
 attacker. The differentiator is not ``channel awareness'' (present
 in~\cite{sagduyu2021,radioshock2026}) nor the sensing task
@@ -213,7 +246,8 @@ the resulting robustness metrics deployable (Section~\ref{sec:standards}).
 \begin{table}[t]
 \centering
 \caption{Threat-model comparison. ``Mask'' = regulatory allocation +
-emission-mask constraint on the transmitted adversarial perturbation.}
+emission-mask constraint on the transmitted adversarial perturbation.
+PUEA = primary-user emulation, the pre-DL ancestor (Section~\ref{sec:related}).}
 \label{tab:threat}
 \small
 \begin{tabular}{lccccc}
@@ -222,6 +256,7 @@ Work & Waveform & Channel & Mask & Power sweep & Task \\
 \midrule
 Sadeghi \& Larsson~\cite{sadeghi2019} & -- & -- & -- & -- & modulation \\
 Liu et al.~\cite{liu2022} & -- & -- & -- & -- & spectrum sensing \\
+Anand et al.~\cite{anand2008} (PUEA) & \checkmark & -- & -- & fixed & occupancy \\
 Kim et al.~\cite{kim2020} & \checkmark & \checkmark & -- & fixed & modulation \\
 Kim et al.~\cite{sagduyu2021} & \checkmark & \checkmark & -- & fixed & modulation \\
 Zheng et al.~\cite{zheng2026} & \checkmark & \checkmark & -- & fixed & wideband sensing \\
@@ -757,6 +792,94 @@ worst-case disclosure that qualifies every ASR in this paper is therefore
 a genuine upper bound by a wide margin, and even a surrogate attacker
 still pays 3--8\,dB of price of compliance.
 
+\subsection{Power-amplifier reality check: compliance beyond floating point}
+\label{sec:papr}
+
+Everything above defines compliance at the attacker's transmit port, in
+floating point: the projection nulls out-of-mask bins exactly. A real
+transmitter has a power amplifier, and AM/AM nonlinearity causes
+\emph{spectral regrowth}---energy reappears out of band after the
+projection has already happened. If the optimized adversarial waveform
+has high peak-to-average power ratio (PAPR), a real PA both breaks its
+compliance and distorts it in-band; the ``regulator-verifiable adversary''
+claim then needs to say \emph{where} verification happens. This section
+runs that check. The protocol was pre-registered before execution
+(hypotheses H1--H3 in \texttt{papr\_pa\_results.json}), following the
+paper's disclosure discipline.
+
+\paragraph{Setup} Memoryless Rapp PA $y = x[1+(|x|/A_s)^{2p}]^{-1/(2p)}$
+with $p\in\{2,3\}$ (softness) applied per window at input backoff
+$\mathrm{IBO}=10\log_{10}(A_s^2/P_{\mathrm{in}})$ swept over
+$0$--$12$\,dB (plus a 1\,dB fine grid to $16$\,dB for the
+compliance-backoff search); output window energy is re-normalized to the attack budget
+(a real transmitter power-controls to its licensed limit, so compression
+is compensated and PSR labels stay physical). Compliance gates on the
+post-PA transmit spectrum use the same per-bin FFT grid as the
+projection: \emph{strict} = peak out-of-mask PSD $\le -40$\,dBr w.r.t.\
+the in-band peak (802.11-style far-out level), \emph{lenient} =
+$-28$\,dBr (shoulder level); a backoff passes if 95\% of windows meet the
+gate. Canonical urban/untargeted setup: 300 windows, attack seed 7,
+PGD-10, \texttt{psd\_margin} 2. The in-process no-PA control reproduces
+the canonical MEAP at $-37.0$\,dB (0.1\,dB of the coarser canonical grid).
+PAPR is measured on uniform samples without oversampling (a disclosed
+lower bound); genie deltas behave like mask deltas and are not PA-realistic
+by construction, so the genie reference stays the canonical $-44.2$\,dB.
+
+\paragraph{The optimized waveform is the highest-PAPR signal on the air}
+The mask-constrained optimum at $-36$\,dB PSR has mean PAPR
+11.05\,dB (p95 12.8), versus 6.26 (PC5), 8.77 (11p), 8.69 (WiFi), 9.02
+(noise) for the benign classes---H1 confirmed. The PGD optimum exploits
+coherent time-domain peaks within the flat PSD cap, producing a waveform
+that is \emph{harder to amplify} than every signal it impersonates.
+
+\paragraph{Regrowth breaks compliance at operating backoffs} At the
+$\sim$6\,dB backoff typical of OFDM transmitters, the post-PA peak
+out-of-mask PSD sits at $-19.3$\,dBr (p95, $p{=}3$): 92\% of windows
+fail even the lenient $-28$\,dBr shoulder (all fail the strict gate),
+and the regrowth pedestal rises $\sim$9\,dB above the post-PA skirt of
+the \emph{cleanest} legitimate neighbor (PC5: $-28.7$\,dBr total, of
+which the PA contributes only $+1.0$\,dB at that backoff; 802.11p's own
+skirt is $6$\,dB less suppressed). Restoring strict-gate compliance
+requires
+$\mathrm{IBO}^{*}=13$\,dB ($p{=}3$) / 15\,dB ($p{=}2$)---roughly twice
+the backoff a compliant OFDM radio needs for its own incremental
+regrowth. A floating-point-compliant attack transmitted through a
+PA engineered like its victims' is, in the strict sense, non-compliant
+and \emph{detectable as a regrowth outlier}.
+
+\paragraph{But the attack does not care---and a PA-aware attacker closes
+the gap} Effectiveness through the PA is essentially unchanged at every
+backoff: MEAP shifts of $+0.6$\,dB (IBO 0, hard clipping), $-0.1$\,dB
+(IBO 6), $0.0$\,dB (IBO 12--13; $p{=}2$ arms identical)---the STFT
+magnitude features that the attack targets are robust to envelope
+clipping. Pre-registered H2 (a 0.5--4\,dB compliant-backoff penalty) is
+therefore \emph{falsified in the attack's favor}: compliance costs the
+naive attacker nothing but mask cleanliness. Going further, putting the
+Rapp model \emph{inside} the differentiable attack chain
+(project $\rightarrow$ Rapp $\rightarrow$ power-control $\rightarrow$
+channel) lets the optimizer see its own PA: the PA-aware attack at
+IBO$^{*}$ is \emph{stronger than the no-PA control} (MEAP $-38.2$\,dB,
+$-1.2$\,dB shift) while achieving 100\% strict-gate compliance at the PA
+output ($-60$\,dBr p95 out-of-mask)---it converges to waveforms whose
+intermodulation products land inside its own allocation. At IBO 0 the
+same optimizer instead accepts clipping (post-PA PAPR 4.95\,dB) and
+remains non-compliant, i.e.\ it trades compliance for raw effectiveness
+when compliance is unreachable anyway. H3 (kill criterion: unreachable
+backoff or $>$6\,dB penalty) is not triggered.
+
+\paragraph{Reading} The compliance-constrained threat model survives the
+PA reality check, with two sharpened statements. First, verification
+must happen at the \emph{PA output port}, not the waveform file: the
+naive floating-point attack fails a conformance test at operating
+backoffs while remaining fully effective, and PAPR/regrowth statistics
+are an RF-side tell against it (11.1\,dB PAPR in a band whose benign
+signals sit at 6.3--9.0\,dB). Second, that tell is not a defense: a
+PA-aware attacker passes it while gaining 1.2\,dB. The honest conclusion
+is the same as the paper's other stress tests---the constraint buys
+detectability of \emph{unsophisticated} attackers, not safety against
+the worst case the threat model is designed to disclose.
+
+
 \section{Standards, Deployment Implications, and Ethics}
 \label{sec:standards}
 
@@ -827,13 +950,20 @@ defense study and the TRADES ablation remain single-seed (seed 42).
 (7)~The adversarially-trained defense's robustness is confined to its
 training power range ($-25$ to $-5$\,dB); attacks at parity or above still
 succeed. The TRADES ablation and the rural transfer are single-seed.
-(8)~The real-capture study uses 96 gated bursts from four capture
+(8)~The real-capture study uses 96 gated bursts from three capture
 locations (74 eval / 22 train windows); PC5, 802.11p and the noise class
 remain synthetic, and the real class is 802.11 captured at 5240\,MHz
 (U-NII-2, same OFDM family as U-NII-4), placed in the unlicensed half of
 the window. (9)~The second-victim study shares the receiver front-end, so
 it varies the classifier architecture, not the receiver; transfer attacks
-still assume a perfect attacker channel.
+still assume a perfect attacker channel. (10)~The PA study uses a
+memoryless Rapp model with per-window backoff and output power control;
+no measured PA or transmitter chain is involved, PAPR is computed
+without oversampling, and the strict/lenient gates are per-FFT-bin
+idealizations of 802.11-style masks rather than regulatory measurement
+procedures (RBW, detector type). The PA-aware arm demonstrates that the
+threat survives this model class, not that any particular hardware
+realization would behave identically.
 
 \section{Conclusion}
 \label{sec:conclusion}
@@ -845,7 +975,14 @@ rule-abiding transmitter operating tens of dB below the victim signal. The
 legacy feature-space threat model, translated to physical power, overstates
 realizable attacks: its own perturbation, made physical, mostly fails, while
 a purpose-optimized waveform at the same implied power is far stronger; the
-PSR-equivalence translation makes such comparisons meaningful. The compliant-attacker threat
+PSR-equivalence translation makes such comparisons meaningful. The
+power-amplifier reality check sharpens the regulatory reading: the naive
+floating-point-compliant attack is the highest-PAPR signal on the air and
+fails a post-PA conformance test at operating backoffs while losing
+almost no effectiveness, and a PA-aware re-optimization is both stronger
+and post-PA compliant---so compliance testing should sit at the PA
+output port, and compliance itself buys detectability of unsophisticated
+attackers, not safety against the worst case. The compliant-attacker threat
 model, the MEAP and Price-of-Compliance metrics, and the released
 end-to-end framework give regulators, standards bodies, and O-RAN security
 engineers a physically grounded, certification-style way to measure---and,
@@ -924,6 +1061,22 @@ No. 19-138, adopted Nov. 18, 2020 (published at 86 FR 23281, May 3, 2021).
 5.850--5.925~GHz Band,'' Second Report and Order, FCC 24-123, ET Docket
 No. 19-138, adopted Nov. 20, 2024 (published at 89 FR 100838, Dec. 13,
 2024; effective Feb. 11, 2025).
+
+\bibitem{itsa2024} ITS America, ``Future of V2X in 5.9~GHz Report,''
+May 2024. [Online]. Available:
+https://itsa.org/wp-content/uploads/2024/05/ITS-America-Future-of-V2X-in-5.9-GHz-Report.pdf
+
+\bibitem{5gaa2024} 5G Automotive Association (5GAA), ``C-V2X roadmap
+update,'' Dec. 2024.
+
+\bibitem{anand2008} S. Anand, Z. Jin, K. P. Subbalakshmi, ``An analytical
+model for primary user emulation attacks in cognitive radio networks,'' in
+Proc. 3rd IEEE Symp. New Frontiers in Dynamic Spectrum Access Networks
+(DySPAN), Chicago, IL, Oct. 2008, pp. 1--12.
+
+\bibitem{ambhika2024} C. Ambhika, ``Discrimination of primary user
+emulation attack on cognitive radio networks using machine learning based
+spectrum sensing scheme,'' Wireless Networks, vol. 30, no. 5, Oct. 2024.
 
 \bibitem{etsi302571} ETSI, ``Intelligent Transport Systems (ITS);
 Radiocommunications equipment operating in the 5~855~MHz to 5~925~MHz

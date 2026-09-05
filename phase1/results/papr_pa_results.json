@@ -1,0 +1,563 @@
+{
+  "experiment": "Wave 11-A: PAPR + PA-regrowth reality check for the Compliant Attacker (Rapp model, IBO sweep, PA-aware re-optimization)",
+  "preregistered_hypotheses": [
+    "H1 papr_adv > benign classes",
+    "H2 compliant backoff costs 0.5-4 dB MEAP; PA-aware recovers <= half",
+    "H3 KILL if IBO* > 16 dB unreachable or MEAP shift > 6 dB post-reopt"
+  ],
+  "config": {
+    "scenario": "urban",
+    "n_eval_per_class": 100,
+    "attack_seed": 7,
+    "steps": 10,
+    "alpha_frac": 0.25,
+    "psd_cap_margin": 2.0,
+    "psr_db": [
+      -50.0,
+      -47.0,
+      -44.0,
+      -41.0,
+      -38.0,
+      -36.0,
+      -34.0,
+      -32.0,
+      -30.0,
+      -27.0,
+      -24.0,
+      -21.0,
+      -18.0,
+      -15.0,
+      -12.0,
+      -9.0,
+      -6.0,
+      -3.0,
+      0.0
+    ],
+    "rapp_p": [
+      2.0,
+      3.0
+    ],
+    "ibo_sweep_db": [
+      0.0,
+      2.0,
+      4.0,
+      6.0,
+      8.0,
+      10.0,
+      12.0
+    ],
+    "mask_band_mhz": {
+      "lo": 0.0,
+      "hi": 10.0
+    },
+    "gates_dbr": {
+      "strict": -40.0,
+      "lenient": -28.0
+    },
+    "pass_fraction_required": 0.95,
+    "papr_note": "no oversampling (uniform samples); oversampled PAPR would be higher \u2014 disclosed",
+    "genie_reference": "canonical -44.22 dB (urban, untargeted, seed 7) from attack_results_urban_untargeted.json; genie is an idealization, not PA-realistic (disclosed)",
+    "power_control": "post-PA window energy renormalized to the attack budget (models transmitter power control; compression compensated; OBO reported)"
+  },
+  "clean_acc_active": 1.0,
+  "papr_benign_db": {
+    "C-V2X-PC5": {
+      "mean_db": 6.26,
+      "p95_db": 6.95
+    },
+    "802.11p": {
+      "mean_db": 8.77,
+      "p95_db": 9.89
+    },
+    "WiFi-U-NII4": {
+      "mean_db": 8.69,
+      "p95_db": 9.67
+    },
+    "Noise": {
+      "mean_db": 9.02,
+      "p95_db": 10.32
+    }
+  },
+  "papr_optimized_db": {
+    "mask": {
+      "psr=-36dB": {
+        "mean_db": 11.05,
+        "p95_db": 12.8,
+        "std_db": 1.07
+      },
+      "psr=-25dB": {
+        "mean_db": 10.93,
+        "p95_db": 12.79,
+        "std_db": 1.05
+      }
+    },
+    "genie": {
+      "psr=-36dB": {
+        "mean_db": 11.02,
+        "p95_db": 12.7,
+        "std_db": 1.0
+      },
+      "psr=-25dB": {
+        "mean_db": 10.92,
+        "p95_db": 12.49,
+        "std_db": 0.94
+      }
+    }
+  },
+  "H1": {
+    "adv_papr_db": 11.05,
+    "benign_max_db": 9.02,
+    "confirmed": true
+  },
+  "regrowth": {
+    "p=2/ibo=0": {
+      "mask_excess_p50_dbr": -15.43,
+      "mask_excess_p95_dbr": -12.47,
+      "oob_frac_p50_db": -17.3,
+      "pass_strict": 0.0,
+      "pass_lenient": 0.0,
+      "obo_mean_db": 3.06,
+      "papr_out_mean_db": 3.04
+    },
+    "p=2/ibo=2": {
+      "mask_excess_p50_dbr": -17.18,
+      "mask_excess_p95_dbr": -14.05,
+      "oob_frac_p50_db": -19.43,
+      "pass_strict": 0.0,
+      "pass_lenient": 0.0,
+      "obo_mean_db": 4.07,
+      "papr_out_mean_db": 4.04
+    },
+    "p=2/ibo=4": {
+      "mask_excess_p50_dbr": -19.44,
+      "mask_excess_p95_dbr": -16.14,
+      "oob_frac_p50_db": -22.1,
+      "pass_strict": 0.0,
+      "pass_lenient": 0.0033,
+      "obo_mean_db": 5.31,
+      "papr_out_mean_db": 5.22
+    },
+    "p=2/ibo=6": {
+      "mask_excess_p50_dbr": -22.45,
+      "mask_excess_p95_dbr": -18.85,
+      "oob_frac_p50_db": -25.4,
+      "pass_strict": 0.0,
+      "pass_lenient": 0.0367,
+      "obo_mean_db": 6.77,
+      "papr_out_mean_db": 6.55
+    },
+    "p=2/ibo=8": {
+      "mask_excess_p50_dbr": -26.4,
+      "mask_excess_p95_dbr": -22.29,
+      "oob_frac_p50_db": -29.5,
+      "pass_strict": 0.0,
+      "pass_lenient": 0.29,
+      "obo_mean_db": 8.41,
+      "papr_out_mean_db": 7.9
+    },
+    "p=2/ibo=10": {
+      "mask_excess_p50_dbr": -31.56,
+      "mask_excess_p95_dbr": -26.25,
+      "oob_frac_p50_db": -34.65,
+      "pass_strict": 0.0133,
+      "pass_lenient": 0.8667,
+      "obo_mean_db": 10.2,
+      "papr_out_mean_db": 9.1
+    },
+    "p=2/ibo=12": {
+      "mask_excess_p50_dbr": -37.68,
+      "mask_excess_p95_dbr": -31.51,
+      "oob_frac_p50_db": -40.67,
+      "pass_strict": 0.2433,
+      "pass_lenient": 0.9967,
+      "obo_mean_db": 12.09,
+      "papr_out_mean_db": 10.0
+    },
+    "p=3/ibo=0": {
+      "mask_excess_p50_dbr": -15.2,
+      "mask_excess_p95_dbr": -12.21,
+      "oob_frac_p50_db": -17.03,
+      "pass_strict": 0.0,
+      "pass_lenient": 0.0,
+      "obo_mean_db": 2.74,
+      "papr_out_mean_db": 2.74
+    },
+    "p=3/ibo=2": {
+      "mask_excess_p50_dbr": -17.1,
+      "mask_excess_p95_dbr": -13.91,
+      "oob_frac_p50_db": -19.31,
+      "pass_strict": 0.0,
+      "pass_lenient": 0.0,
+      "obo_mean_db": 3.75,
+      "papr_out_mean_db": 3.74
+    },
+    "p=3/ibo=4": {
+      "mask_excess_p50_dbr": -19.61,
+      "mask_excess_p95_dbr": -16.45,
+      "oob_frac_p50_db": -22.27,
+      "pass_strict": 0.0,
+      "pass_lenient": 0.0067,
+      "obo_mean_db": 5.01,
+      "papr_out_mean_db": 5.0
+    },
+    "p=3/ibo=6": {
+      "mask_excess_p50_dbr": -23.14,
+      "mask_excess_p95_dbr": -19.32,
+      "oob_frac_p50_db": -26.11,
+      "pass_strict": 0.0,
+      "pass_lenient": 0.08,
+      "obo_mean_db": 6.52,
+      "papr_out_mean_db": 6.46
+    },
+    "p=3/ibo=8": {
+      "mask_excess_p50_dbr": -28.41,
+      "mask_excess_p95_dbr": -23.15,
+      "oob_frac_p50_db": -31.25,
+      "pass_strict": 0.0,
+      "pass_lenient": 0.56,
+      "obo_mean_db": 8.23,
+      "papr_out_mean_db": 8.03
+    },
+    "p=3/ibo=10": {
+      "mask_excess_p50_dbr": -35.62,
+      "mask_excess_p95_dbr": -28.51,
+      "oob_frac_p50_db": -37.93,
+      "pass_strict": 0.1533,
+      "pass_lenient": 0.9633,
+      "obo_mean_db": 10.09,
+      "papr_out_mean_db": 9.44
+    },
+    "p=3/ibo=12": {
+      "mask_excess_p50_dbr": -44.92,
+      "mask_excess_p95_dbr": -35.83,
+      "oob_frac_p50_db": -46.84,
+      "pass_strict": 0.8267,
+      "pass_lenient": 1.0,
+      "obo_mean_db": 12.03,
+      "papr_out_mean_db": 10.39
+    },
+    "limiter/ibo=6": {
+      "mask_excess_p95_dbr": -19.34,
+      "pass_strict": 0.0,
+      "obo_mean_db": 6.27
+    }
+  },
+  "ibo_star_strict_db": {
+    "p=2": 15.0,
+    "p=3": 13.0
+  },
+  "benign_regrowth_increment": {
+    "C-V2X-PC5": {
+      "pre_p95_dbr": -29.69,
+      "post_ibo0_p95_dbr": -18.22,
+      "increment_ibo0_p95_db": 11.46,
+      "post_ibo6_p95_dbr": -28.67,
+      "increment_ibo6_p95_db": 1.02,
+      "post_ibo12_p95_dbr": -29.73,
+      "increment_ibo12_p95_db": -0.04
+    },
+    "802.11p": {
+      "pre_p95_dbr": -22.45,
+      "post_ibo0_p95_dbr": -15.35,
+      "increment_ibo0_p95_db": 7.1,
+      "post_ibo6_p95_dbr": -21.73,
+      "increment_ibo6_p95_db": 0.72,
+      "post_ibo12_p95_dbr": -22.45,
+      "increment_ibo12_p95_db": 0.0
+    },
+    "WiFi-U-NII4": {
+      "pre_p95_dbr": -12.9,
+      "post_ibo0_p95_dbr": -11.06,
+      "increment_ibo0_p95_db": 1.83,
+      "post_ibo6_p95_dbr": -12.65,
+      "increment_ibo6_p95_db": 0.25,
+      "post_ibo12_p95_dbr": -12.86,
+      "increment_ibo12_p95_db": 0.04
+    }
+  },
+  "curves": {
+    "pa_aware_p3_ibo0": [
+      0.0,
+      0.67,
+      5.67,
+      11.67,
+      21.0,
+      27.0,
+      36.67,
+      52.33,
+      69.33,
+      88.0,
+      97.67,
+      100.0,
+      100.0,
+      100.0,
+      100.0,
+      100.0,
+      100.0,
+      100.0,
+      100.0
+    ],
+    "pa_aware_p3_ibo0__meap": {
+      "meap_db": -38.32154340836041,
+      "censor": null,
+      "ref_psr_db": -36.0,
+      "post_tx_mask_excess_p95_dbr": -12.79,
+      "post_tx_pass_strict": 0.0,
+      "post_tx_papr_mean_db": 4.95,
+      "post_tx_papr_p95_db": 5.8,
+      "shift_vs_control_db": -1.32,
+      "note": "Rapp inside the PGD chain; projection pre-PA; post-PA compliance reported in stats"
+    },
+    "control_no_pa": [
+      0.0,
+      0.67,
+      5.0,
+      12.0,
+      18.0,
+      22.0,
+      27.33,
+      33.0,
+      39.33,
+      50.33,
+      62.33,
+      74.0,
+      82.67,
+      88.33,
+      95.0,
+      97.67,
+      99.33,
+      100.0,
+      100.0
+    ],
+    "pa_p3_ibo0": [
+      0.0,
+      0.67,
+      3.67,
+      9.67,
+      17.33,
+      20.67,
+      25.67,
+      31.33,
+      37.67,
+      48.0,
+      61.0,
+      72.67,
+      81.67,
+      87.67,
+      94.67,
+      97.0,
+      98.67,
+      100.0,
+      100.0
+    ],
+    "pa_p3_ibo0__meap": {
+      "meap_db": -36.4011976047909,
+      "censor": null,
+      "ref_psr_db": -36.0,
+      "post_tx_mask_excess_p95_dbr": -12.21,
+      "post_tx_pass_strict": 0.0,
+      "shift_vs_control_db": 0.6
+    },
+    "pa_p3_ibo6": [
+      0.0,
+      0.67,
+      4.33,
+      11.33,
+      18.33,
+      22.0,
+      26.67,
+      32.67,
+      39.33,
+      49.67,
+      61.67,
+      74.0,
+      82.0,
+      89.33,
+      95.0,
+      98.0,
+      99.67,
+      100.0,
+      100.0
+    ],
+    "pa_p3_ibo6__meap": {
+      "meap_db": -37.089918256131035,
+      "censor": null,
+      "ref_psr_db": -36.0,
+      "post_tx_mask_excess_p95_dbr": -19.32,
+      "post_tx_pass_strict": 0.0,
+      "shift_vs_control_db": -0.09
+    },
+    "pa_p3_ibo12": [
+      0.0,
+      0.67,
+      4.67,
+      12.0,
+      18.0,
+      22.0,
+      27.33,
+      33.0,
+      39.33,
+      50.0,
+      62.33,
+      74.0,
+      82.67,
+      88.67,
+      95.0,
+      97.67,
+      99.33,
+      100.0,
+      100.0
+    ],
+    "pa_p3_ibo12__meap": {
+      "meap_db": -37.00000000000025,
+      "censor": null,
+      "ref_psr_db": -36.0,
+      "post_tx_mask_excess_p95_dbr": -35.83,
+      "post_tx_pass_strict": 0.8267,
+      "shift_vs_control_db": 0.0
+    },
+    "pa_p3_ibo13": [
+      0.0,
+      0.67,
+      4.67,
+      12.0,
+      18.0,
+      22.0,
+      27.33,
+      33.0,
+      39.33,
+      50.0,
+      62.33,
+      74.0,
+      82.67,
+      88.67,
+      95.0,
+      98.0,
+      99.33,
+      100.0,
+      100.0
+    ],
+    "pa_p3_ibo13__meap": {
+      "meap_db": -37.00000000000025,
+      "censor": null,
+      "ref_psr_db": -36.0,
+      "post_tx_mask_excess_p95_dbr": -40.35,
+      "post_tx_pass_strict": 0.9533,
+      "shift_vs_control_db": 0.0
+    },
+    "pa_p2_ibo6": [
+      0.0,
+      0.67,
+      4.33,
+      11.33,
+      18.33,
+      21.67,
+      27.0,
+      32.33,
+      39.33,
+      49.67,
+      61.67,
+      74.33,
+      82.0,
+      89.0,
+      95.0,
+      98.0,
+      99.33,
+      100.0,
+      100.0
+    ],
+    "pa_p2_ibo6__meap": {
+      "meap_db": -37.0000000000003,
+      "censor": null,
+      "ref_psr_db": -36.0,
+      "post_tx_mask_excess_p95_dbr": -18.85,
+      "post_tx_pass_strict": 0.0,
+      "shift_vs_control_db": -0.0
+    },
+    "pa_p2_ibo15": [
+      0.0,
+      0.67,
+      4.67,
+      12.0,
+      18.0,
+      22.0,
+      27.33,
+      33.0,
+      39.33,
+      50.0,
+      62.33,
+      74.33,
+      82.67,
+      88.33,
+      95.0,
+      97.67,
+      99.33,
+      100.0,
+      100.0
+    ],
+    "pa_p2_ibo15__meap": {
+      "meap_db": -37.00000000000025,
+      "censor": null,
+      "ref_psr_db": -36.0,
+      "post_tx_mask_excess_p95_dbr": -41.31,
+      "post_tx_pass_strict": 0.97,
+      "shift_vs_control_db": 0.0
+    },
+    "pa_aware_p3_ibo13": [
+      0.33,
+      0.67,
+      5.67,
+      12.0,
+      20.67,
+      26.67,
+      34.0,
+      44.67,
+      59.67,
+      83.67,
+      96.0,
+      99.33,
+      100.0,
+      100.0,
+      100.0,
+      100.0,
+      100.0,
+      100.0,
+      100.0
+    ],
+    "pa_aware_p3_ibo13__meap": {
+      "meap_db": -38.23183391003492,
+      "censor": null,
+      "ref_psr_db": -36.0,
+      "post_tx_mask_excess_p95_dbr": -60.24,
+      "post_tx_pass_strict": 1.0,
+      "post_tx_papr_mean_db": 11.06,
+      "post_tx_papr_p95_db": 12.86,
+      "shift_vs_control_db": -1.23,
+      "note": "Rapp inside the PGD chain; projection pre-PA; post-PA compliance reported in stats"
+    }
+  },
+  "psr_grid": [
+    -50.0,
+    -47.0,
+    -44.0,
+    -41.0,
+    -38.0,
+    -36.0,
+    -34.0,
+    -32.0,
+    -30.0,
+    -27.0,
+    -24.0,
+    -21.0,
+    -18.0,
+    -15.0,
+    -12.0,
+    -9.0,
+    -6.0,
+    -3.0,
+    0.0
+  ],
+  "elapsed_s": 5179.7,
+  "control_meap_db": -37.00000000000025,
+  "control_censor": null
+}

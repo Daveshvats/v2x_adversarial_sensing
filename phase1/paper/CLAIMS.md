@@ -59,6 +59,12 @@ corrected runs.
 | C24 | AT defense rural transfer: trained urban/highway, rural eval mask −21.9 dB (vs −23.1 urban; PoC 13.4 vs 14.4) — defense transfers to unseen scenario at ~1.2 dB cost | results/attack_results_rural_untargeted_atrural.json; attack_results_urban_untargeted_at.json (protocol-parity check vs at_defense_results: exact) | VERIFIED (prototype scale, seed 42) |
 | C25 | v2x-redteam CLI: one-command red-team evaluation + certification-style report; reproduces canonical −44.22/−37.08/7.14 exactly and the real-wifi track −37.67 | scripts/v2x_redteam.py; results/redteam_*.json + _report.md | VERIFIED |
 | C26 | Wave-6 exit gate (D1): independent numpy re-derivation of all Wave-6 MEAPs/PoCs (match), curves monotone, transfer ≤ white-box, projection physics (budget 1.000000000, OOB 4.8e-32, numpy==torch to 2e-7) | scripts/w6b_check.py (exit: PASS) | VERIFIED |
+| C27 | Wave-11 PA reality check (pre-registered H1–H3 in the JSON): optimized mask delta PAPR 11.05 dB mean (p95 12.8) vs benign PC5 6.26 / 11p 8.77 / WiFi 8.69 / noise 9.02 — H1 confirmed (attack is the highest-PAPR signal on the air) | results/papr_pa_results.json: papr_benign_db, papr_optimized_db, H1 | VERIFIED |
+| C28 | Post-PA regrowth: at IBO 6 dB (p=3) peak OOB PSD −19.3 dBr p95, 92% of windows fail even the lenient −28 dBr gate (all fail strict); strict-gate (−40 dBr, 95% windows) requires IBO*=13 dB (p=3) / 15 dB (p=2); benign PA increment at IBO 6: +1.0 dB (PC5, the cleanest skirt at −29.7 dBr pre-PA) — attack pedestal ~9.4 dB above the cleanest benign neighbor's post-PA skirt | results/papr_pa_results.json: regrowth, ibo_star_strict_db, benign_regrowth_increment | VERIFIED |
+| C29 | Effectiveness through PA: MEAP shifts +0.60 (IBO 0) / −0.09 (IBO 6) / 0.00 (IBO 12, 13, p=2 arms) dB vs in-process no-PA control MEAP −37.00 dB (canonical −37.08 on the coarser grid) — H2 (0.5–4 dB penalty) FALSIFIED in the attack's favor | results/papr_pa_results.json: curves.*__meap, control_meap_db | VERIFIED |
+| C30 | PA-aware re-optimization (Rapp inside the PGD chain, budget-anchored power control): at IBO* 13 dB MEAP −38.23 dB (−1.23 dB vs control) with 100% strict-gate post-PA compliance (−60.2 dBr p95 OOB, post-PA PAPR 11.06 dB); at IBO 0 MEAP −38.32 dB but non-compliant (−12.8 dBr) with post-PA PAPR 4.95 dB — PA-aware attacker is stronger AND compliant at backoff; H3 kill criterion not triggered | results/papr_pa_results.json: curves.pa_aware_p3_ibo13__meap (incl. post_tx_papr_mean_db), pa_aware_p3_ibo0__meap; scripts/run_papr_pa.py (pa_aware_pgd) | VERIFIED |
+| C31 | Two NaN/units bugs in the first PA-aware implementation were caught by the pre-registered physical-sanity gate (D2) and fixed before any publication use: (a) renorm 0/0 at zero-init → NaN gradients mimicking a 13 dB "improvement" (66.7% = argmax-of-NaN signature, 20/30); (b) asat sized to window energy instead of mean power (+33.11 dB phantom backoff, same class as the Wave-3 PSR bug); merge-on-write clobber also fixed (prev curves read before update). Deterministic seeds; all arms re-run post-fix | worklog Task 19; scripts/run_papr_pa.py comments (chain docstring) | VERIFIED (process claim) |
+| C32 | PUEA lineage now cited and differentiated (Anand/Jin/Subbalakshmi DySPAN 2008; Ambhika Wireless Networks 30(5) 2024); threat-model table includes the PUEA row; 2026 band status grounded (FCC final rule eff. Feb 11 2025, two-year DSRC sunset; >50 C-V2X waivers per ITS America 2024; 5GAA Dec 2024 roadmap) | paper/main.tex related work + Table 1 + bib (anand2008, ambhika2024, itsa2024, 5gaa2024) | VERIFIED |
 
 ## Bibliography verification queue — ALL VERIFIED (2026-09-05, W1-C)
 
@@ -72,6 +78,12 @@ corrected runs.
 8. Habler et al. 2025 — J. Network and Computer Applications 236:104090 ✓
 9. FCC 20-164 (2020) + FCC 24-123 (2024 Second R&O) ✓; ETSI EN 302 571 V2.1.1 ✓;
    TR 37.885 V15.3.0 ✓; TS 36.211 V15.14.0 ✓; IEEE 802.11-2012 ✓
+10. Wave-11 additions (2026-09-05, W11-B): Anand, Jin, Subbalakshmi, DySPAN 2008
+    (pp. 1–12, cited-by 223 per ADS) ✓; Ambhika, Wireless Networks 30(5):3135–,
+    2024 (Springer citation metadata fetched; single author) ✓; ITS America
+    "Future of V2X in 5.9 GHz Report" May 2024 (PDF URL live; 50-waiver stat) ✓;
+    5GAA C-V2X roadmap update Dec 2024 (org report, no page numbers) ✓.
+    Not verified page-exact: DySPAN page range (1–12 from ADS) — minor.
 Correction caught: O'Shea co-author "J. Nath" (wrong) → T. Roy.
 
 ## Known limitations carried into Limitations section

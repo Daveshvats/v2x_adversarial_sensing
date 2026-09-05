@@ -46,10 +46,18 @@ attack power does compliance cost, compared to an unconstrained one?
    making an active transmitter *look like empty air* ("cloaking").
    Compliance is a speed bump, not a wall.
 
-3. **"Compliant" attacks are invisible to enforcement.** By construction,
-   the attack waveform is a legitimate transmission: right allocation, right
-   mask, normal-looking power. There is nothing to fine. This is a *policy*
-   gap, not an enforcement gap — the rules permit the attacker to exist.
+3. **"Compliant" attacks are invisible to enforcement — almost.** By
+   construction, the attack waveform is a legitimate transmission: right
+   allocation, right mask, normal-looking power. There is nothing to fine.
+   This is a *policy* gap, not an enforcement gap — the rules permit the
+   attacker to exist. One practical caveat from our power-amplifier study:
+   the naive attack waveform is unusually peaky (the highest-PAPR signal
+   on the air, 11 dB vs 6–9 dB for everything else), so transmitting it
+   through a normal radio's amplifier produces out-of-band regrowth that
+   a spectrum analyzer *can* see — unless the attacker re-optimizes with
+   the amplifier in the loop, which also fixes that tell (and makes the
+   attack slightly stronger). Detection helps against lazy attackers; it
+   is not a defense against the worst case.
 
 4. **The standard defense works, with an honest boundary.** Training the
    sensor against these attacks (adversarial training with the same mask

@@ -49,6 +49,8 @@ scripts/
   run_victim2.py          train + attack the second victim (ResNet) + transfer grids
   run_real_wifi.py        real-OTA-WiFi eval + leakage-free fine-tune probe
   run_trades.py           TRADES-style ablation (resumable chunks)
+  run_papr_pa.py          PA reality check: PAPR/regrowth vs IBO, MEAP arms,
+                         PA-aware re-optimization (resumable --arms chunks)
   run_csi_mismatch.py     CSI/no-CSI attack variants
   run_at_defense.py       mask-matched adversarial training (resumable)
   run_at_eval.py          defense evaluation
@@ -125,6 +127,16 @@ robustness). `results/real_wifi_attack.json`.
 18.6, at 99.25% clean — stronger compliant-axis defense at 0.75 pp clean cost.
 **AT rural transfer**: −21.9 dB (vs −23.1 urban) — the defense transfers to an
 unseen scenario at ~1.2 dB cost.
+
+**PA reality check (Wave 11, C27–C30)**: the optimized attack waveform is
+the highest-PAPR signal on the air (11.05 dB vs 6.26–9.02 benign); through
+a Rapp PA it needs 13 dB (p=3) / 15 dB (p=2) backoff for post-PA strict-
+mask compliance (0% pass at the typical 6 dB), while losing almost no
+effectiveness at any backoff; a PA-aware re-optimization (Rapp inside the
+PGD chain) is *stronger* than the no-PA control (−1.2 dB MEAP) AND fully
+post-PA compliant at backoff. Verification of compliance must happen at
+the PA output port. `results/papr_pa_results.json` (pre-registered
+hypotheses H1–H3 embedded).
 
 Key findings: (1) an *undefended* sensing CNN is broken by a compliant attacker
 tens of dB below the victim signal level; (2) emission-mask compliance costs the
