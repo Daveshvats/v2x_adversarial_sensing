@@ -31,3 +31,8 @@ checkpoints/
 .DS_Store
 Thumbs.db
 *.swp
+
+# --- Phase-1: victim checkpoints ARE part of the release artifact ---
+# (negate the global *.pt ignore: v2x-redteam/evaluate + 3-seed protocol
+#  need them; total 7 MB; all configs recorded in the result JSONs)
+!phase1/results/*.pt

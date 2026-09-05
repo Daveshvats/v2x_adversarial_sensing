@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software or build on the experiments, please cite both the software release and the paper below."
-title: "v2x_adversarial_sensing: honest, reproducible release of the Dual-Stream Phase-Aware Inception-Time CNN for adversarially robust V2X spectrum sensing"
+title: "The Price of Compliance: emission-mask-constrained adversarial attacks on deep learning spectrum sensing in the 5.9 GHz ITS band (research framework)"
 type: software
 authors:
   - family-names: "Dhankhar"
@@ -11,36 +11,40 @@ authors:
     affiliation: "Department of Computer Science and Engineering, Vaish College of Engineering, Rohtak, India"
 repository-code: "https://github.com/Daveshvats/v2x_adversarial_sensing"
 abstract: >-
-  Reproducible research artifact for the ICE2CT-2026 paper "Dual-Stream
-  Phase-Aware Inception-Time CNN for Adversarially Robust Spectrum Sensing in
-  V2X Networks". Contains the exact pipeline behind the paper's Tables II/III/V:
-  a synthetic V2X dataset generator (LTE / WiFi / V2X-PC5 / Noise, Rayleigh
-  fading), the 86,052-parameter Dual-Stream Inception-Time CNN trained with
-  TF-CutMix, FGSM/PGD/APGD/FAB/Square adversarial evaluation, a corrected
-  metrics module (robust accuracy and conditional ASR), a one-command
-  reproduction harness, and a full honesty audit (AUDIT.md) that reconciles
-  every legacy result file in the repository, including one that is marked
-  invalid and not citable. Runs on CPU only.
+  Phase-1 research framework: the compliance-constrained ("Compliant
+  Attacker") threat model for deep learning spectrum sensing in the
+  post-FCC 5.9 GHz ITS band. Contains: post-coexistence waveform
+  generators (C-V2X PC5, 802.11p, U-NII-4 WiFi, plus real over-the-air
+  802.11 captures, CC BY-NC-SA), TR 37.885-inspired channels, a
+  differentiable receiver front-end, the mask-constrained waveform-domain
+  PGD attack, mask-matched adversarial training and TRADES defenses, a
+  second victim architecture with surrogate transfer, a 3-training-seed
+  protocol, MEAP / Price-of-Compliance physical robustness metrics, a
+  power-amplifier (Rapp) regrowth reality check with PA-aware
+  re-optimization, and the one-command v2x-redteam evaluation CLI. All
+  result JSONs embed configuration and seeds; every paper claim is traced
+  to a result JSON (paper/CLAIMS.md). Code: MIT; embedded real-capture
+  data: CC BY-NC-SA. Runs on CPU only.
 keywords:
   - "spectrum sensing"
   - "V2X"
   - "C-V2X"
   - "adversarial machine learning"
-  - "adversarial robustness"
+  - "emission mask"
   - "wireless security"
   - "deep learning"
   - "PyTorch"
   - "reproducibility"
 license: "MIT"
-version: "2.0.0"
-date-released: "2026-09-04"
+version: "phase1-1.1.0"
+date-released: "2026-09-05"
 preferred-citation:
-  type: conference-paper
-  title: "Dual-Stream Phase-Aware Inception-Time CNN for Adversarially Robust Spectrum Sensing in V2X Networks"
+  type: article
+  title: "The Price of Compliance: emission-mask-constrained adversarial attacks on deep learning spectrum sensing in the 5.9 GHz ITS band"
   authors:
     - family-names: "Dhankhar"
       given-names: "Parveen"
+      affiliation: "Department of Computer Science and Engineering, Vaish College of Engineering, Rohtak, India"
     - family-names: "Vats"
       given-names: "Davesh"
-  collection-title: "Proceedings of the International Conference on Computing, Communication, and Technologies (ICE2CT)"
-  year: 2026
+      affiliation: "Department of Computer Science and Engineering, Vaish College of Engineering, Rohtak, India"

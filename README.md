@@ -1,4 +1,23 @@
-# v2x_adversarial_sensing — Honest Release (Phase 0)
+# v2x_adversarial_sensing
+
+**This branch (`phase1-compliant-attacker`) is the Phase-1 release —
+"The Price of Compliance": emission-mask-constrained adversarial attacks on
+deep learning spectrum sensing in the 5.9 GHz ITS band.**
+
+Start here: **[`phase1/`](phase1/)** — the complete Phase-1 artifact:
+one-command red-team CLI (`phase1/scripts/v2x_redteam.py`), waveform
+generators + real OTA 802.11 captures, the mask-constrained attack, MEAP /
+Price-of-Compliance metrics, defenses (AT + TRADES), 3-seed protocol,
+second victim + transfer, PA-regrowth reality check, the paper draft with
+its claim-verification matrix (`phase1/paper/CLAIMS.md`), and a
+plain-language summary (`phase1/ONE_PAGER.md`). Release: `phase1-v1.0`
+tag on this branch.
+
+Below is the Phase-0 release (kept for the ICE2CT-2026 paper record).
+
+---
+
+# Phase 0 — Honest Release
 
 **Code for:** *Dual-Stream Phase-Aware Inception-Time CNN for Adversarially Robust Spectrum
 Sensing in V2X Networks* (Dhankhar & Vats, ICE2CT-2026).

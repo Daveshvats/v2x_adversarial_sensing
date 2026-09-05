@@ -2,9 +2,9 @@ name: smoke
 
 on:
   push:
-    branches: [main]
+    branches: [main, phase1-compliant-attacker]
   pull_request:
-    branches: [main]
+    branches: [main, phase1-compliant-attacker]
   workflow_dispatch:
 
 jobs:
@@ -68,4 +68,92 @@ jobs:
                 "clean", s["clean_acc"] * 100,
                 "| fgsm", f["raw_asr"], "cond", f["cond_asr"],
                 "| pgd20", p["raw_asr"], "cond", p["cond_asr"])
+          EOF
+
+  phase1-release-gate:
+    # Phase-1 (compliant attacker) release gate: verifies that the SHIPPED
+    # victim checkpoints load, that the canonical clean accuracy reproduces,
+    # and that the mask projection invariant (pre-PA OOB = 0) holds on a
+    # fresh PGD run. Runs only when phase1/ is present (phase1 branch + any
+    # future merge into main).
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install CPU-only PyTorch
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Check shipped checkpoints exist (release artifact integrity)
+        run: |
+          python - <<'EOF'
+          import os
+          needed = ["checkpoint_dual.pt", "checkpoint_resnet.pt",
+                    "checkpoint_mag.pt", "checkpoint_dual_at.pt",
+                    "checkpoint_dual_realft.pt"]
+          for f in needed:
+              p = os.path.join("phase1", "results", f)
+              assert os.path.exists(p) and os.path.getsize(p) > 100_000, \
+                  f"missing/undersized release checkpoint: {p}"
+          print("all 5 release checkpoints present:", needed)
+          EOF
+
+      - name: Gate: clean acc + mask-projection invariant on shipped victim
+        env:
+          OMP_NUM_THREADS: "2"
+          MKL_NUM_THREADS: "2"
+        run: |
+          python - <<'EOF'
+          import os, sys
+          sys.path.insert(0, os.path.join("phase1", "src"))
+          sys.path.insert(0, os.path.join("phase1", "scripts"))
+          import torch
+          torch.manual_seed(7)
+          torch.set_num_threads(2)
+          from receiver import FrontEnd, DualStreamModel
+          from run_attack import build_eval_set
+          from attack_mask import waveform_pgd
+          from waveforms import ATTACK_BANDS
+          import numpy as np
+
+          ck = torch.load(os.path.join("phase1", "results",
+                                       "checkpoint_dual.pt"),
+                          map_location="cpu", weights_only=False)
+          model = DualStreamModel(); model.load_state_dict(ck["model"])
+          model.eval()
+          fe = FrontEnd(); fe.set_stats(ck["mag_mean"], ck["mag_std"])
+
+          x, y, h, p = build_eval_set("urban", 10, 7)     # 30 windows
+          with torch.no_grad():
+              preds = model.forward_wave(x, fe).argmax(1)
+          acc = (preds == y).float().mean().item()
+          assert acc >= 0.95, f"clean acc on active tx too low: {acc}"
+          print(f"clean acc (30 active windows): {acc*100:.1f}%")
+
+          pb = p * (10 ** (0.0 / 10.0))                    # PSR 0 dB
+          out = waveform_pgd(model, fe, x, h, y, pb, steps=5,
+                             band=ATTACK_BANDS["cv2x_attacker"],
+                             psd_margin=2.0, return_delta=True)
+          d = out["delta"]
+          asr = (out["preds"][preds == y] != y[preds == y]).float().mean()
+          print(f"cond-ASR @ PSR 0 dB, PGD-5: {asr*100:.1f}%")
+          assert asr >= 0.5, f"attack unexpectedly weak in gate: {asr}"
+
+          # mask-projection invariant: pre-PA OOB energy must be ~zero
+          D = torch.fft.fft(d, dim=1)
+          f_mhz = torch.fft.fftfreq(D.shape[1], d=1.0/20e6) / 1e6
+          inb = (f_mhz >= ATTACK_BANDS["cv2x_attacker"]["lo"]) & \
+                (f_mhz <= ATTACK_BANDS["cv2x_attacker"]["hi"])
+          oob = (D.abs() ** 2).masked_fill(inb, 0).sum() / (D.abs() ** 2).sum()
+          assert oob < 1e-9, f"projection invariant violated: OOB={oob}"
+          print(f"pre-PA OOB fraction: {oob.item():.2e} (< 1e-9) PASS")
+          print("PHASE1 RELEASE GATE PASSED")
           EOF
