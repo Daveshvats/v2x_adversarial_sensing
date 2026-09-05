@@ -89,7 +89,12 @@ for scen, sd in merged["per_scenario"].items():
 
 # --- money figure ---
 C_GENIE, C_MASK = "#c0392b", "#2471a3"
-fig, axes = plt.subplots(1, 2, figsize=(9.6, 4.0), constrained_layout=True)
+# print-size design: displayed at ~0.95*linewidth (~5 in) in the paper;
+# design at the display size so fonts render 1:1 (>= 7.5 pt effective)
+plt.rcParams.update({"font.size": 8, "axes.titlesize": 8.5,
+                     "axes.labelsize": 8, "legend.fontsize": 6.8,
+                     "xtick.labelsize": 7.5, "ytick.labelsize": 7.5})
+fig, axes = plt.subplots(1, 2, figsize=(5.3, 2.5), constrained_layout=True)
 titles = {"untargeted": "Untargeted (any misclassification)",
           "targeted_noise": "Targeted: cloak active TX as Noise"}
 styles = {"urban": ("-", "o"), "highway": ("--", "s"), "rural": (":", "^")}
@@ -111,11 +116,12 @@ for ax, mode in zip(axes, ("untargeted", "targeted_noise")):
                 label=f"C-V2X-mask compliant ({scen})", ms=4)
     ax.set_xlabel("Attack power budget  PSR (dB)")
     ax.set_ylabel("Conditional ASR (%)")
-    ax.set_title(titles[mode], fontsize=10)
+    ax.set_title(titles[mode], fontsize=8)
     ax.grid(alpha=0.3)
     ax.set_ylim(-3, 103)
-axes[0].legend(fontsize=8, loc="upper left")
+axes[0].legend(loc="upper left", handlelength=1.4,
+                borderpad=0.3, labelspacing=0.25)
 fig.suptitle(f"Emission-mask compliance shifts the attack curve by "
-             f"~{poc_txt} dB — but does not close it", fontsize=11)
-fig.savefig(os.path.join(FIGS, "price_of_compliance.png"), dpi=200)
+             f"~{poc_txt} dB — but does not close it", fontsize=9)
+fig.savefig(os.path.join(FIGS, "price_of_compliance.png"), dpi=300)
 print("figure saved:", os.path.join(FIGS, "price_of_compliance.png"))

@@ -1,0 +1,7 @@
+{
+  "seed": 42,
+  "arch": "ResNetVictim (2-ch early fusion)",
+  "params": 493316,
+  "val_acc": 1.0,
+  "elapsed_s": 73.8
+}

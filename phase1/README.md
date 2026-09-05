@@ -1,7 +1,24 @@
-# v2x_phase1 — The Compliant Attacker (Phase 1 of the upgrade)
+# v2x-redteam — The Compliant Attacker (Phase 1, v1.0)
 
 **Working title:** *The Price of Compliance: Emission-Mask-Constrained Adversarial
 Attacks on Deep Learning Spectrum Sensing in the 5.9 GHz ITS Band*
+
+## 60-second start (the red-team harness)
+
+```bash
+# evaluate any released victim against a rule-compliant attacker,
+# with physics checks and a certification-style report:
+python scripts/v2x_redteam.py evaluate --victim dual --scenario urban
+python scripts/v2x_redteam.py report --json results/redteam_dual_cv2x_attacker_urban.json
+
+# victims: dual | mag | resnet | dual-at | dual-realft
+# real-OTA-WiFi eval set:  add --real-wifi
+```
+
+The report gives MEAP (minimum received power at which the compliant attacker
+crosses a chosen conditional-ASR threshold), the Price of Compliance, the full
+ASR-vs-power sweep, and in-run verification that the attack actually respected
+the emission mask (post-projection budget ratio and out-of-band leakage).
 
 This package contains the complete Phase-1 research framework: post-FCC coexistence
 waveform generators, TR 37.885-inspired channels, a differentiable receiver front-end,
@@ -26,14 +43,27 @@ src/
   attack_mask.py    THE INNOVATION: mask-constrained waveform PGD + genie baseline,
                     MEAP / Price-of-Compliance metrics (censoring-aware)
 scripts/
-  run_train.py            train dual model + honesty baselines (checkpoints)
+  run_train.py            train dual model + honesty baselines (checkpoints, --seed/--tag)
   run_mag_baseline.py     mag-only ablation (same budget) + baselines
-  run_attack.py           compliant-attacker PSR sweeps (chunkable per scenario/mode)
+  run_attack.py           compliant-attacker PSR sweeps (--checkpoint for any victim)
+  run_victim2.py          train + attack the second victim (ResNet) + transfer grids
+  run_real_wifi.py        real-OTA-WiFi eval + leakage-free fine-tune probe
+  run_trades.py           TRADES-style ablation (resumable chunks)
+  run_csi_mismatch.py     CSI/no-CSI attack variants
+  run_at_defense.py       mask-matched adversarial training (resumable)
+  run_at_eval.py          defense evaluation
+  run_snr_sweep.py        clean-task SNR sweep (honest negative)
+  v2x_redteam.py          ONE-COMMAND red-team evaluation + report (start here)
   run_plot.py             merge + physical metrics + money figure
   debug_attack.py         surgical attack verification (run after any change)
-  check_waveforms.py (../scripts) band-plan occupancy + PAPR sanity
+  w6_check.py / w6b_check.py   Wave-6 physics gates + independent exit-gate checker
+src/
+  real_wifi.py           real OTA capture loader (burst gating, placement, provenance)
+  victim_resnet.py       second victim architecture
 results/           checkpoints + JSONs (all embed config/seed; pre-fix archive inside)
-paper/             main.tex + CLAIMS.md + figs/
+data/real_wifi/    9 raw USRP captures (CC BY-NC-SA; see data/real_wifi/ATTRIBUTION)
+paper/             main.tex + CLAIMS.md + figs/ + main.pdf (compiled)
+```
 ```
 
 ## Prototype results (in this repo, CPU; corrected axis)
@@ -75,7 +105,26 @@ overstates physical realizability. ε≤0.3 → 0–1.7% at −34..−44 dB.
 **Metric robustness**: PGD-50 shifts mask MEAP by −1.7 dB and raises mid-grid
 ASR by up to +37 pp (PGD-10 numbers are conservative lower bounds); attack
 seed 11 vs 7: PoC spread 0.28 dB; PSD-cap margin 2→10: PoC 7.1→6.2 dB (the
-allocation constraint, not the flat cap, drives the cost).
+allocation constraint, not the flat cap, drives the cost). **Training seeds
+42/123/456**: compliant MEAP −37.1/−38.1/−37.9 (1.1 dB spread), PoC
+7.1/6.9/7.1 (lower bound 2/3), clean 3×100%. `results/three_seed_summary.json`.
+
+**Second victim (ResNet, 493k params)**: white-box genie −29.2 / compliant
+−25.5 / PoC 3.7 dB — architecture shifts the compliant threshold by 12–15 dB.
+**Surrogate transfer**: 11–25 dB penalty (white-box disclosure = genuine upper
+bound). `results/victim2_transfer.json`.
+
+**Real OTA WiFi in the loop** (Fontaine/UGent USRP captures, 5240 MHz):
+frozen model 66.2% real-WiFi accuracy; compliant MEAP −35.9 dB (frozen),
+−37.7 dB after leakage-free fine-tune (PoC 7.3) — the canonical conclusion
+replicates on real signals. OOD margin collapse: 0.0% synthetic flips vs
+68.5% real flips at −45 dB PSR (synthetic-only evaluation overstates
+robustness). `results/real_wifi_attack.json`.
+
+**TRADES ablation (C17)**: mask MEAP −19.1 dB (vs standard AT −23.1), PoC
+18.6, at 99.25% clean — stronger compliant-axis defense at 0.75 pp clean cost.
+**AT rural transfer**: −21.9 dB (vs −23.1 urban) — the defense transfers to an
+unseen scenario at ~1.2 dB cost.
 
 Key findings: (1) an *undefended* sensing CNN is broken by a compliant attacker
 tens of dB below the victim signal level; (2) emission-mask compliance costs the
@@ -85,24 +134,32 @@ where the mask bites hardest; (5) at high power the targeted attack overshoots
 into non-target wrong classes (label-keyed pipelines beware); (6) mask-matched AT
 and compliance compound (~7–8 dB each).
 
-## Full protocol (run locally, ~2–4 h CPU or <30 min on any GPU)
+## Full protocol (extended scale; the 3-seed core is ALREADY in results/)
+
+Already completed in this release: 3 training seeds + grids
+(three_seed_summary.json), rural/PGD-50/seed-11/margin sensitivity, CSI
+mismatch, defense + TRADES + rural transfer, real-OTA WiFi study, second
+victim + transfer, feature-space equivalence.
+
+Remaining extensions (local, CPU-hours):
 
 ```bash
-# 1. three seeds, deeper training
-python scripts/run_train.py --seeds 42 123 456 --epochs 40
+# 1. deeper training per seed (recipe identical, longer budget)
+python scripts/run_train.py --seed 42 --epochs 40 --tag _e40
 
-# 2. full attack grid: seeds x scenarios x modes (chunkable; each invocation
-#    writes its own JSON, run_plot merges everything)
+# 2. full-grid PGD-50 across seeds x scenarios x modes (each invocation
+#    writes its own JSON; run_plot merges the canonical set)
 for s in 11 22 33; do
   for m in untargeted targeted_noise; do
     python scripts/run_attack.py --scenarios urban highway rural \
         --psr -45 -40 -35 -30 -25 -20 -15 -10 -5 0 5 10 --steps 50 \
-        --n-eval 200 --seed $s --modes $m
+        --n-eval 200 --seed $s --modes $m --tag-out _pgd50_$s
   done
 done
 
 # 3. PSD-cap idealization sensitivity: repeat key points with --psd-margin 10
-# 4. mask-matched adversarial training defense (per paper §Defenses)
+# 4. defense seeds 123/456 (run_at_defense.py --seed, then run_attack
+#    --checkpoint checkpoint_dual_at_s*.pt)
 # 5. regenerate figure + metrics
 python scripts/run_plot.py
 ```

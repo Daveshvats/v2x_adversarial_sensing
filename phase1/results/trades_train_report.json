@@ -1,0 +1,161 @@
+{
+  "experiment": "TRADES-style ablation (C17): beta-KL clean/adv objective with the mask-matched generator",
+  "config": {
+    "epochs_total": 16,
+    "beta": 6.0,
+    "at_prob": 0.5,
+    "steps": 5,
+    "psr_lo": -25.0,
+    "psr_hi": -5.0,
+    "psd_margin": 2.0,
+    "batch_size": 64,
+    "lr": 0.0005,
+    "cutmix_prob": 0.3,
+    "gauss_prob": 0.3,
+    "gauss_std": 0.02,
+    "seed": 42
+  },
+  "recipe": "v3 recipe; adversarial batches: smooth-CE(clean) + beta(6.0)*KL(adv||clean.detach()); CutMix disabled on adversarial batches (disclosed)",
+  "n_train": 3200,
+  "n_val": 800,
+  "classes": [
+    "C-V2X-PC5",
+    "802.11p",
+    "WiFi-U-NII4",
+    "Noise"
+  ],
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 1.2377,
+      "val_acc": 0.765,
+      "n_adv_batches": 22,
+      "n_batches": 50,
+      "epoch_s": 51.7
+    },
+    {
+      "epoch": 2,
+      "loss": 1.1183,
+      "val_acc": 0.8087,
+      "n_adv_batches": 24,
+      "n_batches": 50,
+      "epoch_s": 54.9
+    },
+    {
+      "epoch": 3,
+      "loss": 1.1263,
+      "val_acc": 0.52,
+      "n_adv_batches": 33,
+      "n_batches": 50,
+      "epoch_s": 64.9
+    },
+    {
+      "epoch": 4,
+      "loss": 1.0828,
+      "val_acc": 0.7262,
+      "n_adv_batches": 28,
+      "n_batches": 50,
+      "epoch_s": 57.3
+    },
+    {
+      "epoch": 5,
+      "loss": 1.0067,
+      "val_acc": 0.96,
+      "n_adv_batches": 25,
+      "n_batches": 50,
+      "epoch_s": 52.3
+    },
+    {
+      "epoch": 6,
+      "loss": 1.0116,
+      "val_acc": 0.7575,
+      "n_adv_batches": 29,
+      "n_batches": 50,
+      "epoch_s": 58.2
+    },
+    {
+      "epoch": 7,
+      "loss": 0.9833,
+      "val_acc": 0.9538,
+      "n_adv_batches": 26,
+      "n_batches": 50,
+      "epoch_s": 53.5
+    },
+    {
+      "epoch": 8,
+      "loss": 0.962,
+      "val_acc": 0.8825,
+      "n_adv_batches": 24,
+      "n_batches": 50,
+      "epoch_s": 50.4
+    },
+    {
+      "epoch": 9,
+      "loss": 0.9562,
+      "val_acc": 0.97,
+      "n_adv_batches": 29,
+      "n_batches": 50,
+      "epoch_s": 64.5
+    },
+    {
+      "epoch": 10,
+      "loss": 0.9204,
+      "val_acc": 0.9787,
+      "n_adv_batches": 25,
+      "n_batches": 50,
+      "epoch_s": 59.3
+    },
+    {
+      "epoch": 11,
+      "loss": 0.896,
+      "val_acc": 0.9825,
+      "n_adv_batches": 23,
+      "n_batches": 50,
+      "epoch_s": 53.7
+    },
+    {
+      "epoch": 12,
+      "loss": 0.9574,
+      "val_acc": 0.9825,
+      "n_adv_batches": 24,
+      "n_batches": 50,
+      "epoch_s": 55.9
+    },
+    {
+      "epoch": 13,
+      "loss": 0.9455,
+      "val_acc": 0.99,
+      "n_adv_batches": 25,
+      "n_batches": 50,
+      "epoch_s": 56.3
+    },
+    {
+      "epoch": 14,
+      "loss": 0.8979,
+      "val_acc": 0.99,
+      "n_adv_batches": 27,
+      "n_batches": 50,
+      "epoch_s": 56.0
+    },
+    {
+      "epoch": 15,
+      "loss": 0.8433,
+      "val_acc": 0.9925,
+      "n_adv_batches": 20,
+      "n_batches": 50,
+      "epoch_s": 44.9
+    },
+    {
+      "epoch": 16,
+      "loss": 0.8646,
+      "val_acc": 0.9925,
+      "n_adv_batches": 24,
+      "n_batches": 50,
+      "epoch_s": 51.0
+    }
+  ],
+  "best_val_acc": 0.9925,
+  "completed": true,
+  "elapsed_total_s": 884.7,
+  "threads": 1
+}

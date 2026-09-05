@@ -35,7 +35,7 @@ on Deep Learning Spectrum Sensing in the 5.9\,GHz ITS Band}
 
 \cortext[cor1]{Corresponding author.}
 \affiliation[inst1]{organization={Department of Computer Science and Engineering,
-Vaish College of Engineering, Rohtak, India},
+Vaish College of Engineering},
             city={Rohtak},
             country={India}}
 
@@ -66,7 +66,13 @@ perturbation that mostly cannot survive its own physical realization, while
 a purpose-optimized waveform at the same implied power is far stronger. As the matched defense, mask-matched adversarial training shifts
 the compliant-attacker threshold by $+14$\,dB (doubling the price of
 compliance) at no clean-accuracy cost, with robustness honestly bounded by
-its training power range. We propose Minimum Effective Attack Power (MEAP) and
+its training power range. These conclusions are stress-tested beyond the prototype protocol: three
+training seeds move the compliant threshold by at most 1.1\,dB; replacing
+the WiFi class with real over-the-air 802.11 captures replicates the
+compliant MEAP within 1.8\,dB while exposing a decision-margin fragility
+that synthetic-only evaluation hides entirely; and a second victim
+architecture (early-fusion ResNet) shifts the threshold by 11.6--15.1\,dB,
+with surrogate-model transfer costing the attacker 11--23\,dB. We propose Minimum Effective Attack Power (MEAP) and
 Price-of-Compliance (PoC) as physically grounded, transferable security
 metrics, and release the complete framework (waveform generators, channels,
 attack, defenses, checkpoints, result JSONs with embedded seeds and
@@ -154,13 +160,14 @@ Our contributions are:
 \end{enumerate}
 
 \paragraph{Scope and honesty} All attack numbers in this paper are
-prototype-scale (one training seed, two attack seeds, 300 evaluation windows,
-PGD-10) and are labeled as such; the full protocol (3 seeds, PGD-50, extended
-grid, rural scenario) is specified in the released repository; rural,
-PGD-50, a second attack seed, the mask-cap sensitivity, the defense study,
-and the feature-space comparison are included here, and
-\FULLP{the 3-seed training protocol completes the statistics}. Every number
-traces to a result JSON with embedded configuration. The undefended model is
+prototype-scale (three training seeds for the undefended headline, two
+attack seeds, 300 evaluation windows, PGD-10) and are labeled as such; the
+full protocol (PGD-50, extended grid) is specified in the released
+repository; rural, PGD-50, a second attack seed, the mask-cap sensitivity,
+the defense study, the feature-space comparison, real over-the-air
+captures, a second victim architecture, and surrogate-model transfer are
+included here. Every number traces to a result JSON with embedded
+configuration. The undefended model is
 the subject of Sections~\ref{sec:poc}--\ref{sec:featurespace}; the defense
 study (Section~\ref{sec:defenses}) quantifies how much of the threat
 adversarial training removes.
@@ -277,7 +284,7 @@ Noise & -- & full band & complex AWGN \\
 Two design decisions deserve justification. First, \emph{802.11p and PC5 are
 co-channel} in the ITS allocation: during the multi-year DSRC sunset,
 roadside infrastructure must classify both technologies sharing the same
-spectrum, and region-energy features provably cannot separate them---our
+spectrum, and region-energy features reliably cannot separate them---our
 logistic-regression baseline on region-energy and envelope features reaches
 only 77.75\% on this pair, while the CNN reaches 100\% (four-class baseline:
 88.62\% vs 100\%). The DL-necessity claim is thus confined to what physics
@@ -466,6 +473,16 @@ $\epsilon$---directly interpretable in link-budget terms.
 \subsection{Protocol and scale}
 \label{sec:protocol}
 
+Unless stated otherwise, every experiment below uses the same evaluation
+contract: a frozen victim model, a fixed set of active-transmission windows
+(PC5, 802.11p, WiFi), per-sample attacker channels drawn from the scenario
+model, and the PSR grid of Table~\ref{tab:protocol}; conditional ASR is
+measured only over windows the victim classified correctly before the
+attack, and every MEAP carries an explicit censoring flag when the grid
+does not resolve it. The honesty box records the prototype scale; the
+three-seed statistics, PGD-50 convergence, and sensitivity checks in
+Section~\ref{sec:poc} quantify how far the prototype numbers generalize.
+
 \begin{table}[h]
 \centering
 \caption{Protocol honesty box. Prototype-scale numbers in this paper use the
@@ -476,7 +493,7 @@ first row; the full protocol is released with the repository.}
 \toprule
 Setting & Value (prototype) \\
 \midrule
-Training & seed 42, 3{,}200 train / 800 val windows, SNR [5,25]\,dB \\
+Training & seeds 42/123/456 (undefended headline), 3{,}200 train / 800 val windows, SNR [5,25]\,dB \\
 Attack & seed 7, 300 active-tx windows, PGD-10, $\alpha=0.25$ \\
 PSD cap margin & 2.0 (flat-cap idealization; relaxing to 10 moves PoC by $-0.9$\,dB) \\
 PSR grid & $-45$ to $+10$\,dB, 12 points \\
@@ -491,10 +508,14 @@ MEAP threshold & 20\% conditional ASR \\
 The dual-stream CNN and the magnitude-only ablation both reach 100\%
 validation accuracy (800 held-out windows); the energy-feature logistic
 regression baseline reaches 88.62\% (four-class) and 77.75\% on the
-co-channel PC5-vs-802.11p pair, where the CNN is error-free. The phase
+co-channel PC5-vs-802.11p pair, where the CNN is error-free. Across the
+three training seeds (42/123/456) the picture is stable: clean accuracy is
+100\% for all seeds, the LR baseline moves within one point
+(88.6/88.1/87.8\%), and the LR pair accuracy spreads 74.0--77.8\%
+(mean 76.3\%) while the CNN pair stays error-free throughout. The phase
 difference stream contributes nothing (dual = mag-only), retiring the
 ``phase-aware'' framing of our prior work~\cite{dhankhar2026}---an honest
-negative result reported pre-registered. An SNR sweep below the training
+negative result, pre-registered as an ablation. An SNR sweep below the training
 range bounds the noise-floor regime honestly: the CNN's advantage over the
 energy baseline persists down to 0\,dB SNR (73.0\% vs 62.6\% at
 $[0,10]$\,dB, 63.6\% on the hard pair) and vanishes at negative SNR
@@ -520,7 +541,10 @@ undefended CNN at deeply negative PSR.}
 \centering
 \caption{Physical summary metrics (conditional-ASR threshold 20\%;
 prototype protocol of Table~\ref{tab:protocol}; all MEAPs resolved within
-the grid, no censoring).}
+the grid, no censoring). Training-seed stability (seeds 42/123/456, urban
+untargeted): compliant MEAP $-37.1/-38.1/-37.9$\,dB (mean $-37.7$, spread
+1.1\,dB); genie MEAP at or below the grid floor for 2 of 3 seeds, so the
+per-seed PoC (7.1/6.9/7.1\,dB) is a lower bound for those seeds.}
 \label{tab:metrics}
 \begin{tabular}{llrrr}
 \toprule
@@ -572,15 +596,22 @@ moves the compliant MEAP by only $-0.9$\,dB and the PoC from 7.1 to
 6.2\,dB---the Price of Compliance is driven by the \emph{allocation}
 constraint (the out-of-band null), not by how strictly in-band flatness is
 enforced. \emph{Attacker knowledge:} re-running the compliant attack with
-imperfect CSI (additive error of 0.3 relative magnitude) costs only
-1--2\,pp of conditional ASR across the grid (MEAP within 0.5\,dB)---the
-attack is robust to CSI error; but with \emph{no} CSI (optimizing against
+imperfect CSI (additive error of 0.3 relative magnitude) costs at most
+2.7\,pp of conditional ASR across the measured grid---the attack is robust
+to CSI error; but with \emph{no} CSI (optimizing against
 an independent draw from the same scenario, evaluated on the true channel)
 the compliant attack's 20\%\,ASR threshold moves from $-37$\,dB to
 $\approx\!-16$\,dB, a $\sim$21\,dB penalty: channel-realization
 knowledge, not channel statistics, is what makes the white-box threat
-catastrophic. \FULLP{Three-seed training error bars complete the statistics at
-full scale.}
+catastrophic. \emph{Training-seed statistics:} retraining the victim from
+scratch on seeds 123 and 456 (identical recipe) and re-running the full
+urban untargeted grid gives compliant MEAPs of $-38.1$ and $-37.9$\,dB
+against seed~42's $-37.1$\,dB---a 1.1\,dB total spread, with clean
+accuracy 100\% and the CNN pair error-free on every seed. The genie MEAP
+falls at or below the $-45$\,dB grid floor for the two new seeds, making
+their PoCs lower bounds (6.9 and 7.1\,dB); the ordering genie~$<$~compliant
+threshold, and the ${\sim}$7\,dB price of compliance, are invariant to
+the training seed.
 
 \subsection{What the legacy feature-space threat model silently assumes}
 \label{sec:featurespace}
@@ -590,7 +621,7 @@ receiver's spectrogram has no direct physical meaning. It can be given one:
 a log-magnitude change $d$ on bin $k$ corresponds to the complex STFT-domain
 addition $\hat{\Delta}_k = \hat{Z}_k (10^{d} - 1)$ (magnitude scaling, phase
 preserved), and the hann/50\%-overlap STFT is invertible (interior
-reconstruction error $< 10^{-5}$), so the same edit implies a
+reconstruction error $8.4\times10^{-7}$), so the same edit implies a
 \emph{received} waveform perturbation whose power we can measure
 (PSR$_{\mathrm{eq}}$). We attack the magnitude input with an
 $\ell_\infty$ PGD ($\epsilon \in \{0.1, 0.3, 1.0\}$) and translate the
@@ -604,8 +635,9 @@ only 14.0\%: the hann-window round trip realizes roughly half of the
 intended per-bin log-change, and the receiver noise absorbs the rest. By
 contrast, \emph{transmitted} attacks optimized for that same power
 ($-24$\,dB) achieve 99.3\% (genie) and 62.3\% (compliant). At
-$\epsilon \le 0.3$ the legacy attack achieves essentially nothing (0--1.7\%)
-at implied powers of $-34$ to $-44$\,dB. Three lessons: (i) the
+$\epsilon = 0.3$ the legacy attack achieves 1.7\% intended (0\%
+realized) at an implied $-34.4$\,dB, and at $\epsilon = 0.1$ nothing
+(0\%) at $-44.0$\,dB. Three lessons: (i) the
 feature-space $\epsilon$-ball hides a power budget that is invisible in
 $\epsilon$-units; (ii) a feature-space perturbation is not a physically
 consistent waveform---its own physical realization mostly fails, so legacy
@@ -638,9 +670,92 @@ boundary: robustness is confined to the trained power range---at PSR parity
 and above the attack still succeeds (94.7\% at 0\,dB), and attacks far below
 the training range partially transfer. Adversarial training \emph{delays} the
 attack exactly as compliance does; neither closes it, and the
-certification-style metric (MEAP) is what quantifies both. \FULLP{A
-TRADES-style trade-off variant and statistical detection~\cite{zhao2024} as
-a complementary control are evaluated at full scale.}
+certification-style metric (MEAP) is what quantifies both.
+
+\paragraph{TRADES-style ablation} A TRADES variant ($\beta = 6$, the same
+mask-matched generator, probability 0.5, PSR $[-25,-5]$\,dB, seed 42)
+replaces the adversarial-view CE with the clean/adversarial KL trade-off
+objective. It buys \emph{more} threshold shift on the compliant axis
+(mask MEAP $-19.1$\,dB versus standard AT's $-23.1$\,dB; PoC 18.6 versus
+14.4\,dB) at a 0.75\,pp clean-accuracy cost (99.25\% versus 100\%).
+Standard AT remains the zero-clean-cost choice; TRADES is the stronger
+option when a small clean cost is acceptable---the same trade-off shape
+documented in the vision literature, here in a power-budget metric.
+
+\paragraph{Cross-scenario transfer} The AT model was trained on
+urban/highway batches only; evaluated on the rural scenario it retains most
+of its robustness (compliant MEAP $-21.9$\,dB versus $-23.1$\,dB urban;
+genie $-35.3$ versus $-37.5$\,dB; PoC 13.4 versus 14.4\,dB): the defense
+transfers to an unseen channel scenario at a ${\sim}$1.2\,dB cost.
+
+
+\subsection{Real over-the-air signals in the loop}
+\label{sec:realwifi}
+
+Every result so far---like nearly every result in the wireless
+adversarial-ML literature---uses synthetic victim signals. We replace the
+WiFi class in the evaluation set with real over-the-air 802.11 captures
+(Fontaine et~al.\ dataset, USRP captures at 5240\,MHz at three Gent,
+Belgium locations (a fourth capture site was rejected by the burst gate); DC-removed, resampled to 20\,Msps, placed in the
+unlicensed half of the window, burst-gated by spectral flatness and power;
+96 verified active windows; CC~BY-NC-SA, redistributed with
+attribution). Real captures carry their own real propagation channel, so
+no synthetic victim channel is applied to them; receiver noise is added at
+the drawn SNR as for every class. Evaluation uses captures from one
+location (UZ, 74 windows), fine-tuning uses disjoint locations
+(Rabot/Reep, 22 windows with 4$\times$ overlap augmentation)---zero
+shared samples by construction.
+
+Three results. \textbf{(R1) The domain gap is real and asymmetric.} The
+frozen model classifies only 66\% of real WiFi windows as WiFi (best at
+low SNR, where region occupancy dominates; worst at high SNR, where
+fine-structure mismatch dominates). \textbf{(R2) The canonical
+compliant-attacker conclusion replicates on real signals.} With real WiFi
+as the victim signal, the compliant MEAP is $-35.9$\,dB (frozen) and
+$-37.7$\,dB after the leakage-free fine-tune (73\% real-WiFi
+accuracy)---bracketing the synthetic-task value of $-37.1$\,dB and its
+three-seed spread. The price of compliance is 7.3\,dB (lower bound),
+matching the synthetic 7.1\,dB. \textbf{(R3) Synthetic-only evaluation
+overstates robustness.} At $-45$\,dB PSR---an attack three and a half
+orders of magnitude below the signal---synthetic windows flip at 0.0\%
+while real WiFi windows flip at 68.5\%: the model's correctly-classified
+real windows sit essentially on the decision boundary (near-zero margin),
+so gradient-aligned perturbations of almost any power flip them.
+Conditional-ASR at ultra-low power therefore measures \emph{decision-margin
+pathology on out-of-distribution inputs}, not attack power; a
+synthetic-only evaluation hides this fragility entirely. For deployment
+gate purposes the actionable reading is the opposite direction: any
+learned coexistence sensor trained on synthetic waveforms must be
+red-teamed against real captures before its robustness claims are
+believed.
+
+\subsection{A second victim and surrogate-model transfer}
+\label{sec:victim2}
+
+A red-team suite that has only ever attacked its own author's model proves
+nothing about anyone else's. We therefore train a second victim, a
+2-channel early-fusion ResNet (493k parameters, six times the canonical
+InceptionTime-style CNN) on the identical task, data recipe, and seed
+(100\% clean). Against it, the same compliant attack reaches 20\%
+conditional ASR at $-25.5$\,dB (genie $-29.2$\,dB, PoC 3.7\,dB) versus
+$-37.1/-44.2/7.1$\,dB against the canonical victim: \textbf{the victim
+architecture shifts the compliant-attack threshold by 11.6\,dB (genie
+15.1\,dB) and halves the price of compliance.} Two readings follow. First, the suite has
+genuine discriminating power---model choice is a larger robustness lever
+than the emission mask itself, which is exactly the kind of statement a
+deployment gate needs to make. Second, no single-victim number should be
+quoted as ``the'' robustness of DL spectrum sensing; MEAP is a property of
+the (model, threat) pair.
+
+\paragraph{Surrogate-model transfer} Crafting the attack against one model
+and deploying it against the other (the partial-knowledge attacker: task
+known, victim weights unknown; attacker channel still perfect) costs
+11--23\,dB (white-box minus transfer, per direction and setting): genie transfer MEAPs of $-18.4$\,dB (dual$\to$ResNet) and
+$-21.0$\,dB (ResNet$\to$dual) versus $-44.2/-29.2$\,dB white-box; mask
+transfer $-10.0/-18.0$\,dB versus $-37.1/-25.5$\,dB. The white-box
+worst-case disclosure that qualifies every ASR in this paper is therefore
+a genuine upper bound by a wide margin, and even a surrogate attacker
+still pays 3--8\,dB of price of compliance.
 
 \section{Standards, Deployment Implications, and Ethics}
 \label{sec:standards}
@@ -703,14 +818,22 @@ of the received realization (worst-case upper bound; the CSI-mismatch
 variant is released); PGD is zero-initialized without restarts, making
 reported ASRs lower bounds on the attack side and upper bounds on the
 defense side.
-(5)~Prototype scale: one training seed, two attack seeds, 300 windows,
-PGD-10 (PGD-50 and seed stability checked on key conditions: shifts
-$\le$1.7\,dB); \FULLP{the full 3-seed protocol completes the statistics}.
+(5)~Prototype scale: undefended headline now carries three training seeds
+(mask MEAP spread 1.1\,dB), two attack seeds, 300 windows, PGD-10 (PGD-50
+and seed stability checked on key conditions: shifts $\le$1.7\,dB); the
+defense study and the TRADES ablation remain single-seed (seed 42).
 (6)~The phase-difference stream contributes nothing on this task; the
 ``phase-aware'' framing of our prior work is retired honestly.
 (7)~The adversarially-trained defense's robustness is confined to its
 training power range ($-25$ to $-5$\,dB); attacks at parity or above still
-succeed, and a TRADES-style trade-off study is deferred.
+succeed. The TRADES ablation and the rural transfer are single-seed.
+(8)~The real-capture study uses 96 gated bursts from four capture
+locations (74 eval / 22 train windows); PC5, 802.11p and the noise class
+remain synthetic, and the real class is 802.11 captured at 5240\,MHz
+(U-NII-2, same OFDM family as U-NII-4), placed in the unlicensed half of
+the window. (9)~The second-victim study shares the receiver front-end, so
+it varies the classifier architecture, not the receiver; transfer attacks
+still assume a perfect attacker channel.
 
 \section{Conclusion}
 \label{sec:conclusion}
@@ -725,9 +848,13 @@ a purpose-optimized waveform at the same implied power is far stronger; the
 PSR-equivalence translation makes such comparisons meaningful. The compliant-attacker threat
 model, the MEAP and Price-of-Compliance metrics, and the released
 end-to-end framework give regulators, standards bodies, and O-RAN security
-engineers a physically grounded, certification-ready way to measure---and,
+engineers a physically grounded, certification-style way to measure---and,
 with mask-matched adversarial training (+14\,dB at zero clean-accuracy
-cost), to raise---the cost of attacking deep-learning spectrum sensing.
+cost; +17.9\,dB with a TRADES variant at 0.75\,pp clean cost, PoC 18.6), to
+raise---the cost of attacking deep-learning spectrum sensing. The
+stress-tests say the same thing three ways: seed-stable, real-signal-valid,
+and architecture-discriminating---the numbers move, the conclusions do
+not.
 
 % ============================================================================
 \begin{thebibliography}{99}

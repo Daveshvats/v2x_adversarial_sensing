@@ -34,8 +34,20 @@ def set_seed(s):
     np.random.seed(s); torch.manual_seed(s)
 
 
-def build_dataset(seed, n_per_class, frontend_stats_seed=42):
-    """Generate waveforms, apply per-sample mixed-scenario channels, return tensors."""
+def build_dataset(seed, n_per_class, frontend_stats_seed=42, cache=True):
+    """Generate waveforms, apply per-sample mixed-scenario channels, return tensors.
+
+    Deterministic in (seed, n_per_class): cached to results/dataset_cache/
+    so multi-seed protocol runs (Wave 7) skip the ~2 min regeneration.
+    """
+    import pickle
+    cdir = os.path.join(OUT, "dataset_cache")
+    cpath = os.path.join(cdir, f"ds_s{seed}_n{n_per_class}.pkl")
+    if cache and os.path.exists(cpath):
+        with open(cpath, "rb") as f:
+            X_rx, y, scen_labels = pickle.load(f)
+        return (torch.from_numpy(X_rx), torch.from_numpy(y).long(),
+                np.array(scen_labels))
     X, y = gen_dataset(n_per_class=n_per_class, seed=seed)
     rng = np.random.default_rng(seed + 1)
     B = X.shape[0]
@@ -53,9 +65,12 @@ def build_dataset(seed, n_per_class, frontend_stats_seed=42):
         X_rx[i] = yv.astype(np.complex64)
         scen_labels.append(scen)
     idx = np.random.default_rng(seed + 2).permutation(B)
-    return (torch.from_numpy(X_rx[idx]),
-            torch.from_numpy(y[idx]).long(),
-            np.array(scen_labels)[idx])
+    X_fin, y_fin, s_fin = X_rx[idx], y[idx], np.array(scen_labels)[idx]
+    if cache:
+        os.makedirs(cdir, exist_ok=True)
+        with open(cpath, "wb") as f:
+            pickle.dump((X_fin, y_fin, s_fin), f, protocol=4)
+    return (torch.from_numpy(X_fin), torch.from_numpy(y_fin).long(), s_fin)
 
 
 def energy_baseline(X_np, y_np, n_val):
@@ -159,6 +174,9 @@ def main():
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--skip-mag", action="store_true",
                     help="train only the dual-stream model (faster, resumable)")
+    ap.add_argument("--tag", default="",
+                    help="suffix for checkpoints/reports (e.g. _s123); "
+                         "default keeps canonical filenames")
     args = ap.parse_args()
 
     t0 = time.time()
@@ -194,8 +212,8 @@ def main():
                 "mag_mean": frontend.mag_mean, "mag_std": frontend.mag_std,
                 "config": {"seed": args.seed, "n_train": tr_w.size(0),
                            "n_val": val_w.size(0), "epochs": args.epochs}},
-               os.path.join(OUT, "checkpoint_dual.pt"))
-    print("    checkpoint_dual.pt saved", flush=True)
+               os.path.join(OUT, f"checkpoint_dual{args.tag}.pt"))
+    print(f"    checkpoint_dual{args.tag}.pt saved", flush=True)
 
     acc_mag, ebase = None, None
     if not args.skip_mag:
@@ -243,7 +261,7 @@ def main():
     })
     if acc_mag is not None:
         report["params_mag"] = sum(p.numel() for p in magm.parameters())
-    with open(os.path.join(OUT, "train_report.json"), "w") as f:
+    with open(os.path.join(OUT, f"train_report{args.tag}.json"), "w") as f:
         json.dump(report, f, indent=2)
     print("DONE", json.dumps(report), flush=True)
 

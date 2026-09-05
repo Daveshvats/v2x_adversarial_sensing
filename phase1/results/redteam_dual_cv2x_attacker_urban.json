@@ -1,0 +1,175 @@
+{
+  "tool": "v2x-redteam",
+  "version": "1.0",
+  "victim": "dual",
+  "attacker": "cv2x_attacker",
+  "mode": "untargeted",
+  "clean_acc_active": 1.0,
+  "eval_set": {
+    "eval_set": "synthetic, urban, 100/active class, seed 7"
+  },
+  "config": {
+    "steps": 10,
+    "seed": 7,
+    "psr_db": [
+      -45.0,
+      -40.0,
+      -35.0,
+      -30.0,
+      -25.0,
+      -20.0,
+      -15.0,
+      -10.0,
+      -5.0,
+      0.0,
+      5.0,
+      10.0
+    ],
+    "psd_margin": 2.0,
+    "alpha": 0.25,
+    "psr_reference": "clean received-signal window energy (sum |r|^2, pre-noise)"
+  },
+  "worst_case_disclosure": "attacker knows the victim model and the exact received realization incl. noise \u2014 ASRs are upper bounds",
+  "genie": {
+    "curve": {
+      "psr=-45dB": {
+        "cond_asr": 16.33,
+        "n_eligible": 300,
+        "robust_acc": 83.67
+      },
+      "psr=-40dB": {
+        "cond_asr": 40.0,
+        "n_eligible": 300,
+        "robust_acc": 60.0
+      },
+      "psr=-35dB": {
+        "cond_asr": 71.0,
+        "n_eligible": 300,
+        "robust_acc": 29.0
+      },
+      "psr=-30dB": {
+        "cond_asr": 88.0,
+        "n_eligible": 300,
+        "robust_acc": 12.0
+      },
+      "psr=-25dB": {
+        "cond_asr": 98.67,
+        "n_eligible": 300,
+        "robust_acc": 1.33
+      },
+      "psr=-20dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 300,
+        "robust_acc": 0.0
+      },
+      "psr=-15dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 300,
+        "robust_acc": 0.0
+      },
+      "psr=-10dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 300,
+        "robust_acc": 0.0
+      },
+      "psr=-5dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 300,
+        "robust_acc": 0.0
+      },
+      "psr=+0dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 300,
+        "robust_acc": 0.0
+      },
+      "psr=+5dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 300,
+        "robust_acc": 0.0
+      },
+      "psr=+10dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 300,
+        "robust_acc": 0.0
+      }
+    },
+    "meap_db": -44.22475707646814,
+    "censor": null,
+    "threshold_pct": 20.0
+  },
+  "mask_compliant": {
+    "curve": {
+      "psr=-45dB": {
+        "cond_asr": 3.0,
+        "n_eligible": 300,
+        "robust_acc": 97.0
+      },
+      "psr=-40dB": {
+        "cond_asr": 13.0,
+        "n_eligible": 300,
+        "robust_acc": 87.0
+      },
+      "psr=-35dB": {
+        "cond_asr": 25.0,
+        "n_eligible": 300,
+        "robust_acc": 75.0
+      },
+      "psr=-30dB": {
+        "cond_asr": 39.33,
+        "n_eligible": 300,
+        "robust_acc": 60.67
+      },
+      "psr=-25dB": {
+        "cond_asr": 58.33,
+        "n_eligible": 300,
+        "robust_acc": 41.67
+      },
+      "psr=-20dB": {
+        "cond_asr": 78.0,
+        "n_eligible": 300,
+        "robust_acc": 22.0
+      },
+      "psr=-15dB": {
+        "cond_asr": 88.33,
+        "n_eligible": 300,
+        "robust_acc": 11.67
+      },
+      "psr=-10dB": {
+        "cond_asr": 96.67,
+        "n_eligible": 300,
+        "robust_acc": 3.33
+      },
+      "psr=-5dB": {
+        "cond_asr": 99.67,
+        "n_eligible": 300,
+        "robust_acc": 0.33
+      },
+      "psr=+0dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 300,
+        "robust_acc": 0.0
+      },
+      "psr=+5dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 300,
+        "robust_acc": 0.0
+      },
+      "psr=+10dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 300,
+        "robust_acc": 0.0
+      }
+    },
+    "meap_db": -37.08333333333358,
+    "censor": null,
+    "threshold_pct": 20.0
+  },
+  "price_of_compliance_db": 7.14142374313456,
+  "poc_censor": null,
+  "physics_checks": {
+    "post_projection_budget_ratio_median": 0.16995442,
+    "delta_oob_fraction": 1.033e-14,
+    "note": "budget ratio must be <= 1.0000001 and OOB ~ 0 (mask)"
+  },
+  "elapsed_s": 249.3
+}

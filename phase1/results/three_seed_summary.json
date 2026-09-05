@@ -1,0 +1,85 @@
+{
+  "experiment": "3-seed training protocol (C12 training-seeds part; W4-B M4)",
+  "protocol": "run_train.py --seed {42,123,456} + run_attack.py urban/untargeted 12-pt grid, PGD-10, attack seed 7, 300 windows (identical protocol to the canonical seed-42 row of Table 4)",
+  "per_seed": {
+    "seed42": {
+      "meap_genie": -44.22475707646814,
+      "genie_censor": null,
+      "meap_mask": -37.08333333333358,
+      "mask_censor": null,
+      "poc": 7.14142374313456,
+      "poc_censor": null,
+      "clean_acc_dual": 1.0,
+      "energy_baseline_acc": 0.8862,
+      "energy_pair_acc": 0.7775,
+      "cnn_pair_acc": 1.0
+    },
+    "seed123": {
+      "meap_genie": -45.0,
+      "genie_censor": "le",
+      "meap_mask": -38.147222222222325,
+      "mask_censor": null,
+      "poc": 6.852777777777675,
+      "poc_censor": {
+        "genie": "le",
+        "poc_bias": "lower bound (genie MEAP censored at grid floor)"
+      },
+      "clean_acc_dual": 1.0,
+      "energy_baseline_acc": 0.8812,
+      "energy_pair_acc": 0.7725,
+      "cnn_pair_acc": 1.0
+    },
+    "seed456": {
+      "meap_genie": -45.0,
+      "genie_censor": "le",
+      "meap_mask": -37.89494470774108,
+      "mask_censor": null,
+      "poc": 7.105055292258918,
+      "poc_censor": {
+        "genie": "le",
+        "poc_bias": "lower bound (genie MEAP censored at grid floor)"
+      },
+      "clean_acc_dual": 1.0,
+      "energy_baseline_acc": 0.8775,
+      "energy_pair_acc": 0.74,
+      "cnn_pair_acc": 1.0
+    }
+  },
+  "mean_spread": {
+    "meap_mask_db": {
+      "mean": -37.709,
+      "spread": 1.064,
+      "note": "all 3 MEAPs EXACT (no censoring)"
+    },
+    "meap_genie_db": {
+      "values": [
+        -44.22475707646814,
+        -45.0,
+        -45.0
+      ],
+      "note": "seed42 exact -44.22; seeds 123/456 le-censored at grid floor -45 (genie crosses 20% at or below the floor)"
+    },
+    "poc_db": {
+      "mean": 7.033,
+      "spread": 0.289,
+      "note": "PoC is a LOWER BOUND for 2/3 seeds (genie censored); seed-42 PoC 7.14 is exact"
+    },
+    "clean_acc_dual": {
+      "mean": 1.0,
+      "spread": 0.0
+    },
+    "lr_baseline": {
+      "mean": 0.882,
+      "spread": 0.009
+    },
+    "lr_pair": {
+      "mean": 0.763,
+      "spread": 0.037
+    },
+    "cnn_pair": {
+      "mean": 1.0,
+      "spread": 0.0
+    }
+  },
+  "verdict": "Ordering invariant across seeds: genie < compliant < defended MEAP; headline deltas hold within 1.1 dB spread."
+}

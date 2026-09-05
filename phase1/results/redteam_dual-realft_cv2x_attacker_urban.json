@@ -1,0 +1,194 @@
+{
+  "tool": "v2x-redteam",
+  "version": "1.0",
+  "victim": "dual-realft",
+  "attacker": "cv2x_attacker",
+  "mode": "untargeted",
+  "clean_acc_active": 0.927,
+  "eval_set": {
+    "eval_set": "REAL OTA WiFi (74 windows) + synthetic PC5/11p (100/class), urban channels, seed 7",
+    "real_wifi_provenance": {
+      "dataset": "Technology-Recognition dataset of real-life LTE, Wi-Fi and DVB-T (Fontaine et al., UGent/imec, Gent, Belgium)",
+      "url": "https://cloud.ilabt.imec.be/index.php/s/qrJCWgzQaGPfHPr",
+      "paper": "Fontaine et al., 'Towards low-complexity wireless technology classification across multiple environments', Ad Hoc Networks 91:101881, 2019",
+      "license": "CC BY-NC-SA 4.0",
+      "captures": "wf10Msps_*_f5240MHz_*.bin \u2014 802.11 WiFi, 5240 MHz, USRP, 10 Msps, float32 interleaved I/Q",
+      "processing": "DC removal -> x2 polyphase resample to 20 Msps -> frequency shift to -5.0 MHz -> burst gating (>= 6 dB above 10th-pct window power and >= 3x noise floor) -> unit-power normalization",
+      "files_used": [
+        "wf10Msps_g60_uz_f5240MHz_r1.bin",
+        "wf10Msps_g76_rabot_f5240MHz_r1.bin",
+        "wf10Msps_g76_reep_f5240MHz_r1.bin",
+        "wf10Msps_g76_uz_f5240MHz_r1.bin",
+        "wf10Msps_g80_uz_f5240MHz_r2.bin"
+      ],
+      "n_windows_total": 96
+    }
+  },
+  "config": {
+    "steps": 10,
+    "seed": 7,
+    "psr_db": [
+      -45.0,
+      -40.0,
+      -35.0,
+      -30.0,
+      -25.0,
+      -20.0,
+      -15.0,
+      -10.0,
+      -5.0,
+      0.0,
+      5.0,
+      10.0
+    ],
+    "psd_margin": 2.0,
+    "alpha": 0.25,
+    "psr_reference": "clean received-signal window energy (sum |r|^2, pre-noise)"
+  },
+  "worst_case_disclosure": "attacker knows the victim model and the exact received realization incl. noise \u2014 ASRs are upper bounds",
+  "genie": {
+    "curve": {
+      "psr=-45dB": {
+        "cond_asr": 29.13,
+        "n_eligible": 254,
+        "robust_acc": 65.69
+      },
+      "psr=-40dB": {
+        "cond_asr": 48.82,
+        "n_eligible": 254,
+        "robust_acc": 47.45
+      },
+      "psr=-35dB": {
+        "cond_asr": 68.9,
+        "n_eligible": 254,
+        "robust_acc": 28.83
+      },
+      "psr=-30dB": {
+        "cond_asr": 90.55,
+        "n_eligible": 254,
+        "robust_acc": 8.76
+      },
+      "psr=-25dB": {
+        "cond_asr": 99.21,
+        "n_eligible": 254,
+        "robust_acc": 0.73
+      },
+      "psr=-20dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 254,
+        "robust_acc": 0.0
+      },
+      "psr=-15dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 254,
+        "robust_acc": 0.0
+      },
+      "psr=-10dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 254,
+        "robust_acc": 0.0
+      },
+      "psr=-5dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 254,
+        "robust_acc": 0.0
+      },
+      "psr=+0dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 254,
+        "robust_acc": 0.0
+      },
+      "psr=+5dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 254,
+        "robust_acc": 0.0
+      },
+      "psr=+10dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 254,
+        "robust_acc": 0.0
+      }
+    },
+    "meap_db": -45.0,
+    "censor": "le",
+    "threshold_pct": 20.0
+  },
+  "mask_compliant": {
+    "curve": {
+      "psr=-45dB": {
+        "cond_asr": 14.57,
+        "n_eligible": 254,
+        "robust_acc": 79.2
+      },
+      "psr=-40dB": {
+        "cond_asr": 18.9,
+        "n_eligible": 254,
+        "robust_acc": 75.18
+      },
+      "psr=-35dB": {
+        "cond_asr": 21.26,
+        "n_eligible": 254,
+        "robust_acc": 72.99
+      },
+      "psr=-30dB": {
+        "cond_asr": 31.1,
+        "n_eligible": 254,
+        "robust_acc": 63.87
+      },
+      "psr=-25dB": {
+        "cond_asr": 53.54,
+        "n_eligible": 254,
+        "robust_acc": 43.07
+      },
+      "psr=-20dB": {
+        "cond_asr": 73.23,
+        "n_eligible": 254,
+        "robust_acc": 24.82
+      },
+      "psr=-15dB": {
+        "cond_asr": 90.16,
+        "n_eligible": 254,
+        "robust_acc": 9.12
+      },
+      "psr=-10dB": {
+        "cond_asr": 97.24,
+        "n_eligible": 254,
+        "robust_acc": 2.55
+      },
+      "psr=-5dB": {
+        "cond_asr": 99.21,
+        "n_eligible": 254,
+        "robust_acc": 0.73
+      },
+      "psr=+0dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 254,
+        "robust_acc": 0.0
+      },
+      "psr=+5dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 254,
+        "robust_acc": 0.0
+      },
+      "psr=+10dB": {
+        "cond_asr": 100.0,
+        "n_eligible": 254,
+        "robust_acc": 0.0
+      }
+    },
+    "meap_db": -37.66949152542472,
+    "censor": null,
+    "threshold_pct": 20.0
+  },
+  "price_of_compliance_db": 7.330508474575282,
+  "poc_censor": {
+    "genie": "le",
+    "poc_bias": "lower bound (genie MEAP censored at grid floor)"
+  },
+  "physics_checks": {
+    "post_projection_budget_ratio_median": 0.16167238,
+    "delta_oob_fraction": 1.035e-14,
+    "note": "budget ratio must be <= 1.0000001 and OOB ~ 0 (mask)"
+  },
+  "elapsed_s": 229.3
+}

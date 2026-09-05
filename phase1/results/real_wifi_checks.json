@@ -1,0 +1,100 @@
+{
+  "experiment": "Wave-6 G1 real-WiFi physics gates",
+  "checks": {
+    "dc_pre": 0.008607493713498116,
+    "dc_post": 0.00013212971680331975,
+    "occupancy": {
+      "mean": 0.9966424107551575,
+      "min": 0.9902969002723694,
+      "max": 0.9992215633392334
+    },
+    "pool_size": 96,
+    "per_file": [
+      {
+        "floor": 0.002914727432653308,
+        "n_total": 1074,
+        "n_kept": 0,
+        "kept_frac": 0.0,
+        "file": "wf10Msps_g30_rabot_f5240MHz_r1.bin"
+      },
+      {
+        "floor": 0.0029228676576167345,
+        "n_total": 1074,
+        "n_kept": 0,
+        "kept_frac": 0.0,
+        "file": "wf10Msps_g30_uz_f5240MHz_r1.bin"
+      },
+      {
+        "floor": 0.03810383379459381,
+        "p_kept_median": 0.34726786613464355,
+        "sf_kept_median": 0.4019017517566681,
+        "n_total": 1074,
+        "n_kept": 18,
+        "kept_frac": 0.01675977653631285,
+        "file": "wf10Msps_g60_uz_f5240MHz_r1.bin"
+      },
+      {
+        "floor": 0.3678475022315979,
+        "n_total": 1074,
+        "n_kept": 0,
+        "kept_frac": 0.0,
+        "file": "wf10Msps_g76_gentbrugge_f5240MHz_r1.bin"
+      },
+      {
+        "floor": 0.3627117872238159,
+        "p_kept_median": 20.217443466186523,
+        "sf_kept_median": 0.361217200756073,
+        "n_total": 1074,
+        "n_kept": 19,
+        "kept_frac": 0.017690875232774673,
+        "file": "wf10Msps_g76_rabot_f5240MHz_r1.bin"
+      },
+      {
+        "floor": 0.3753545880317688,
+        "p_kept_median": 2.8589398860931396,
+        "sf_kept_median": 0.4366340935230255,
+        "n_total": 1074,
+        "n_kept": 3,
+        "kept_frac": 0.002793296089385475,
+        "file": "wf10Msps_g76_reep_f5240MHz_r1.bin"
+      },
+      {
+        "floor": 0.37337106466293335,
+        "p_kept_median": 15.111281394958496,
+        "sf_kept_median": 0.2223406583070755,
+        "n_total": 1074,
+        "n_kept": 25,
+        "kept_frac": 0.023277467411545624,
+        "file": "wf10Msps_g76_uz_f5240MHz_r1.bin"
+      },
+      {
+        "floor": 0.36990439891815186,
+        "p_kept_median": 11.797203063964844,
+        "sf_kept_median": 0.2466481626033783,
+        "n_total": 1074,
+        "n_kept": 31,
+        "kept_frac": 0.028864059590316574,
+        "file": "wf10Msps_g80_uz_f5240MHz_r2.bin"
+      }
+    ],
+    "papr_real_db": 9.947135925292969,
+    "papr_synthetic_db": 8.714336395263672,
+    "verdict": "PASS"
+  },
+  "provenance": {
+    "dataset": "Technology-Recognition dataset of real-life LTE, Wi-Fi and DVB-T (Fontaine et al., UGent/imec, Gent, Belgium)",
+    "url": "https://cloud.ilabt.imec.be/index.php/s/qrJCWgzQaGPfHPr",
+    "paper": "Fontaine et al., 'Towards low-complexity wireless technology classification across multiple environments', Ad Hoc Networks 91:101881, 2019",
+    "license": "CC BY-NC-SA 4.0",
+    "captures": "wf10Msps_*_f5240MHz_*.bin \u2014 802.11 WiFi, 5240 MHz, USRP, 10 Msps, float32 interleaved I/Q",
+    "processing": "DC removal -> x2 polyphase resample to 20 Msps -> frequency shift to -5.0 MHz -> burst gating (>= 6 dB above 10th-pct window power and >= 3x noise floor) -> unit-power normalization",
+    "files_used": [
+      "wf10Msps_g60_uz_f5240MHz_r1.bin",
+      "wf10Msps_g76_rabot_f5240MHz_r1.bin",
+      "wf10Msps_g76_reep_f5240MHz_r1.bin",
+      "wf10Msps_g76_uz_f5240MHz_r1.bin",
+      "wf10Msps_g80_uz_f5240MHz_r2.bin"
+    ],
+    "n_windows_total": 96
+  }
+}

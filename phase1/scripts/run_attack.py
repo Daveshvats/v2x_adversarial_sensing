@@ -104,10 +104,14 @@ def main():
                     help="in-band flat-PSD cap margin (mask attacker only);"
                          " sweep {2, 10} for the idealization sensitivity")
     ap.add_argument("--alpha", type=float, default=0.25)
+    ap.add_argument("--checkpoint", default="checkpoint_dual.pt",
+                    help="victim checkpoint filename in results/")
+    ap.add_argument("--tag-out", default="",
+                    help="suffix for the output JSON")
     args = ap.parse_args()
 
     t0 = time.time()
-    ckpt = torch.load(os.path.join(OUT, "checkpoint_dual.pt"),
+    ckpt = torch.load(os.path.join(OUT, args.checkpoint),
                       map_location="cpu", weights_only=False)
     model = DualStreamModel()
     model.load_state_dict(ckpt["model"])
@@ -134,7 +138,7 @@ def main():
 
         for mode in args.modes:
             targeted = (mode == "targeted_noise")
-            fname = scen_file.format(mode)
+            fname = scen_file.format(mode + args.tag_out)
             runs = {}
             for setting, sband in [("genie", None),
                                    ("cv2x_mask", band)]:

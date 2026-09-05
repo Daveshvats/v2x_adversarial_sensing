@@ -1,0 +1,26 @@
+{
+  "seed": 456,
+  "epochs_max": 25,
+  "n_train": 3200,
+  "n_val": 800,
+  "classes": [
+    "C-V2X-PC5",
+    "802.11p",
+    "WiFi-U-NII4",
+    "Noise"
+  ],
+  "scenarios": "mixed",
+  "clean_acc_dual": 1.0,
+  "clean_acc_mag_only": null,
+  "energy_baseline_acc": 0.8775,
+  "energy_baseline_pc5_11p_acc": 0.74,
+  "cnn_pc5_11p_pair_acc": 1.0,
+  "val_acc_per_class": {
+    "C-V2X-PC5": 100.0,
+    "802.11p": 100.0,
+    "WiFi-U-NII4": 100.0,
+    "Noise": 100.0
+  },
+  "params_dual": 86052,
+  "elapsed_s": 307.5
+}
