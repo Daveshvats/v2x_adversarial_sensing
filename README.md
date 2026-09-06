@@ -8,8 +8,9 @@
 **Working title:** *The Price of Compliance: Emission-Mask-Constrained Adversarial
 Attacks on Deep Learning Spectrum Sensing in the 5.9 GHz ITS Band*
 
-> Can a transmitter that follows **every spectrum rule** — right frequency, right
-> allocation, inside its emission mask, passing every spectrum monitor — still break
+> Can a transmitter that stays **inside its spectral-emission constraints** — right
+> frequency, right allocation, inside an emission mask modeled on the applicable
+> limits — still break
 > a deep-learning coexistence sensor? Yes. And this repository is the complete,
 > audited research framework that shows how, what it costs the attacker, how to
 > defend against it, and where the remaining honest gaps are.
@@ -106,9 +107,10 @@ front-end) realizes only 14.0%; transmitted attacks at the same power: genie
 overstates physical realizability. ε≤0.3 → 0–1.7% at −34..−44 dB.
 `results/feature_space_equiv.json`.
 
-**CSI robustness (C13)**: 0.3-relative CSI error costs the attack only 1–2 pp
-(MEAP within 0.5 dB); NO CSI moves the compliant 20%-ASR threshold from −37 to
-≈−16 dB (~21 dB penalty). `results/csi_mismatch.json`.
+**CSI robustness (C13)**: 0.3-relative CSI error costs ≤2.3 pp of conditional
+ASR on the mask curves (≤2.7 pp genie; the MEAP shift is not resolvable — the
+20% crossing sits below the stored grid floor); NO CSI moves the compliant
+20%-ASR threshold from −37 to ≈−16 dB (~21 dB penalty). `results/csi_mismatch.json`.
 
 **Metric robustness**: PGD-50 shifts mask MEAP by −1.7 dB and raises mid-grid
 ASR by up to +37 pp (PGD-10 numbers are conservative lower bounds); attack
@@ -118,16 +120,16 @@ allocation constraint, not the flat cap, drives the cost). **Training seeds
 7.1/6.9/7.1 (lower bound 2/3), clean 3×100%. `results/three_seed_summary.json`.
 
 **Second victim (ResNet, 493k params)**: white-box genie −29.2 / compliant
-−25.5 / PoC 3.7 dB — architecture shifts the compliant threshold by 12–15 dB.
-**Surrogate transfer**: 11–25 dB penalty (white-box disclosure = genuine upper
+−25.5 / PoC 3.7 dB — architecture shifts the compliant threshold by 11.6–15.1 dB.
+**Surrogate transfer**: 11–23 dB penalty (white-box disclosure = genuine upper
 bound). `results/victim2_transfer.json`.
 
 **Real OTA WiFi in the loop** (Fontaine/UGent USRP captures, 5240 MHz):
 frozen model 66.2% real-WiFi accuracy; compliant MEAP −35.9 dB (frozen),
 −37.7 dB after leakage-free fine-tune (PoC 7.3) — the canonical conclusion
 replicates on real signals. OOD margin collapse: 0.0% synthetic flips vs
-68.5% real flips at −45 dB PSR (synthetic-only evaluation overstates
-robustness). `results/real_wifi_attack.json`.
+67.35% real flips at −45 dB PSR on the frozen model's real-only curve
+(synthetic-only evaluation overstates robustness). `results/real_wifi_attack.json`.
 
 **TRADES ablation (C17)**: mask MEAP −19.1 dB (vs standard AT −23.1), PoC
 18.6, at 99.25% clean — stronger compliant-axis defense at 0.75 pp clean cost.

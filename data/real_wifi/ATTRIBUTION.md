@@ -19,7 +19,7 @@ results derived in this repository) inherit the ShareALike terms.
 ## Files
 
 `wf10Msps_<gain>_<location>_f5240MHz_r<N>.bin` — IEEE 802.11 WiFi captured
-over-the-air at 5240 MHz (U-NII-2 band; same OFDM PHY family as U-NII-4)
+over-the-air at 5240 MHz (U-NII-1 band; same OFDM PHY family as U-NII-4)
 with a USRP at 10 Msps, float32 interleaved I/Q, 8.8 MB (1.1 M complex
 samples, 0.11 s) each. Locations: UZ (university hospital), Rabot, Reep,
 Gentbrugge — distinct real propagation environments.

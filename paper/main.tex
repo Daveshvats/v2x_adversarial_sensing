@@ -69,7 +69,7 @@ compliance) at no clean-accuracy cost, with robustness honestly bounded by
 its training power range. These conclusions are stress-tested beyond the prototype protocol: three
 training seeds move the compliant threshold by at most 1.1\,dB; replacing
 the WiFi class with real over-the-air 802.11 captures (recorded at
-5.24\,GHz in U-NII-2, the OFDM family adjacent to U-NII-4) replicates the
+5.24\,GHz in U-NII-1, the OFDM family adjacent to U-NII-4) replicates the
 compliant MEAP within 1.8\,dB while exposing a decision-margin fragility
 that synthetic-only evaluation hides entirely; and a second victim
 architecture (early-fusion ResNet) shifts the threshold by 11.6--15.1\,dB,
@@ -247,7 +247,10 @@ the resulting robustness metrics deployable (Section~\ref{sec:standards}).
 \centering
 \caption{Threat-model comparison. ``Mask'' = regulatory allocation +
 emission-mask constraint on the transmitted adversarial perturbation.
-PUEA = primary-user emulation, the pre-DL ancestor (Section~\ref{sec:related}).}
+PUEA = primary-user emulation, the pre-DL ancestor (Section~\ref{sec:related}).
+``Power sweep'': \emph{fixed} = single power level; \emph{PNR} = accuracy-vs-PNR
+sweeps with no threshold-in-power metric; \emph{MEAP} = threshold-in-power
+robustness metric (this work).}
 \label{tab:threat}
 \small
 \begin{tabular}{lccccc}
@@ -258,7 +261,7 @@ Sadeghi \& Larsson~\cite{sadeghi2019} & -- & -- & -- & -- & modulation \\
 Liu et al.~\cite{liu2022} & -- & -- & -- & -- & spectrum sensing \\
 Anand et al.~\cite{anand2008} (PUEA) & \checkmark & -- & -- & fixed & occupancy \\
 Kim et al.~\cite{kim2020} & \checkmark & \checkmark & -- & fixed & modulation \\
-Kim et al.~\cite{sagduyu2021} & \checkmark & \checkmark & -- & fixed & modulation \\
+Kim et al.~\cite{sagduyu2021} & \checkmark & \checkmark & -- & PNR & modulation \\
 Zheng et al.~\cite{zheng2026} & \checkmark & \checkmark & -- & fixed & wideband sensing \\
 RadioShock~\cite{radioshock2026} & \checkmark & \checkmark & -- & fixed & communication \\
 \textbf{This work} & \checkmark & \checkmark & \textbf{\checkmark} & \textbf{MEAP} & \textbf{ITS coexistence} \\
@@ -754,7 +757,7 @@ three-seed spread. The price of compliance is 7.3\,dB (lower bound),
 matching the synthetic 7.1\,dB. \textbf{(R3) Synthetic-only evaluation
 overstates robustness.} At $-45$\,dB PSR---an attack three and a half
 orders of magnitude below the signal---synthetic windows flip at 0.0\%
-while real WiFi windows flip at 68.5\%: the model's correctly-classified
+while real WiFi windows flip at 67.35\%: the model's correctly-classified
 real windows sit essentially on the decision boundary (near-zero margin),
 so gradient-aligned perturbations of almost any power flip them.
 Conditional-ASR at ultra-low power therefore measures \emph{decision-margin
@@ -954,7 +957,7 @@ succeed. The TRADES ablation and the rural transfer are single-seed.
 (8)~The real-capture study uses 96 gated bursts from three capture
 locations (74 eval / 22 train windows); PC5, 802.11p and the noise class
 remain synthetic, and the real class is 802.11 captured at 5240\,MHz
-(U-NII-2, same OFDM family as U-NII-4), placed in the unlicensed half of
+(U-NII-1, same OFDM family as U-NII-4), placed in the unlicensed half of
 the window. (9)~The second-victim study shares the receiver front-end, so
 it varies the classifier architecture, not the receiver; transfer attacks
 still assume a perfect attacker channel. (10)~The PA study uses a

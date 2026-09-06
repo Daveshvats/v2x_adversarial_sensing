@@ -3,7 +3,7 @@
 Source (G1, "real signal in the loop"):
   Fontaine et al., "Technology-Recognition dataset of real-life LTE, Wi-Fi and
   DVB-T" (imec / UGent), captures in Gent, Belgium. 802.11 WiFi at 5240 MHz
-  (U-NII-2 band, same OFDM PHY family as U-NII-4) captured over-the-air with a
+  (U-NII-1 band, same OFDM PHY family as U-NII-4) captured over-the-air with a
   USRP at 10 Msps, float32 interleaved I/Q, 8.8 MB (1.1 M complex samples,
   0.11 s) per file. License: CC BY-NC-SA 4.0 (redistributed with attribution
   for research use).

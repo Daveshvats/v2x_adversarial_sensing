@@ -36,7 +36,7 @@ attack power does compliance cost, compared to an unconstrained one?
 
 1. **Yes.** A rule-compliant transmitter breaks an undefended deep-learning
    sensor at a received power **tens of thousands of times below the signal
-   it is attacking** (−37 dB in our units — four orders of magnitude). At a
+   it is attacking** (−37 dB in our units — nearly four orders of magnitude). At a
    more modest one-tenth of the victim's power, it fools the sensor **96.7%
    of the time**.
 
@@ -66,10 +66,10 @@ attack power does compliance cost, compared to an unconstrained one?
    But the protection only covers the power range it was trained for.
 
 5. **This is not about our specific neural network.** We attacked a second,
-   architecturally different network: its break-point shifted by 12–15 dB,
+   architecturally different network: its break-point shifted by 11.6–15.1 dB,
    showing the test discriminates between models — model choice matters
    more than the emission mask. Attacks transferred *between* models only
-   at 11–25 dB extra cost: knowing the exact victim model is a big part of
+   at 11–23 dB extra cost: knowing the exact victim model is a big part of
    the threat.
 
 6. **Real signals confirm it.** Replacing our simulated Wi-Fi class with

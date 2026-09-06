@@ -33,9 +33,11 @@ addressed by enforcement). The case of regulatory interest is different:
 a **rule-compliant** transmitter that adds a purpose-crafted, low-power
 component to its own lawful transmission. Such a device:
 
-* passes every in-band power and out-of-band emission check (the
-  perturbation is projected onto the attacker's mask by construction);
-* creates no enforcement signature — there is nothing to detect or fine;
+* passes the modeled spectral-emission constraints (allocation plus an
+  emission mask modeled on the applicable limits — the perturbation is
+  projected onto the attacker's mask by construction);
+* creates no enforcement signature — there is nothing to detect or fine
+  under mask-shaped monitoring;
 * yet shifts the output of a learned coexistence classifier.
 
 ## Measured effect (prototype scale; three training seeds; TR 37.885-style
@@ -93,12 +95,15 @@ substitute for, worst-case receiver testing in power units.
 * Prototype scale: 300 evaluation windows per condition, PGD-10 (lower
   bound on attack strength), three training seeds (spread 1.1 dB), worst
   case attacker knowledge (exact model and received realization — the
-  disclosed upper bound; surrogate-model attackers measured 11–25 dB
+  disclosed upper bound; surrogate-model attackers measured 11–23 dB
   weaker).
 * Synthetic channel and waveform models (TR 37.885-inspired;
   standard-parameterized PC5/802.11p), with real OTA 802.11 captures for
   the Wi-Fi class; no over-the-air validation of the attack itself.
-* RF impairments (PA nonlinearity, phase noise) are not modeled.
+* RF impairments beyond a memoryless Rapp power-amplifier model (phase
+  noise, CFO, AGC, quantization) are not modeled; PA spectral regrowth at
+  the amplifier output port IS modeled and independently verified (see the
+  "power-amplifier reality check" section of the accompanying paper).
 * Nothing here licenses non-compliant behavior; the attack *is* compliant
   by construction, which is precisely why it is a policy consideration
   rather than an enforcement matter.
