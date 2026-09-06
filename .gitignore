@@ -6,33 +6,17 @@ __pycache__/
 .venv/
 venv/
 
-# --- Fresh reproduction outputs (regenerated locally; do NOT commit) ---
-# Keep the shipped evidence files only (negated below).
-results/reproduction/*
-!results/reproduction/smoke_seed42.json
-!results/reproduction/repro_seed42.json
-
-# --- Runtime output dirs created by src/ and experiments/ scripts ---
-autoattack_data/
-src/autoattack_data/
-experiments/transfer_data/
-experiments/official_autoattack_data/
-experiments/v3_channel_data/
-# mobility_scenario_eval.py writes its JSON next to the repo root:
-/mobility_scenario_results.json
-
-# --- Model artifacts ---
-*.pt
+# --- Model artifacts (generated locally) ---
 *.pth
 *.ckpt
 checkpoints/
+
+# NOTE: *.pt is NOT globally ignored here — the shipped victim checkpoints
+# in results/ are part of the release artifact (v2x_redteam.py evaluate and
+# the 3-seed protocol need them; ~8 MB total; all configs recorded in the
+# result JSONs). If you add throwaway .pt files, delete them explicitly.
 
 # --- OS / editor ---
 .DS_Store
 Thumbs.db
 *.swp
-
-# --- Phase-1: victim checkpoints ARE part of the release artifact ---
-# (negate the global *.pt ignore: v2x-redteam/evaluate + 3-seed protocol
-#  need them; total 7 MB; all configs recorded in the result JSONs)
-!phase1/results/*.pt

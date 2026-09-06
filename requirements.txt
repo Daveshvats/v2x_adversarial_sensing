@@ -1,11 +1,6 @@
+# v2x_adversarial_sensing — Phase-1 runtime requirements
+# All shipped results were produced on CPU with fixed seeds; GPU optional.
 torch>=2.0
 numpy>=1.24
 scipy>=1.10
-scikit-learn>=1.3
 matplotlib>=3.7
-tqdm>=4.65
-# NOTE: experiments/official_autoattack_eval.py additionally needs the official
-# AutoAttack library, which is not on PyPI. Only if you run that script:
-#   pip install git+https://github.com/fra31/auto-attack
-# (scipy / scikit-learn / tqdm are kept for paper-environment parity; the release
-#  code itself imports only torch, numpy, and matplotlib.)

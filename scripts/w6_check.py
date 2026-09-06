@@ -13,7 +13,7 @@ import sys, os, json
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(HERE)                 # v2x_phase1/
+ROOT = os.path.dirname(HERE)                 # repo root
 sys.path.insert(0, os.path.join(ROOT, "src"))
 
 DATA = "/home/z/my-project/download/wave6_data/extracted"

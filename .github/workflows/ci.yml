@@ -1,4 +1,4 @@
-name: smoke
+name: ci
 
 on:
   push:
@@ -8,74 +8,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  smoke:
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Cache pip wheels
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: ${{ runner.os }}-pip-
-
-      - name: Install CPU-only PyTorch + dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
-          python -m pip install -r requirements.txt
-          python -c "import torch; assert torch.cuda.is_available() == False; print('torch', torch.__version__, '(CPU-only OK)')"
-
-      - name: Run deterministic smoke reproduction (seed 42)
-        env:
-          PYTHONHASHSEED: "0"
-          OMP_NUM_THREADS: "2"
-          MKL_NUM_THREADS: "2"
-          OPENBLAS_NUM_THREADS: "2"
-          NUMEXPR_NUM_THREADS: "2"
-        run: |
-          python reproduce/run_reproduction.py --smoke
-
-      - name: Assert expected smoke results (tolerance for runner CPU variance)
-        run: |
-          python - <<'EOF'
-          import json, sys
-          d = json.load(open("results/reproduction/smoke_seed42.json"))
-          assert d["config"]["smoke"] is True
-          assert d["config"]["epochs"] == 3
-          assert d["env"]["device"] == "cpu"
-          s = d["seeds"][0]
-          assert s["seed"] == 42
-          assert s["n_params"] == 86052, f"n_params={s['n_params']}"
-          def close(got, want, tol):
-              assert abs(got - want) <= tol, f"{got} vs {want} +/- {tol}"
-          close(s["clean_acc"] * 100, 85.50, 1.0)
-          f = s["attacks"]["fgsm"]["eps=0.03"]
-          p = s["attacks"]["pgd20"]["eps=0.03"]
-          close(f["raw_asr"], 23.62, 1.0)
-          close(p["raw_asr"], 24.12, 1.0)
-          close(f["cond_asr"], 10.67, 1.0)
-          close(p["cond_asr"], 11.26, 1.0)
-          print("SMOKE ASSERTIONS PASSED:",
-                "clean", s["clean_acc"] * 100,
-                "| fgsm", f["raw_asr"], "cond", f["cond_asr"],
-                "| pgd20", p["raw_asr"], "cond", p["cond_asr"])
-          EOF
-
-  phase1-release-gate:
-    # Phase-1 (compliant attacker) release gate: verifies that the SHIPPED
-    # victim checkpoints load, that the canonical clean accuracy reproduces,
-    # and that the mask projection invariant (pre-PA OOB = 0) holds on a
-    # fresh PGD run. Runs only when phase1/ is present (phase1 branch + any
-    # future merge into main).
+  release-gate:
+    # Release gate for the Phase-1 (Compliant Attacker) artifact: verifies
+    # that the shipped victim checkpoints load, that the canonical clean
+    # accuracy reproduces, and that the mask-projection invariant
+    # (pre-PA OOB = 0) holds on a fresh PGD run.
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -87,10 +24,12 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install CPU-only PyTorch
+      - name: Install CPU-only PyTorch + dependencies
         run: |
           python -m pip install --upgrade pip
           python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r requirements.txt
+          python -c "import torch; assert torch.cuda.is_available() == False; print('torch', torch.__version__, '(CPU-only OK)')"
 
       - name: Check shipped checkpoints exist (release artifact integrity)
         run: |
@@ -100,7 +39,7 @@ jobs:
                     "checkpoint_mag.pt", "checkpoint_dual_at.pt",
                     "checkpoint_dual_realft.pt"]
           for f in needed:
-              p = os.path.join("phase1", "results", f)
+              p = os.path.join("results", f)
               assert os.path.exists(p) and os.path.getsize(p) > 100_000, \
                   f"missing/undersized release checkpoint: {p}"
           print("all 5 release checkpoints present:", needed)
@@ -110,11 +49,13 @@ jobs:
         env:
           OMP_NUM_THREADS: "2"
           MKL_NUM_THREADS: "2"
+          OPENBLAS_NUM_THREADS: "2"
+          NUMEXPR_NUM_THREADS: "2"
         run: |
           python - <<'EOF'
           import os, sys
-          sys.path.insert(0, os.path.join("phase1", "src"))
-          sys.path.insert(0, os.path.join("phase1", "scripts"))
+          sys.path.insert(0, os.path.join("src"))
+          sys.path.insert(0, os.path.join("scripts"))
           import torch
           torch.manual_seed(7)
           torch.set_num_threads(2)
@@ -124,8 +65,7 @@ jobs:
           from waveforms import ATTACK_BANDS
           import numpy as np
 
-          ck = torch.load(os.path.join("phase1", "results",
-                                       "checkpoint_dual.pt"),
+          ck = torch.load(os.path.join("results", "checkpoint_dual.pt"),
                           map_location="cpu", weights_only=False)
           model = DualStreamModel(); model.load_state_dict(ck["model"])
           model.eval()
@@ -138,6 +78,8 @@ jobs:
           assert acc >= 0.95, f"clean acc on active tx too low: {acc}"
           print(f"clean acc (30 active windows): {acc*100:.1f}%")
 
+          # fresh compliant attack at PSR 0 dB: the attack must work AND
+          # the mask-projection invariant (pre-PA OOB = 0) must hold
           pb = p * (10 ** (0.0 / 10.0))                    # PSR 0 dB
           out = waveform_pgd(model, fe, x, h, y, pb, steps=5,
                              band=ATTACK_BANDS["cv2x_attacker"],

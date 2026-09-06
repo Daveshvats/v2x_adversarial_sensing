@@ -36,7 +36,7 @@ keywords:
   - "PyTorch"
   - "reproducibility"
 license: "MIT"
-version: "phase1-1.1.0"
+version: "phase1-1.2.0"
 date-released: "2026-09-05"
 preferred-citation:
   type: article

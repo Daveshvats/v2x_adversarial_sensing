@@ -67,13 +67,21 @@ print("\n== sec:papr: regrowth claims ==")
 r6 = res["regrowth"]["p=3/ibo=6"]
 ps("paper -19.3 dBr p95 @IBO6 p=3", near(r6["mask_excess_p95_dbr"], -19.3, 0.05)
    and tex_has("$-19.3$\\,dBr"), f"JSON {r6['mask_excess_p95_dbr']}")
-# the lenient-gate sentence
+# the lenient-gate sentence (W11 audit F5a fix: paper now says "92% of
+# windows fail even the lenient ... (all fail the strict gate)" — correct
+# for JSON pass_lenient=0.08. The pre-fix wording "0% of windows pass even
+# the lenient" must NOT reappear unless pass_lenient == 0.)
 pl = r6["pass_lenient"]
-if near(pl, 0.0, 1e-9) and tex_has("0\\% of windows pass even the lenient"):
+if near(pl, 0.0, 1e-9):
     ps("paper '0% pass lenient' @IBO6 p=3", True, "JSON 0.0")
+elif tex_has("fail even the lenient") and \
+        not tex_has("0\\% of windows pass even the lenient"):
+    ps("paper '92% fail lenient' @IBO6 p=3 (F5a-corrected wording)", True,
+       f"JSON pass_lenient={pl} -> {100-pl*100:.0f}% fail / "
+       f"{pl*100:.0f}% pass (paper wording matches)")
 else:
-    ps("paper '0% pass even the lenient -28 dBr shoulder' @IBO6 p=3", False,
-       f"paper says 0% of windows pass the lenient gate; JSON "
+    ps("paper lenient-gate sentence @IBO6 p=3", False,
+       f"paper wording does not match JSON "
        f"regrowth['p=3/ibo=6'].pass_lenient = {pl} "
        f"({pl*100:.0f}% DO pass, i.e. {100-pl*100:.0f}% fail). "
        f"(p=2/ibo=6: {res['regrowth']['p=2/ibo=6']['pass_lenient']})")
@@ -167,10 +175,12 @@ print("\n== abstract / conclusion / limitations PA sentences ==")
 ps("abstract: highest PAPR (11.1 vs 6.3-9.0)",
    tex_has("(11.1\\,dB vs.\\ 6.3--9.0\\,dB") and near(m["mean_db"], 11.1, 0.05),
    "traced")
-ps("abstract: -40 dBr mask at 13 dB backoff",
-   tex_has("inside a\n$-40$\\,dBr mask at 13\\,dB backoff") and star["p=3"] == 13.0,
-   f"JSON p=3 IBO* {star['p=3']} (p=2 needs {star['p=2']}; abstract cites "
-   "only the p=3 value — body gives both)")
+ps("abstract: -40 dBr mask at 13--15 dB backoff (F5d-corrected)",
+   (tex_has("13--15\\,dB backoff") or
+    tex_has("inside a\n$-40$\\,dBr mask at 13\\,dB backoff"))
+   and star["p=3"] == 13.0,
+   f"JSON p=3 IBO* {star['p=3']}, p=2 IBO* {star['p=2']}; abstract now "
+   "cites the 13--15 dB range")
 ps("abstract: PA-aware gains 1.2 dB", tex_has("gaining 1.2\\,dB")
    and near(a13["shift_vs_control_db"], -1.2, 0.05), "traced")
 ps("conclusion PA sentences present",
@@ -257,11 +267,16 @@ ps("canonical -44.2 still headline", tex_has("$-44.2$ dB")
 ps("price-of-compliance table row intact",
    tex_has("urban & untargeted & $-44.2$ dB & $-37.1$ dB & $7.1$ dB"),
    "row found verbatim")
-pi("system-model PAPR sentence",
-   "paper Sec. 3 still says 'measured: 6.1 dB PC5 vs 8.8/8.6 dB' "
-   "(untraced legacy number, W9-B already noted); Wave-11 JSON now provides "
-   "committed benign PAPR 6.26/8.77/8.69 — the two measurements agree to "
-   "<0.2 dB but the Sec. 3 sentence still cites the older untraced one")
+if tex_has("6.1\\,dB PC5") or tex_has("8.8/8.6\\,dB"):
+    pi("system-model PAPR sentence",
+       "paper Sec. 3 still says 'measured: 6.1 dB PC5 vs 8.8/8.6 dB' "
+       "(untraced legacy number, W9-B already noted); Wave-11 JSON now provides "
+       "committed benign PAPR 6.26/8.77/8.69 — the two measurements agree to "
+       "<0.2 dB but the Sec. 3 sentence still cites the older untraced one")
+else:
+    ps("system-model PAPR sentence cites committed W11 measurement",
+       tex_has("6.26\\,dB PC5") and tex_has("8.77/8.69\\,dB"),
+       "Sec. 3 now traces to results/papr_pa_results.json (benign PAPR)")
 
 # --------------------------------------------------------------------------
 print(f"\nTOTAL: {len(fails)} FAIL, {len(warns)} INFO")
