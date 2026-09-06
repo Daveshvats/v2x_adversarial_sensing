@@ -1,0 +1,73 @@
+{
+  "experiment": "Compliant-Attacker (mask-constrained waveform PGD, corrected PSR axis)",
+  "config": {
+    "steps": 10,
+    "psr_db": [
+      -55.0,
+      -50.0
+    ],
+    "n_eval_per_class": 100,
+    "seed": 7,
+    "attack_pgd_alpha_frac": 0.25,
+    "psd_cap_margin": 2.0,
+    "psr_reference": "clean received-signal window energy (sum |r|^2, pre-noise)",
+    "mask_band_mhz": {
+      "lo": 0.0,
+      "hi": 10.0
+    },
+    "genie": "power-only, no PSD cap (corrected 2026-09-05)"
+  },
+  "per_scenario": {
+    "urban": {
+      "clean_acc_active": 1.0,
+      "runs": {
+        "untargeted/genie": {
+          "psr=-55dB": {
+            "cond_asr": 0.0,
+            "robust_acc": 100.0,
+            "n_eligible": 300
+          },
+          "psr=-50dB": {
+            "cond_asr": 3.33,
+            "robust_acc": 96.67,
+            "n_eligible": 300
+          }
+        },
+        "untargeted/cv2x_mask": {
+          "psr=-55dB": {
+            "cond_asr": 0.0,
+            "robust_acc": 100.0,
+            "n_eligible": 300
+          },
+          "psr=-50dB": {
+            "cond_asr": 0.0,
+            "robust_acc": 100.0,
+            "n_eligible": 300
+          }
+        }
+      },
+      "summary": {
+        "untargeted": {
+          "meap_genie_db": null,
+          "meap_genie_censor": "ge",
+          "meap_cv2x_mask_db": null,
+          "meap_cv2x_mask_censor": "ge",
+          "price_of_compliance_db": null,
+          "poc_censor": {
+            "genie": "ge",
+            "mask": "ge"
+          },
+          "genie_curve": [
+            0.0,
+            3.33
+          ],
+          "mask_curve": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  },
+  "elapsed_s": 43.3
+}

@@ -45,6 +45,8 @@ Baselines and metrics
     correctly before the attack (see Phase-0 AUDIT.md for why raw ASR misleads).
 """
 
+import time
+
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -144,7 +146,8 @@ def project(delta: torch.Tensor, band: dict, p_budget: torch.Tensor,
 # ---------------------------------------------------------------------------
 def waveform_pgd(model, frontend, x_rx, h_a, y, p_budget, steps=10,
                  band=None, targeted=False, target_class=NOISE_CLASS,
-                 alpha_frac=0.25, psd_margin=2.0, return_delta=False):
+                 alpha_frac=0.25, psd_margin=2.0, return_delta=False,
+                 project_fn=None):
     """PGD-K attack on the waveform delta.
 
     model/frontend : victim (differentiable chain)
@@ -154,10 +157,14 @@ def waveform_pgd(model, frontend, x_rx, h_a, y, p_budget, steps=10,
     p_budget       : (B,) linear power budgets per sample
     band           : {"lo","hi"} MHz for mask compliance; None => genie
     targeted       : minimize CE to target_class (e.g., cloak as Noise)
+    project_fn     : optional custom projection (delta, band, p_budget,
+                     psd_margin) -> delta. Overrides the default project()
+                     (used by the ETSI-Table-7-shaped variant, src/etsi_mask).
     """
     B = x_rx.size(0)
     delta = torch.zeros_like(x_rx, requires_grad=True)
     h = torch.as_tensor(h_a, dtype=x_rx.dtype)
+    proj = project_fn if project_fn is not None else project
 
     for _ in range(steps):
         r = x_rx + cconv(delta, h)
@@ -174,7 +181,7 @@ def waveform_pgd(model, frontend, x_rx, h_a, y, p_budget, steps=10,
             # torch complex autograd convention: z - a*g DESCENDS the loss;
             # verified empirically in scripts/debug_attack.py
             delta = delta - step
-            delta = project(delta, band, p_budget, psd_margin=psd_margin)
+            delta = proj(delta, band, p_budget, psd_margin=psd_margin)
         delta = delta.detach().requires_grad_(True)
 
     with torch.no_grad():
@@ -185,6 +192,96 @@ def waveform_pgd(model, frontend, x_rx, h_a, y, p_budget, steps=10,
     if return_delta:
         out["delta"] = delta.detach()
     return out
+
+
+def waveform_pgd_restarts(model, frontend, x_rx, h_a, y, p_budget, steps=50,
+                          restarts=10, base_seed=0, band=None, targeted=False,
+                          target_class=NOISE_CLASS, alpha_frac=0.25,
+                          psd_margin=2.0, chunk=300):
+    """Multi-restart PGD-K: best-of-R per sample (adaptive-attack protocol).
+
+    Restart 0 is the DETERMINISTIC zero init (identical to waveform_pgd —
+    continuity with every previously reported number); restarts 1..R-1 are
+    complex-Gaussian random inits, scaled to a random fraction U[0.2, 1.0] of
+    the per-sample window-energy budget and projected onto the feasible set,
+    each from its own reproducible RNG stream
+    np.random.default_rng(base_seed * 7919 + r).
+
+    Per sample the delta with the highest attack objective is kept:
+      untargeted: objective = CE(logits, y)        (higher = stronger attack)
+      targeted  : objective = -CE(logits, target)  (higher = stronger attack)
+    Final predictions are re-evaluated from the winning deltas (no grad).
+
+    chunk: eval-sized batches (memory safety), same convention as run_attack.
+    Returns {"preds", "obj_best", "win_restart"} (obj_best/winning restart are
+    per-sample tensors; preds is the argmax over the full eval set).
+    """
+    B = x_rx.size(0)
+    h = torch.as_tensor(h_a, dtype=x_rx.dtype)
+    best_obj = torch.full((B,), -float("inf"))
+    best_delta = torch.zeros_like(x_rx)
+    win_restart = torch.full((B,), -1, dtype=torch.long)
+
+    for r in range(restarts):
+        t0 = time.time()
+        if r == 0:
+            delta = torch.zeros_like(x_rx, requires_grad=True)
+        else:
+            rng = np.random.default_rng(base_seed * 7919 + r)
+            g = (rng.standard_normal((B, x_rx.size(1))) +
+                 1j * rng.standard_normal((B, x_rx.size(1))))
+            g = torch.from_numpy(g.astype(np.complex64))
+            e = (g.abs() ** 2).sum(dim=1)                      # unit-scale energy
+            g = g / (e.sqrt().unsqueeze(1) + 1e-12)
+            frac = torch.from_numpy(
+                rng.uniform(0.2, 1.0, size=B).astype(np.float32))
+            with torch.no_grad():
+                delta = project(g * (frac * p_budget).sqrt().unsqueeze(1),
+                                band, p_budget, psd_margin=psd_margin)
+            delta = delta.detach().requires_grad_(True)
+
+        for i in range(0, B, chunk):
+            xb, yb, pb = x_rx[i:i + chunk], y[i:i + chunk], p_budget[i:i + chunk]
+            db = delta[i:i + chunk].clone().detach().requires_grad_(True)
+            hb = h if h.dim() == 1 else h[i:i + chunk]
+            for _ in range(steps):
+                rr = xb + cconv(db, hb)
+                logits = model.forward_wave(rr, frontend)
+                if targeted:
+                    loss = F.cross_entropy(
+                        logits, torch.full_like(yb, target_class))
+                else:
+                    loss = -F.cross_entropy(logits, yb)
+                g_, = torch.autograd.grad(loss, db)
+                gn = g_ / (g_.abs().norm(dim=1, keepdim=True) + 1e-12)
+                step = alpha_frac * pb.sqrt().unsqueeze(1) * gn
+                with torch.no_grad():
+                    db = db - step
+                    db = project(db, band, pb, psd_margin=psd_margin)
+                db = db.detach().requires_grad_(True)
+            with torch.no_grad():
+                rr = xb + cconv(db, hb)
+                logits = model.forward_wave(rr, frontend)
+                if targeted:
+                    obj = -F.cross_entropy(logits,
+                                           torch.full_like(yb, target_class),
+                                           reduction="none")
+                else:
+                    obj = F.cross_entropy(logits, yb, reduction="none")
+                upd = obj > best_obj[i:i + chunk]
+                idx = torch.nonzero(upd, as_tuple=False).squeeze(1) + i
+                best_obj[idx] = obj[upd]
+                best_delta[idx] = db[upd]
+                win_restart[idx] = r
+        print(f"      restart {r + 1}/{restarts} "
+              f"({time.time() - t0:.0f}s)", flush=True)
+
+    with torch.no_grad():
+        r_adv = x_rx + cconv(best_delta, h)
+        logits = model.forward_wave(r_adv, frontend)
+        preds = logits.argmax(1)
+    return {"preds": preds, "obj_best": best_obj,
+            "win_restart": win_restart}
 
 
 # ---------------------------------------------------------------------------

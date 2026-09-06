@@ -1,0 +1,236 @@
+{
+  "experiment": "Adaptive attack (PGD-50 x 5 restarts, best-of-R per sample) on TRADES",
+  "config": {
+    "defense": "trades",
+    "checkpoint": "checkpoint_dual_trades.pt",
+    "scenario": "urban",
+    "mode": "untargeted",
+    "steps": 50,
+    "restarts": 5,
+    "psr_db": [
+      -45.0,
+      -40.0,
+      -35.0,
+      -30.0,
+      -25.0
+    ],
+    "n_eval_per_class": 100,
+    "seed": 7,
+    "attack_pgd_alpha_frac": 0.25,
+    "psd_cap_margin": 2.0,
+    "restart_init": "r0 zero-init (continuity) + CN random inits, frac U[0.2,1.0], projected; rng stream default_rng(seed*7919+r)",
+    "best_of": "per-sample max attack objective (CE to true label, untargeted)",
+    "psr_reference": "clean received-signal window energy (sum |r|^2, pre-noise)",
+    "mask_band_mhz": {
+      "lo": 0.0,
+      "hi": 10.0
+    },
+    "genie": "power-only, no PSD cap (corrected 2026-09-05)"
+  },
+  "clean_acc_active": 0.9967,
+  "runs": {
+    "untargeted/cv2x_mask": {
+      "psr=-35dB": {
+        "cond_asr": 7.69,
+        "robust_acc": 92.0,
+        "n_eligible": 299,
+        "win_restart_hist": {
+          "0": 75,
+          "1": 53,
+          "2": 49,
+          "3": 64,
+          "4": 59
+        },
+        "frac_zero_init_wins": 0.2508
+      },
+      "psr=-30dB": {
+        "cond_asr": 18.39,
+        "robust_acc": 81.33,
+        "n_eligible": 299,
+        "win_restart_hist": {
+          "0": 70,
+          "1": 69,
+          "2": 53,
+          "3": 63,
+          "4": 45
+        },
+        "frac_zero_init_wins": 0.2341
+      },
+      "psr=-25dB": {
+        "cond_asr": 36.79,
+        "robust_acc": 63.0,
+        "n_eligible": 299,
+        "win_restart_hist": {
+          "0": 86,
+          "1": 65,
+          "2": 48,
+          "3": 55,
+          "4": 46
+        },
+        "frac_zero_init_wins": 0.2876
+      },
+      "psr=-20dB": {
+        "cond_asr": 62.21,
+        "robust_acc": 37.67,
+        "n_eligible": 299,
+        "win_restart_hist": {
+          "0": 76,
+          "1": 51,
+          "2": 67,
+          "3": 57,
+          "4": 49
+        },
+        "frac_zero_init_wins": 0.2542
+      },
+      "psr=-15dB": {
+        "cond_asr": 89.3,
+        "robust_acc": 10.67,
+        "n_eligible": 299,
+        "win_restart_hist": {
+          "0": 85,
+          "1": 54,
+          "2": 50,
+          "3": 63,
+          "4": 48
+        },
+        "frac_zero_init_wins": 0.2843
+      },
+      "psr=-10dB": {
+        "cond_asr": 99.0,
+        "robust_acc": 1.0,
+        "n_eligible": 299,
+        "win_restart_hist": {
+          "0": 60,
+          "1": 74,
+          "2": 64,
+          "3": 42,
+          "4": 60
+        },
+        "frac_zero_init_wins": 0.2007
+      },
+      "psr=-5dB": {
+        "cond_asr": 100.0,
+        "robust_acc": 0.0,
+        "n_eligible": 299,
+        "win_restart_hist": {
+          "0": 47,
+          "1": 74,
+          "2": 63,
+          "3": 64,
+          "4": 52
+        },
+        "frac_zero_init_wins": 0.1572
+      }
+    },
+    "untargeted/genie": {
+      "psr=-45dB": {
+        "cond_asr": 6.02,
+        "robust_acc": 93.67,
+        "n_eligible": 299,
+        "win_restart_hist": {
+          "0": 47,
+          "1": 64,
+          "2": 57,
+          "3": 62,
+          "4": 70
+        },
+        "frac_zero_init_wins": 0.1572
+      },
+      "psr=-40dB": {
+        "cond_asr": 20.07,
+        "robust_acc": 79.67,
+        "n_eligible": 299,
+        "win_restart_hist": {
+          "0": 61,
+          "1": 73,
+          "2": 53,
+          "3": 68,
+          "4": 45
+        },
+        "frac_zero_init_wins": 0.204
+      },
+      "psr=-35dB": {
+        "cond_asr": 43.48,
+        "robust_acc": 56.33,
+        "n_eligible": 299,
+        "win_restart_hist": {
+          "0": 63,
+          "1": 60,
+          "2": 66,
+          "3": 65,
+          "4": 46
+        },
+        "frac_zero_init_wins": 0.2107
+      },
+      "psr=-30dB": {
+        "cond_asr": 63.55,
+        "robust_acc": 36.33,
+        "n_eligible": 299,
+        "win_restart_hist": {
+          "0": 75,
+          "1": 58,
+          "2": 60,
+          "3": 50,
+          "4": 57
+        },
+        "frac_zero_init_wins": 0.2508
+      },
+      "psr=-25dB": {
+        "cond_asr": 90.64,
+        "robust_acc": 9.33,
+        "n_eligible": 299,
+        "win_restart_hist": {
+          "0": 70,
+          "1": 58,
+          "2": 73,
+          "3": 52,
+          "4": 47
+        },
+        "frac_zero_init_wins": 0.2341
+      }
+    }
+  },
+  "summary": {
+    "untargeted": {
+      "meap_genie_db": -40.024911032028825,
+      "meap_genie_censor": null,
+      "meap_cv2x_mask_db": -29.562500000000025,
+      "meap_cv2x_mask_censor": null,
+      "price_of_compliance_db": 10.4624110320288,
+      "poc_censor": null,
+      "genie_curve": [
+        6.02,
+        20.07,
+        43.48,
+        63.55,
+        90.64
+      ],
+      "mask_curve": [
+        7.69,
+        18.39,
+        36.79,
+        62.21,
+        89.3,
+        99.0,
+        100.0
+      ],
+      "psr_genie": [
+        -45.0,
+        -40.0,
+        -35.0,
+        -30.0,
+        -25.0
+      ],
+      "psr_mask": [
+        -35.0,
+        -30.0,
+        -25.0,
+        -20.0,
+        -15.0,
+        -10.0,
+        -5.0
+      ]
+    }
+  },
+  "elapsed_s": 3015.0
+}

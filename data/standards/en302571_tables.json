@@ -1,0 +1,64 @@
+{
+  "standard": "ETSI EN 302 571 V1.2.1 (2013-09)",
+  "title": "Intelligent Transport Systems (ITS); Radiocommunications equipment operating in the 5 855 MHz to 5 925 MHz frequency band; Harmonized EN covering the essential requirements of article 3.2 of the R&TTE Directive",
+  "source_url": "https://www.etsi.org/deliver/etsi_en/302500_302599/302571/01.02.01_60/en_302571v010201p.pdf",
+  "fetched": "2026-09-06",
+  "pdf_sha256": "667a9399d2dc32a072fdf111e411554c9b07c93f6da5866b49ee239deca1cb7c",
+  "pdf_bytes": 218250,
+  "note": "Extracted with pdftotext -layout; clause numbers verbatim. This file replaces the WAF-block-page 'en302571_v211.pdf' previously (mistakenly) archived in the W1-C search corpus.",
+
+  "table_2b_nominal_carriers": {
+    "note": "10 MHz channels; attacker model uses the [0,+10] MHz rel. 5895 MHz allocation (G5-SCH2-equivalent geometry)",
+    "channels": [
+      {"name": "G5-SCH4", "fc_mhz": 5860, "bw_mhz": 10},
+      {"name": "G5-SCH3", "fc_mhz": 5870, "bw_mhz": 10},
+      {"name": "G5-SCH1", "fc_mhz": 5880, "bw_mhz": 10},
+      {"name": "G5-SCH2", "fc_mhz": 5890, "bw_mhz": 10},
+      {"name": "G5-CCH",  "fc_mhz": 5900, "bw_mhz": 10},
+      {"name": "G5-SCH5", "fc_mhz": 5910, "bw_mhz": 10},
+      {"name": "G5-SCH6", "fc_mhz": 5920, "bw_mhz": 10}
+    ]
+  },
+
+  "table_3_power_psd_highest": {
+    "frequency_range_mhz": [5855, 5925],
+    "rf_output_power_eirp_dbm": 33,
+    "psd_limit_dbm_per_mhz": 23,
+    "G5-SCH2_and_G5-SCH3": {"rf_output_power_eirp_dbm": 23, "psd_limit_dbm_per_mhz": 13},
+    "G5-SCH4": {"rf_output_power_eirp_dbm": 0, "psd_limit_dbm_per_mhz": -10}
+  },
+
+  "table_7_unwanted_inside_its_bands_10mhz": {
+    "definition": "clause 6.4.2: unwanted emissions (e.i.r.p.) INSIDE the 5 GHz ITS bands, at highest power level; mean levels of the transmitted spectrum",
+    "columns": ["psd_at_fc_dbm_per_mhz", "pm4p5", "pm5p0", "pm5p5", "pm10", "pm15"],
+    "row": [23, 23, -3, -9, -17, -27],
+    "relative_db": [0, 0, -26, -32, -40, -50],
+    "offsets_mhz": [0, 4.5, 5.0, 5.5, 10.0, 15.0],
+    "reductions": "limits reduced by 10 dB for G5-SCH2/G5-SCH3 and by 33 dB for G5-SCH4",
+    "interpolation_note": "paper implementation interpolates linearly in dB between the tabulated offsets; beyond +-15 MHz within the ITS band the -27 dBm/MHz value is held (conservative)"
+  },
+
+  "table_6a_unwanted_outside_its_bands": {
+    "definition": "clause 6.4.1.2, spurious >= 2.5x channel BW from centre; e.i.r.p. limits, 1 MHz RBW (table 6b gives 1 kHz RBW closer in)",
+    "rows": [
+      {"freq_mhz": [1000, 5795], "limit_dbm": -30},
+      {"freq_mhz": [5795, 5815], "limit_dbm": -65},
+      {"freq_mhz": [5815, 5850], "limit_dbm": -55},
+      {"freq_mhz": [5850, 5855], "limit_dbm": -30},
+      {"freq_mhz": [5925, 5965], "limit_dbm": -65},
+      {"freq_mhz": [5965, 18000], "limit_dbm": -30}
+    ]
+  },
+
+  "fcc_47cfr_95_3205": {
+    "cite": "47 CFR 95.3205, Unwanted emissions limits (C-V2X OBUs); 89 FR 100855, Dec 13 2024; corrected 90 FR 5724, Jan 17 2025",
+    "source": "eCFR API, title-47 part-95, retrieved 2026-09-06",
+    "definition": "conducted emissions measured at the antenna input, relative to the C-V2X band edges",
+    "rows": [
+      {"offset_from_band_edge": "within +-1 MHz", "limit": "-16 dBm/100 kHz"},
+      {"offset_from_band_edge": "+-1 MHz to +-5 MHz", "limit": "-13 dBm/MHz"},
+      {"offset_from_band_edge": "+-5 MHz to +-30 MHz", "limit": "-16 dBm/MHz"},
+      {"offset_from_band_edge": "beyond 30 MHz", "limit": "-28 dBm/MHz"}
+    ]
+  }
+}

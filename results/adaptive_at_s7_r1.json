@@ -1,0 +1,92 @@
+{
+  "experiment": "Adaptive attack (PGD-50 x 1 restarts, best-of-R per sample) on mask-matched adversarial training",
+  "config": {
+    "defense": "at",
+    "checkpoint": "checkpoint_dual_at.pt",
+    "scenario": "urban",
+    "mode": "untargeted",
+    "steps": 50,
+    "restarts": 1,
+    "psr_db": [
+      -35.0,
+      -30.0,
+      -25.0,
+      -20.0,
+      -15.0,
+      -10.0
+    ],
+    "n_eval_per_class": 100,
+    "seed": 7,
+    "attack_pgd_alpha_frac": 0.25,
+    "psd_cap_margin": 2.0,
+    "restart_init": "r0 zero-init (continuity) + CN random inits, frac U[0.2,1.0], projected; rng stream default_rng(seed*7919+r)",
+    "best_of": "per-sample max attack objective (CE to true label, untargeted)",
+    "psr_reference": "clean received-signal window energy (sum |r|^2, pre-noise)",
+    "mask_band_mhz": {
+      "lo": 0.0,
+      "hi": 10.0
+    },
+    "genie": "power-only, no PSD cap (corrected 2026-09-05)"
+  },
+  "clean_acc_active": 1.0,
+  "runs": {
+    "untargeted/cv2x_mask": {
+      "psr=-35dB": {
+        "cond_asr": 9.0,
+        "robust_acc": 91.0,
+        "n_eligible": 300,
+        "win_restart_hist": {
+          "0": 300
+        },
+        "frac_zero_init_wins": 1.0
+      },
+      "psr=-30dB": {
+        "cond_asr": 25.0,
+        "robust_acc": 75.0,
+        "n_eligible": 300,
+        "win_restart_hist": {
+          "0": 300
+        },
+        "frac_zero_init_wins": 1.0
+      },
+      "psr=-25dB": {
+        "cond_asr": 53.67,
+        "robust_acc": 46.33,
+        "n_eligible": 300,
+        "win_restart_hist": {
+          "0": 300
+        },
+        "frac_zero_init_wins": 1.0
+      },
+      "psr=-20dB": {
+        "cond_asr": 69.0,
+        "robust_acc": 31.0,
+        "n_eligible": 300,
+        "win_restart_hist": {
+          "0": 300
+        },
+        "frac_zero_init_wins": 1.0
+      },
+      "psr=-15dB": {
+        "cond_asr": 85.33,
+        "robust_acc": 14.67,
+        "n_eligible": 300,
+        "win_restart_hist": {
+          "0": 300
+        },
+        "frac_zero_init_wins": 1.0
+      },
+      "psr=-10dB": {
+        "cond_asr": 99.33,
+        "robust_acc": 0.67,
+        "n_eligible": 300,
+        "win_restart_hist": {
+          "0": 300
+        },
+        "frac_zero_init_wins": 1.0
+      }
+    }
+  },
+  "summary": {},
+  "elapsed_s": 301.5
+}

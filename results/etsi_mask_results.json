@@ -1,0 +1,129 @@
+{
+  "experiment": "Mask-shape sensitivity: ETSI EN 302 571 V1.2.1 Table-7-shaped attacker vs idealized flat cap",
+  "config": {
+    "scenario": "urban",
+    "mode": "untargeted",
+    "steps": 10,
+    "seed": 7,
+    "n_eval_per_class": 100,
+    "attack_pgd_alpha_frac": 0.25,
+    "psd_cap_margin": 2.0,
+    "psr_db": [
+      -45.0,
+      -40.0,
+      -35.0,
+      -30.0,
+      -25.0,
+      -20.0,
+      -15.0,
+      -10.0,
+      -5.0,
+      0.0
+    ],
+    "attacker_carrier_fc_mhz_rel_5895": 5.0,
+    "etsi_template": "EN 302 571 V1.2.1 (2013-09) Table 7, 10 MHz channel; linear-in-dB interpolation; -50 dB rel held beyond +-15 MHz",
+    "etsi_knots_offset_mhz": [
+      0.0,
+      4.5,
+      5.0,
+      5.5,
+      10.0,
+      15.0
+    ],
+    "etsi_knots_db_rel": [
+      0.0,
+      0.0,
+      -26.0,
+      -32.0,
+      -40.0,
+      -50.0
+    ],
+    "standard_source": "data/standards/en302571_tables.json (official ETSI PDF, sha256 667a939...)",
+    "normalization": "in-channel reference cap = 2x uniform budget sharing (same as flat cap); total window-energy budget identical"
+  },
+  "clean_acc_active": 1.0,
+  "runs": {
+    "untargeted/etsi_table7": {
+      "psr=-45dB": {
+        "cond_asr": 2.67,
+        "robust_acc": 97.33,
+        "n_eligible": 300
+      },
+      "psr=-40dB": {
+        "cond_asr": 13.0,
+        "robust_acc": 87.0,
+        "n_eligible": 300
+      },
+      "psr=-35dB": {
+        "cond_asr": 23.67,
+        "robust_acc": 76.33,
+        "n_eligible": 300
+      },
+      "psr=-30dB": {
+        "cond_asr": 38.0,
+        "robust_acc": 62.0,
+        "n_eligible": 300
+      },
+      "psr=-25dB": {
+        "cond_asr": 57.33,
+        "robust_acc": 42.67,
+        "n_eligible": 300
+      },
+      "psr=-20dB": {
+        "cond_asr": 82.67,
+        "robust_acc": 17.33,
+        "n_eligible": 300
+      },
+      "psr=-15dB": {
+        "cond_asr": 97.0,
+        "robust_acc": 3.0,
+        "n_eligible": 300
+      },
+      "psr=-10dB": {
+        "cond_asr": 100.0,
+        "robust_acc": 0.0,
+        "n_eligible": 300
+      },
+      "psr=-5dB": {
+        "cond_asr": 100.0,
+        "robust_acc": 0.0,
+        "n_eligible": 300
+      },
+      "psr=+0dB": {
+        "cond_asr": 100.0,
+        "robust_acc": 0.0,
+        "n_eligible": 300
+      }
+    }
+  },
+  "summary": {
+    "meap_etsi_table7_db": -36.719775070290844,
+    "meap_etsi_censor": null,
+    "meap_flat_cap_db": -37.08333333333358,
+    "meap_flat_censor": null,
+    "meap_genie_db": -44.22475707646814,
+    "meap_genie_censor": null,
+    "poc_flat_minus_genie_db": 7.14,
+    "poc_etsi_minus_genie_db": 7.5,
+    "shape_delta_meap_db": 0.36,
+    "note": "positive shape_delta = ETSI-shaped mask WEAKER for the attacker (higher MEAP) than the idealized flat cap; negative = stronger"
+  },
+  "flat_cap_reference": {
+    "source": "results/attack_results_merged.json (urban, untargeted, cv2x_mask \u2014 same protocol)",
+    "curve": {
+      "psr=-45dB": 3.0,
+      "psr=-40dB": 13.0,
+      "psr=-35dB": 25.0,
+      "psr=-30dB": 39.33,
+      "psr=-25dB": 58.33,
+      "psr=-20dB": 78.0,
+      "psr=-15dB": 88.33,
+      "psr=-10dB": 96.67,
+      "psr=-5dB": 99.67,
+      "psr=+0dB": 100.0,
+      "psr=+5dB": 100.0,
+      "psr=+10dB": 100.0
+    }
+  },
+  "elapsed_s": 107.3
+}

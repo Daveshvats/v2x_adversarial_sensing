@@ -64,9 +64,11 @@ $-10$\,dB). We also translate the legacy feature-space threat model into
 physical power, showing that receiver-internal $\epsilon$-balls describe a
 perturbation that mostly cannot survive its own physical realization, while
 a purpose-optimized waveform at the same implied power is far stronger. As the matched defense, mask-matched adversarial training shifts
-the compliant-attacker threshold by $+14$\,dB (doubling the price of
-compliance) at no clean-accuracy cost, with robustness honestly bounded by
-its training power range. These conclusions are stress-tested beyond the prototype protocol: three
+the compliant-attacker threshold by $+14$\,dB under the evaluation attack
+(PGD-10)---but a converged adaptive attack (PGD-50 with random restarts)
+recovers most of that margin, leaving $+6.7$\,dB of honestly adaptive
+robustness at zero clean-accuracy cost, and the decomposition attributes the
+gap to evaluation step-starvation rather than restart luck. These conclusions are stress-tested beyond the prototype protocol: three
 training seeds move the compliant threshold by at most 1.1\,dB; replacing
 the WiFi class with real over-the-air 802.11 captures (recorded at
 5.24\,GHz in U-NII-1, the OFDM family adjacent to U-NII-4) replicates the
@@ -81,7 +83,15 @@ Rapp-model PA only keeps its post-amplifier spectrum inside a
 $-40$\,dBr mask at 13--15\,dB backoff---while the attack itself remains
 effective at any backoff, making post-PA regrowth statistics an RF-side
 tell against the naive attacker; a PA-aware re-optimization closes even
-that tell while gaining 1.2\,dB. We propose Minimum Effective Attack Power (MEAP) and
+that tell while gaining 1.2\,dB. The mask idealization itself is then
+validated against the real ETSI EN 302 571 Table-7 unwanted-emissions
+template: the compliant MEAP moves by only $+0.4$\,dB, so the
+price-of-compliance headline is not an artifact of the self-defined mask
+shape. Finally, a disclosed-parameter link-budget layer translates the
+sensing attack into fleet-scale harm: at the targeted 20\% false-IDLE
+operating point a rule-abiding attacker within the 33\,dBm ITS EIRP cap
+subtracts 9.5\,pp of BSM packet-reception ratio at 100\,m legit-link
+distance ($\sim$95 extra lost BSMs per 1000 transmitted). We propose Minimum Effective Attack Power (MEAP) and
 Price-of-Compliance (PoC) as physically grounded, transferable security
 metrics, and release the complete framework (waveform generators, channels,
 attack, defenses, checkpoints, result JSONs with embedded seeds and
@@ -168,7 +178,9 @@ Our contributions are:
   cloaking); an undefended CNN is nevertheless broken by a compliant attacker
   at deeply negative PSR; the legacy feature-space $\epsilon$-ball assumes a
   hidden power budget we make measurable; and mask-matched adversarial
-  training shifts the compliant-attacker threshold by $+14$\,dB at no
+  training shifts the compliant-attacker threshold by $+14$\,dB under the
+  evaluation attack ($+6.7$\,dB against the converged adaptive attack;
+  Section~\ref{sec:adaptive}) at no
   clean-accuracy cost. Compliance \emph{delays} the attack; so does the
   defense; neither prevents it.
 \end{enumerate}
@@ -518,8 +530,12 @@ contract: a frozen victim model, a fixed set of active-transmission windows
 model, and the PSR grid of Table~\ref{tab:protocol}; conditional ASR is
 measured only over windows the victim classified correctly before the
 attack, and every MEAP carries an explicit censoring flag when the grid
-does not resolve it. The honesty box records the prototype scale; the
-three-seed statistics, PGD-50 convergence, and sensitivity checks in
+does not resolve it. Every conditional-ASR cell is stored with its
+success count and eligibility, and headline MEAP/PoC numbers carry
+Wilson binomial 95\% confidence intervals (sampling noise at fixed
+model/protocol; model-seed spread is reported separately). The honesty box records the prototype scale; the
+three-seed statistics, PGD-50 convergence, adaptive (multi-restart)
+evaluation of the defenses, and sensitivity checks in
 Section~\ref{sec:poc} quantify how far the prototype numbers generalize.
 
 \begin{table}[h]
@@ -534,9 +550,11 @@ Setting & Value (prototype) \\
 \midrule
 Training & seeds 42/123/456 (undefended headline), 3{,}200 train / 800 val windows, SNR [5,25]\,dB \\
 Attack & seed 7, 300 active-tx windows, PGD-10, $\alpha=0.25$ \\
+Adaptive attack & PGD-50, 5 restarts (zero-init + 4 random), best-of-R per sample \\
 PSD cap margin & 2.0 (flat-cap idealization; relaxing to 10 moves PoC by $-0.9$\,dB) \\
 PSR grid & $-45$ to $+10$\,dB, 12 points \\
 MEAP threshold & 20\% conditional ASR \\
+Confidence & Wilson 95\% binomial CIs on every ASR cell (results/w12\_confidence\_intervals.json) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -727,6 +745,72 @@ of its robustness (compliant MEAP $-21.9$\,dB versus $-23.1$\,dB urban;
 genie $-35.3$ versus $-37.5$\,dB; PoC 13.4 versus 14.4\,dB): the defense
 transfers to an unseen channel scenario at a ${\sim}$1.2\,dB cost.
 
+\subsection{Adaptive attacks: step-starved evaluations overstate defenses}
+\label{sec:adaptive}
+
+The $+14$\,dB headline above is measured under PGD-10, the same budget as
+the undefended baseline. That is not how a certification-style claim should
+be evaluated: a defense must hold against a \emph{converged} adversary. We
+therefore re-evaluated the undefended control, the AT model, and the TRADES
+model under the strongest attack in our arsenal: PGD-50 with five restarts
+(restart 0 is the deterministic zero-init shared with every number above;
+restarts 1--4 are projected complex-Gaussian inits at a random fraction
+$U[0.2,1]$ of the per-sample budget), keeping the per-sample best attack
+objective. Table~\ref{tab:adaptive} shows the result. Three findings:
+
+\begin{enumerate}
+\item \textbf{The defense margin halves.} Under the adaptive attack the
+compliant MEAP of the AT model moves from $-23.1$ to $-32.7$\,dB and
+TRADES from $-19.1$ to $-29.6$\,dB, while the undefended control moves
+only from $-37.1$ to $-39.4$\,dB. The honest defense margins are
+$+6.7$\,dB (AT) and $+9.9$\,dB (TRADES), not the $+14.0$/$+18.0$\,dB
+the PGD-10 protocol suggested. Both defenses still buy real margin, and
+TRADES remains the stronger one---but every defense claim in this paper
+should be read against the adaptive column.
+\item \textbf{The gap is step starvation, not restart luck.} On the AT
+model, PGD-50 \emph{without} restarts already reaches $-31.6$\,dB
+($8.5$\,dB of the $10.4$\,dB total shift); the four random restarts add
+only $1.1$\,dB. The original evaluation was simply not converged---the
+ defended model's loss landscape needs more steps, and a 10-step budget
+understates the adversary. Evaluation protocol, not defense design, was
+the dominant error source.
+\item \textbf{The undefended attack was already near-converged.} The
+control model loses only $2.3$\,dB to the adaptive protocol, confirming
+that the canonical undefended numbers (MEAP $-37.1$\,dB) were not an
+artifact of a weak attack, and that restarts matter exactly where the
+defense makes the optimization landscape harder.
+\end{enumerate}
+
+\begin{table}
+\centering\small
+\caption{Adaptive-attack evaluation (urban, untargeted, attack seed 7,
+300 active windows; PGD-50, 5 restarts, best-of-R per sample). The PGD-10
+column is the canonical protocol from Table~\ref{tab:protocol}; the
+$\Delta$ column is the defense margin over the undefended control under
+the SAME attack protocol. Wilson 95\% CIs on the MEAPs are
+$\pm$1.3--1.6\,dB.}
+\label{tab:adaptive}
+\begin{tabular}{lccc|cc}
+\toprule
+ & \multicolumn{3}{c|}{mask MEAP (dB)} & \multicolumn{2}{c}{defense margin (dB)} \\
+Victim & PGD-10 & PGD-50 R$=$1 & PGD-50 R$=$5 & PGD-10 & adaptive \\
+\midrule
+Undefended & $-37.1$ & --- & $-39.4$ & --- & --- \\
+AT & $-23.1$ & $-31.6$ & $-32.7$ & $+14.0$ & $+6.7$ \\
+TRADES & $-19.1$ & --- & $-29.6$ & $+18.0$ & $+9.9$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The zero-init restart share is itself diagnostic: against the defended
+models only 16--30\% of samples are won by the deterministic restart
+(restart 0) that the original protocol used exclusively (AT 19--30\%,
+TRADES 16--29\%; undefended control 20--40\%)---the deterministic
+protocol was leaving attack strength on the table everywhere, and most
+where the defense had made the landscape harder. Repro artifacts:
+results/adaptive\_\{at,trades,dual\}\_s7\_r5.json (R$=$5) and
+adaptive\_at\_s7\_r1.json (R$=$1 decomposition), each cell with
+conditional ASR, eligibility, and the win histogram.
 
 \subsection{Real over-the-air signals in the loop}
 \label{sec:realwifi}
@@ -883,6 +967,103 @@ is the same as the paper's other stress tests---the constraint buys
 detectability of \emph{unsophisticated} attackers, not safety against
 the worst case the threat model is designed to disclose.
 
+\subsection{Regulatory reality check: the real ETSI EN 302 571 mask}
+\label{sec:etsimask}
+
+Every result above enforces an \emph{idealized} in-band mask: a hard OOB
+null plus a flat $2\times$ in-band cap. A fair question---raised by the
+same reasoning as the PA reality check---is whether the
+price-of-compliance headline is an artifact of that self-defined shape.
+We therefore re-ran the canonical experiment (urban, untargeted, PGD-10,
+seed 7, same eval sets and budgets) with the projection replaced by the
+\emph{real} European ITS unwanted-emissions template: ETSI EN 302 571
+V1.2.1, Table~7 (10\,MHz channel), i.e.\ a flat $23$\,dBm/MHz in-channel
+PSD that steps down to $-3$, $-9$, $-17$, $-27$\,dBm/MHz at $\pm$4.5,
+$\pm$5, $\pm$10, $\pm$15\,MHz offsets from the attacker's carrier,
+interpolated linearly in dB (values extracted from the official ETSI PDF
+and committed as machine-readable tables with provenance and file hash;
+see \texttt{data/standards/en302571\_tables.json}; the archived
+``standard'' in our earlier search corpus turned out to be a
+WAF block page, not the document). For the US regime we also record the
+C-V2X OBU unwanted-emissions limits of 47 CFR 95.3205
+($-16$\,dBm/100\,kHz within $\pm$1\,MHz of the band edge,
+$-13$\,dBm/MHz to $\pm$5\,MHz, $-16$\,dBm/MHz to $\pm$30\,MHz) in the
+same artifact.
+
+The result is a wash: the ETSI-shaped compliant MEAP is $-36.7$\,dB
+versus $-37.1$\,dB for the idealized flat cap ($+0.4$\,dB, well inside
+the Wilson 95\% CI of $[-39.0,-35.2]$\,dB), and the PoC moves from
+7.1 to 7.5\,dB. The direction is informative: the real template is
+\emph{slightly more restrictive} for the attacker, because its
+in-channel edge-shaping caps the PSD near the allocation edges that the
+flat $2\times$ cap leaves free, and that edge freedom was worth more to
+the attack than the OOB skirt the real mask permits. The conclusion is
+the one the PA reality check already drew, now at the mask level: the
+price-of-compliance physics is set by the \emph{allocation} (where the
+attacker may radiate), not by the fine shape of the mask. Our idealized
+mask is not merely a convenience---it is (slightly) attacker-favorable,
+which is the conservative direction for every defense claim in this
+paper. Artifact: \texttt{results/etsi\_mask\_results.json} (ETSI curve,
+flat-cap reference, shape-delta, and the verbatim template knots).
+
+\subsection{From sensing error to safety harm: BSM delivery}
+\label{sec:harm}
+
+Sensing metrics (MEAP, PoC) do not by themselves establish safety
+consequence. The missing chain is: false IDLE $\rightarrow$ the fooled
+station transmits when it should have deferred $\rightarrow$ its packet
+collides with a legitimate BSM at a third receiver $\rightarrow$ PRR
+loss. We close it with a disclosed-parameter link-budget layer anchored
+to the measured targeted-noise mask-ASR curve (the cloaking attack,
+MEAP $-14.8$\,dB): all of FSPL anchor (47.85\,dB at 1\,m, 5.9\,GHz),
+path-loss exponents (urban 3.0, swept 2.5--3.5), OBU transmit power
+(23\,dBm), noise floor ($-95$\,dBm, 10\,MHz, NF 9\,dB), decoding
+threshold (6\,dB), capture margin (8\,dB), lognormal shadowing
+($\sigma=4$\,dB), and the sensing-window overlap probability (0.6,
+swept 0.4--0.8) are stated in the artifact JSON and swept in its
+sensitivity block.
+
+\paragraph{Attack feasibility} At the 20\% false-IDLE operating point,
+if the transmitter the attacker cloaks is 100\,m from the sensing
+victim, the attacker's required EIRP stays below the 33\,dBm ITS class
+cap out to $d_A \approx 650$\,m of separation from the victim; at the
+38\% false-IDLE point (PSR $-10$\,dB) it stays feasible to
+$\approx450$\,m. The attack is physically deployable at inter-vehicle
+scales by a device that is, by construction, inside ITS power rules.
+
+\paragraph{Harm} Figure~\ref{fig:harm} quantifies the downstream PRR.
+At the MEAP operating point (20\% false-IDLE, synchronized worst-case
+timing), the legitimate BSM PRR at 100\,m drops from 0.857 to 0.762
+($-9.5$\,pp; $\sim$95 extra lost BSMs per 1000 transmitted); at 150\,m,
+from 0.377 to 0.335; at the $-10$\,dB operating point, 0.857$\to$0.676
+at 100\,m ($-18.1$\,pp). With packet-capture modeling the
+numbers are within 0.2\,pp. The average case matters as much as the
+worst case: if the attacker's energy detection is not synchronized to
+the packets it cloaks, the effective duty of harmful overlaps falls by
+an order of magnitude (10\,Hz BSMs, 0.5\,ms airtime) and the
+random-timing PRR loss at 100\,m shrinks to 0.2\,pp---the harm
+concentrates on attackers that key their waveform to the transmission
+they are cloaking, which energy detection makes practical.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figs/harm_chain.png}
+\caption{The harm chain, urban NLOS parameters. (a) Legitimate BSM PRR
+vs.\ link distance without and with the compliant attacker at the
+targeted MEAP and $-10$\,dB operating points (synchronized worst-case
+timing, no-capture model). (b) Required attacker EIRP vs.\ attacker-
+victim distance with the cloaked transmitter at 100\,m; the 33\,dBm ITS
+cap makes the attack feasible at hundreds of metres.}
+\label{fig:harm}
+\end{figure}
+
+This layer is deliberately parametric, not simulated: it is a
+link-budget bridge (each parameter standard-textbook, all disclosed,
+one Monte-Carlo seed, all curves in \texttt{results/harm\_chain.json}),
+not an ns-3 or field campaign---those remain the honest next step, and
+the harm numbers should be read as order-of-magnitude quantification of
+the consequence, conditional on the measured sensing-level ASR.
+
 
 \section{Standards, Deployment Implications, and Ethics}
 \label{sec:standards}
@@ -935,20 +1116,27 @@ pilots, preambles, and higher-order modulations are not modeled.
 (2)~The emission mask is idealized: a flat in-band cap (stricter than real
 in-band rules, which permit PRB-level concentration) and a hard OOB null;
 the $2\times\!\to\!10\times$ cap relaxation shifts the PoC by only
-$-0.9$\,dB, so the allocation constraint dominates; a PRB-granular in-band
-model remains future work.
+$-0.9$\,dB, and re-running the canonical experiment against the real
+ETSI EN 302 571 V1.2.1 Table-7 template moves the compliant MEAP by only
+$+0.4$\,dB (Section~\ref{sec:etsimask}), so the allocation constraint
+dominates; a PRB-granular in-band model remains future work.
 (3)~Channels are TR~37.885-inspired simplifications (first-tap-only Rician,
 UMa-flavored urban spread), block-fading within the window---defensible by
 Doppler coherence, but approximate.
 (4)~The prototype attacker is white-box with perfect CSI and exact knowledge
 of the received realization (worst-case upper bound; the CSI-mismatch
-variant is released); PGD is zero-initialized without restarts, making
-reported ASRs lower bounds on the attack side and upper bounds on the
-defense side.
+variant is released); the canonical numbers use zero-initialized PGD-10,
+while the defenses are additionally evaluated under converged adaptive
+attack (PGD-50 with 5 restarts, Section~\ref{sec:adaptive})---reported
+ASRs at PGD-10 remain lower bounds on the attack side and upper bounds on
+the defense side.
 (5)~Prototype scale: undefended headline now carries three training seeds
 (mask MEAP spread 1.1\,dB), two attack seeds, 300 windows, PGD-10 (PGD-50
 and seed stability checked on key conditions: shifts $\le$1.7\,dB); the
-defense study and the TRADES ablation remain single-seed (seed 42).
+defense study and the TRADES ablation remain single-seed (seed 42), as does
+the adaptive-attack evaluation (attack seed 7, 5 restarts). Confidence
+intervals are Wilson binomial on sampling noise only; model-seed variance
+(1.1\,dB) is a separate, additive source.
 (6)~The phase-difference stream contributes nothing on this task; the
 ``phase-aware'' framing of our prior work is retired honestly.
 (7)~The adversarially-trained defense's robustness is confined to its
@@ -967,7 +1155,13 @@ without oversampling, and the strict/lenient gates are per-FFT-bin
 idealizations of 802.11-style masks rather than regulatory measurement
 procedures (RBW, detector type). The PA-aware arm demonstrates that the
 threat survives this model class, not that any particular hardware
-realization would behave identically.
+realization would behave identically. (11)~The harm-chain layer of
+Section~\ref{sec:harm} is a parametric link-budget analysis anchored to
+the measured ASR curve, not a system-level simulation: no MAC queuing,
+congestion control, or re-transmission modeling; single Monte-Carlo seed
+with $n=4000$ per distance point; PRR figures are conditional on the
+stated standard-textbook parameters and should be read as
+order-of-magnitude consequence quantification.
 
 \section{Conclusion}
 \label{sec:conclusion}
@@ -986,15 +1180,26 @@ fails a post-PA conformance test at operating backoffs while losing
 almost no effectiveness, and a PA-aware re-optimization is both stronger
 and post-PA compliant---so compliance testing should sit at the PA
 output port, and compliance itself buys detectability of unsophisticated
-attackers, not safety against the worst case. The compliant-attacker threat
+attackers, not safety against the worst case. The mask idealization
+survives contact with the real ETSI EN 302 571 template (+0.4\,dB), and
+the harm chain closes the gap from sensing error to fleet consequence:
+inside ITS power rules, a synchronized attacker at the targeted 20\%
+false-IDLE point costs 9.5\,pp of BSM PRR at 100\,m. Two protocol
+lessons generalize beyond this paper: defense evaluations that are not
+converged (step-starved PGD, no restarts) will systematically overstate
+robustness---ours did, by a factor of two---and sensing-level ASR must be
+paired with a link-budget layer before it can be called a safety claim.
+The compliant-attacker threat
 model, the MEAP and Price-of-Compliance metrics, and the released
 end-to-end framework give regulators, standards bodies, and O-RAN security
 engineers a physically grounded, certification-style way to measure---and,
-with mask-matched adversarial training (+14\,dB at zero clean-accuracy
-cost; +17.9\,dB with a TRADES variant at 0.75\,pp clean cost, PoC 18.6), to
-raise---the cost of attacking deep-learning spectrum sensing. The
-stress-tests say the same thing three ways: seed-stable, real-signal-valid,
-and architecture-discriminating---the numbers move, the conclusions do
+with mask-matched adversarial training, to
+raise---the cost of attacking deep-learning spectrum sensing: $+6.7$\,dB
+against a converged adaptive attacker at zero clean-accuracy cost (AT),
+$+9.9$\,dB with a TRADES variant at 0.75\,pp clean cost. The
+stress-tests say the same thing in more ways: seed-stable, real-signal-valid,
+architecture-discriminating, error-barred, and now adaptive-attack
+certified---the numbers move, the conclusions do
 not.
 
 % ============================================================================
@@ -1085,7 +1290,10 @@ spectrum sensing scheme,'' Wireless Networks, vol. 30, no. 5, Oct. 2024.
 \bibitem{etsi302571} ETSI, ``Intelligent Transport Systems (ITS);
 Radiocommunications equipment operating in the 5~855~MHz to 5~925~MHz
 frequency band; Harmonised Standard covering the essential requirements of
-article 3.2 of Directive 2014/53/EU,'' ETSI EN 302 571, V2.1.1, Feb. 2017.
+article 3.2 of Directive 2014/53/EU,'' ETSI EN 302 571, V1.2.1, Sep. 2013.
+Mask values used in Section~\ref{sec:etsimask} are extracted from the
+official PDF (sha256 667a939\ldots) and committed as machine-readable
+tables with provenance (\texttt{data/standards/en302571\_tables.json}).
 
 \bibitem{tr37885} 3GPP, ``Study on evaluation methodology of new
 Vehicle-to-Everything (V2X) use cases for LTE and NR,'' 3GPP TR 37.885,

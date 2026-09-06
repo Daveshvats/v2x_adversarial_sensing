@@ -20,3 +20,4 @@ checkpoints/
 .DS_Store
 Thumbs.db
 *.swp
+paper/main.log

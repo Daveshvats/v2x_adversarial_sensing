@@ -146,13 +146,46 @@ post-PA compliant at backoff. Verification of compliance must happen at
 the PA output port. `results/papr_pa_results.json` (pre-registered
 hypotheses H1–H3 embedded).
 
+**Adaptive attacks (Wave 12, C33)**: under converged PGD-50 × 5 restarts
+(best-of-R per sample), the defenses keep +6.7 dB (AT) and +9.9 dB (TRADES) of
+mask-MEAP margin — not the +14.0/+18.0 dB the PGD-10 protocol suggested.
+Decomposition: 8.5 of the 10.4 dB AT gap is step-starvation (PGD-50 R=1 alone
+reaches −31.6 dB); restarts add only 1.1 dB. Zero-init wins just 16–30%
+of cells. `results/adaptive_{at,trades,dual}_s7_r5.json` +
+`adaptive_at_s7_r1.json`.
+
+**Real ETSI EN 302 571 mask (Wave 12, C34)**: re-running the canonical
+experiment with the Table-7 unwanted-emissions template (official ETSI PDF,
+sha256-verified, machine-readable in `data/standards/en302571_tables.json`;
+FCC 47 CFR 95.3205 C-V2X OOB limits archived too) moves the compliant MEAP by
+only +0.36 dB (PoC 7.14→7.50): the price-of-compliance headline is not an
+artifact of the self-defined mask shape — and the real template is slightly
+MORE restrictive for the attacker. `results/etsi_mask_results.json`.
+
+**Harm chain (Wave 12, C35)**: disclosed-parameter link budget anchored to the
+measured targeted-noise ASR curve: at the 20% false-IDLE point the attacker
+stays under the 33 dBm ITS EIRP cap to ~650 m (cloaked TX at 100 m);
+synchronized worst-case timing costs 9.5 pp of BSM PRR at 100 m (~95 extra
+lost BSMs/1000); random-timing average case 0.2 pp. `results/harm_chain.json`
++ `paper/figs/harm_chain.png`.
+
+**Error bars (Wave 12, C36)**: Wilson 95% binomial CIs on every conditional-ASR
+cell across 15 result files; headline PoC 7.1 dB carries CI [4.4, 9.8] (wider
+than the 1.06 dB 3-seed spread — the stability argument needed this
+context). `results/w12_confidence_intervals.json`.
+
 Key findings: (1) an *undefended* sensing CNN is broken by a compliant attacker
 tens of dB below the victim signal level; (2) emission-mask compliance costs the
 attacker ~5–7 dB (untargeted) and 16–18 dB (targeted cloaking); (3) compliance
 delays but does not prevent the attack; (4) target specificity (cloaking) is
 where the mask bites hardest; (5) at high power the targeted attack overshoots
 into non-target wrong classes (label-keyed pipelines beware); (6) mask-matched AT
-and compliance compound (~7–8 dB each).
+and compliance compound, but a converged adaptive attack halves the apparent
+defense margin (+6.7 dB AT, +9.9 dB TRADES); (7) the real ETSI Table-7 mask
+shape moves the compliant MEAP by only 0.4 dB; (8) inside ITS power rules the
+attack is fleet-relevant: 9.5 pp BSM PRR loss at 100 m at the 20% false-IDLE
+point; (9) headline PoC carries a ±2.7 dB Wilson 95% CI — wider than the
+3-seed spread, now disclosed everywhere.
 
 ## Research integrity (audit trail)
 
@@ -167,8 +200,10 @@ of the artifact:
   (PAPR/PA reality check: PASS, with pre-ship fixes applied).
 - `results/archive_pre_axis_fix/` — pre-correction results, kept for the
   record, **do not cite**.
-- `scripts/w6_check.py`, `scripts/w11_check*.py` — re-runnable independent
-  checkers (own re-implementations, no shared code with the audited scripts).
+- `scripts/w6_check.py`, `scripts/w11_check*.py`, `scripts/w12_check.py` —
+  re-runnable independent checkers (own re-implementations, no shared code
+  with the audited scripts). Wave-12 audit: PASS (F1–F8, all numbers
+  reproduce).
 
 **2026-09-05 audit corrections** (see CLAIMS.md header): the PSR budget is the
 window ENERGY of the transmit waveform referenced to the clean received-signal

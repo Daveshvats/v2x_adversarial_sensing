@@ -1,0 +1,7276 @@
+{
+  "experiment": "Wave 12 part 2: binomial 95% confidence intervals for headline attack numbers",
+  "method": {
+    "cell_ci": "Wilson score interval, z=1.959964 (95%), k = round(cond_asr * n_eligible / 100)",
+    "meap_ci": "meap_curve (20% threshold) recomputed on per-cell Wilson bound curves; stored as [lower_dB, upper_dB]: lower dB = upper-ASR curve (stronger attack), upper dB = lower-ASR curve (weaker attack)",
+    "poc_ci": "conservative bound propagation (mask_lo - genie_hi, mask_hi - genie_lo); curves share the eval set so this overstates width",
+    "scope": "sampling noise at fixed model/data/protocol ONLY; model-seed variance (3-seed spread 1.06 dB) is additive and reported separately",
+    "meap_threshold_pct": 20.0
+  },
+  "files": {
+    "merged_canonical": {
+      "file": "attack_results_merged.json",
+      "curves": {
+        "per_scenario/highway/runs/targeted_noise/genie": {
+          "label": "per_scenario/highway/runs/targeted_noise/genie",
+          "n_cells": 12,
+          "meap_db": -31.545801526717746,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -32.72,
+            -30.32
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 1,
+            "n": 300,
+            "asr_pct": 0.33,
+            "ci95_pct": [
+              0.06,
+              1.86
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 1,
+              "n": 300,
+              "asr_pct": 0.33,
+              "ci95_pct": [
+                0.06,
+                1.86
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 3,
+              "n": 300,
+              "asr_pct": 1.0,
+              "ci95_pct": [
+                0.34,
+                2.9
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 22,
+              "n": 300,
+              "asr_pct": 7.33,
+              "ci95_pct": [
+                4.89,
+                10.85
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 77,
+              "n": 300,
+              "asr_pct": 25.67,
+              "ci95_pct": [
+                21.05,
+                30.9
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 178,
+              "n": 300,
+              "asr_pct": 59.33,
+              "ci95_pct": [
+                53.69,
+                64.74
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 270,
+              "n": 300,
+              "asr_pct": 90.0,
+              "ci95_pct": [
+                86.08,
+                92.91
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 298,
+              "n": 300,
+              "asr_pct": 99.33,
+              "ci95_pct": [
+                97.6,
+                99.82
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 296,
+              "n": 300,
+              "asr_pct": 98.67,
+              "ci95_pct": [
+                96.62,
+                99.48
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 189,
+              "n": 300,
+              "asr_pct": 63.0,
+              "ci95_pct": [
+                57.4,
+                68.27
+              ]
+            }
+          ]
+        },
+        "per_scenario/highway/runs/targeted_noise/cv2x_mask": {
+          "label": "per_scenario/highway/runs/targeted_noise/cv2x_mask",
+          "n_cells": 12,
+          "meap_db": -14.167500000000041,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -15.52,
+            -13.08
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 0,
+            "n": 300,
+            "asr_pct": 0.0,
+            "ci95_pct": [
+              0.0,
+              1.26
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 1,
+              "n": 300,
+              "asr_pct": 0.33,
+              "ci95_pct": [
+                0.06,
+                1.86
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 7,
+              "n": 300,
+              "asr_pct": 2.33,
+              "ci95_pct": [
+                1.13,
+                4.74
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 17,
+              "n": 300,
+              "asr_pct": 5.67,
+              "ci95_pct": [
+                3.57,
+                8.89
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 50,
+              "n": 300,
+              "asr_pct": 16.67,
+              "ci95_pct": [
+                12.88,
+                21.3
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 110,
+              "n": 300,
+              "asr_pct": 36.67,
+              "ci95_pct": [
+                31.41,
+                42.26
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 174,
+              "n": 300,
+              "asr_pct": 58.0,
+              "ci95_pct": [
+                52.35,
+                63.45
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 216,
+              "n": 300,
+              "asr_pct": 72.0,
+              "ci95_pct": [
+                66.67,
+                76.78
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 250,
+              "n": 300,
+              "asr_pct": 83.33,
+              "ci95_pct": [
+                78.7,
+                87.12
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 245,
+              "n": 300,
+              "asr_pct": 81.67,
+              "ci95_pct": [
+                76.9,
+                85.64
+              ]
+            }
+          ]
+        },
+        "per_scenario/highway/runs/untargeted/genie": {
+          "label": "per_scenario/highway/runs/untargeted/genie",
+          "n_cells": 12,
+          "meap_db": -43.91930251419307,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -44.83,
+            -43.06
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 44,
+            "n": 300,
+            "asr_pct": 14.67,
+            "ci95_pct": [
+              11.11,
+              19.12
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 44,
+              "n": 300,
+              "asr_pct": 14.67,
+              "ci95_pct": [
+                11.11,
+                19.12
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 118,
+              "n": 300,
+              "asr_pct": 39.33,
+              "ci95_pct": [
+                33.97,
+                44.96
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 199,
+              "n": 300,
+              "asr_pct": 66.33,
+              "ci95_pct": [
+                60.81,
+                71.44
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 248,
+              "n": 300,
+              "asr_pct": 82.67,
+              "ci95_pct": [
+                77.98,
+                86.53
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 289,
+              "n": 300,
+              "asr_pct": 96.33,
+              "ci95_pct": [
+                93.55,
+                97.94
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "per_scenario/highway/runs/untargeted/cv2x_mask": {
+          "label": "per_scenario/highway/runs/untargeted/cv2x_mask",
+          "n_cells": 12,
+          "meap_db": -37.20865317515721,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -38.76,
+            -35.65
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 4,
+            "n": 300,
+            "asr_pct": 1.33,
+            "ci95_pct": [
+              0.52,
+              3.38
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 4,
+              "n": 300,
+              "asr_pct": 1.33,
+              "ci95_pct": [
+                0.52,
+                3.38
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 36,
+              "n": 300,
+              "asr_pct": 12.0,
+              "ci95_pct": [
+                8.8,
+                16.17
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 79,
+              "n": 300,
+              "asr_pct": 26.33,
+              "ci95_pct": [
+                21.67,
+                31.59
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 119,
+              "n": 300,
+              "asr_pct": 39.67,
+              "ci95_pct": [
+                34.3,
+                45.3
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 156,
+              "n": 300,
+              "asr_pct": 52.0,
+              "ci95_pct": [
+                46.36,
+                57.59
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 201,
+              "n": 300,
+              "asr_pct": 67.0,
+              "ci95_pct": [
+                61.49,
+                72.08
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 247,
+              "n": 300,
+              "asr_pct": 82.33,
+              "ci95_pct": [
+                77.62,
+                86.23
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 276,
+              "n": 300,
+              "asr_pct": 92.0,
+              "ci95_pct": [
+                88.37,
+                94.57
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 291,
+              "n": 300,
+              "asr_pct": 97.0,
+              "ci95_pct": [
+                94.4,
+                98.41
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 299,
+              "n": 300,
+              "asr_pct": 99.67,
+              "ci95_pct": [
+                98.14,
+                99.94
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "per_scenario/rural/runs/targeted_noise/genie": {
+          "label": "per_scenario/rural/runs/targeted_noise/genie",
+          "n_cells": 12,
+          "meap_db": -31.13636363636381,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -32.07,
+            -30.12
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 0,
+            "n": 300,
+            "asr_pct": 0.0,
+            "ci95_pct": [
+              0.0,
+              1.26
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 9,
+              "n": 300,
+              "asr_pct": 3.0,
+              "ci95_pct": [
+                1.59,
+                5.6
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 75,
+              "n": 300,
+              "asr_pct": 25.0,
+              "ci95_pct": [
+                20.44,
+                30.2
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 193,
+              "n": 300,
+              "asr_pct": 64.33,
+              "ci95_pct": [
+                58.76,
+                69.54
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 282,
+              "n": 300,
+              "asr_pct": 94.0,
+              "ci95_pct": [
+                90.72,
+                96.17
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 204,
+              "n": 300,
+              "asr_pct": 68.0,
+              "ci95_pct": [
+                62.52,
+                73.02
+              ]
+            }
+          ]
+        },
+        "per_scenario/rural/runs/targeted_noise/cv2x_mask": {
+          "label": "per_scenario/rural/runs/targeted_noise/cv2x_mask",
+          "n_cells": 12,
+          "meap_db": -13.014997794442081,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -13.97,
+            -12.08
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 0,
+            "n": 300,
+            "asr_pct": 0.0,
+            "ci95_pct": [
+              0.0,
+              1.26
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 1,
+              "n": 300,
+              "asr_pct": 0.33,
+              "ci95_pct": [
+                0.06,
+                1.86
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 1,
+              "n": 300,
+              "asr_pct": 0.33,
+              "ci95_pct": [
+                0.06,
+                1.86
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 4,
+              "n": 300,
+              "asr_pct": 1.33,
+              "ci95_pct": [
+                0.52,
+                3.38
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 33,
+              "n": 300,
+              "asr_pct": 11.0,
+              "ci95_pct": [
+                7.94,
+                15.05
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 101,
+              "n": 300,
+              "asr_pct": 33.67,
+              "ci95_pct": [
+                28.56,
+                39.19
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 164,
+              "n": 300,
+              "asr_pct": 54.67,
+              "ci95_pct": [
+                49.01,
+                60.21
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 223,
+              "n": 300,
+              "asr_pct": 74.33,
+              "ci95_pct": [
+                69.1,
+                78.95
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 252,
+              "n": 300,
+              "asr_pct": 84.0,
+              "ci95_pct": [
+                79.43,
+                87.71
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 251,
+              "n": 300,
+              "asr_pct": 83.67,
+              "ci95_pct": [
+                79.06,
+                87.42
+              ]
+            }
+          ]
+        },
+        "per_scenario/rural/runs/untargeted/genie": {
+          "label": "per_scenario/rural/runs/untargeted/genie",
+          "n_cells": 12,
+          "meap_db": -44.500000000000014,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -45.0,
+            -43.79
+          ],
+          "meap_ci_censors": [
+            "le",
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 51,
+            "n": 300,
+            "asr_pct": 17.0,
+            "ci95_pct": [
+              13.17,
+              21.66
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 51,
+              "n": 300,
+              "asr_pct": 17.0,
+              "ci95_pct": [
+                13.17,
+                21.66
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 141,
+              "n": 300,
+              "asr_pct": 47.0,
+              "ci95_pct": [
+                41.43,
+                52.65
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 202,
+              "n": 300,
+              "asr_pct": 67.33,
+              "ci95_pct": [
+                61.84,
+                72.39
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 256,
+              "n": 300,
+              "asr_pct": 85.33,
+              "ci95_pct": [
+                80.88,
+                88.89
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 293,
+              "n": 300,
+              "asr_pct": 97.67,
+              "ci95_pct": [
+                95.26,
+                98.87
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "per_scenario/rural/runs/untargeted/cv2x_mask": {
+          "label": "per_scenario/rural/runs/untargeted/cv2x_mask",
+          "n_cells": 12,
+          "meap_db": -39.136504653567826,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -40.91,
+            -36.82
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 10,
+            "n": 300,
+            "asr_pct": 3.33,
+            "ci95_pct": [
+              1.82,
+              6.03
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 10,
+              "n": 300,
+              "asr_pct": 3.33,
+              "ci95_pct": [
+                1.82,
+                6.03
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 55,
+              "n": 300,
+              "asr_pct": 18.33,
+              "ci95_pct": [
+                14.36,
+                23.1
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 84,
+              "n": 300,
+              "asr_pct": 28.0,
+              "ci95_pct": [
+                23.22,
+                33.33
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 115,
+              "n": 300,
+              "asr_pct": 38.33,
+              "ci95_pct": [
+                33.01,
+                43.95
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 162,
+              "n": 300,
+              "asr_pct": 54.0,
+              "ci95_pct": [
+                48.35,
+                59.55
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 220,
+              "n": 300,
+              "asr_pct": 73.33,
+              "ci95_pct": [
+                68.06,
+                78.02
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 264,
+              "n": 300,
+              "asr_pct": 88.0,
+              "ci95_pct": [
+                83.83,
+                91.2
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 283,
+              "n": 300,
+              "asr_pct": 94.33,
+              "ci95_pct": [
+                91.11,
+                96.43
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 291,
+              "n": 300,
+              "asr_pct": 97.0,
+              "ci95_pct": [
+                94.4,
+                98.41
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 298,
+              "n": 300,
+              "asr_pct": 99.33,
+              "ci95_pct": [
+                97.6,
+                99.82
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 299,
+              "n": 300,
+              "asr_pct": 99.67,
+              "ci95_pct": [
+                98.14,
+                99.94
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "per_scenario/urban/runs/targeted_noise/genie": {
+          "label": "per_scenario/urban/runs/targeted_noise/genie",
+          "n_cells": 12,
+          "meap_db": -30.8340909090911,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -31.76,
+            -29.92
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 0,
+            "n": 300,
+            "asr_pct": 0.0,
+            "ci95_pct": [
+              0.0,
+              1.26
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 5,
+              "n": 300,
+              "asr_pct": 1.67,
+              "ci95_pct": [
+                0.71,
+                3.84
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 71,
+              "n": 300,
+              "asr_pct": 23.67,
+              "ci95_pct": [
+                19.21,
+                28.79
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 217,
+              "n": 300,
+              "asr_pct": 72.33,
+              "ci95_pct": [
+                67.01,
+                77.09
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 291,
+              "n": 300,
+              "asr_pct": 97.0,
+              "ci95_pct": [
+                94.4,
+                98.41
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 193,
+              "n": 300,
+              "asr_pct": 64.33,
+              "ci95_pct": [
+                58.76,
+                69.54
+              ]
+            }
+          ]
+        },
+        "per_scenario/urban/runs/targeted_noise/cv2x_mask": {
+          "label": "per_scenario/urban/runs/targeted_noise/cv2x_mask",
+          "n_cells": 12,
+          "meap_db": -14.823684210526325,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -16.18,
+            -13.66
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 0,
+            "n": 300,
+            "asr_pct": 0.0,
+            "ci95_pct": [
+              0.0,
+              1.26
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 4,
+              "n": 300,
+              "asr_pct": 1.33,
+              "ci95_pct": [
+                0.52,
+                3.38
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 11,
+              "n": 300,
+              "asr_pct": 3.67,
+              "ci95_pct": [
+                2.06,
+                6.45
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 58,
+              "n": 300,
+              "asr_pct": 19.33,
+              "ci95_pct": [
+                15.26,
+                24.18
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 115,
+              "n": 300,
+              "asr_pct": 38.33,
+              "ci95_pct": [
+                33.01,
+                43.95
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 151,
+              "n": 300,
+              "asr_pct": 50.33,
+              "ci95_pct": [
+                44.71,
+                55.95
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 203,
+              "n": 300,
+              "asr_pct": 67.67,
+              "ci95_pct": [
+                62.18,
+                72.71
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 246,
+              "n": 300,
+              "asr_pct": 82.0,
+              "ci95_pct": [
+                77.26,
+                85.93
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 239,
+              "n": 300,
+              "asr_pct": 79.67,
+              "ci95_pct": [
+                74.75,
+                83.83
+              ]
+            }
+          ]
+        },
+        "per_scenario/urban/runs/untargeted/genie": {
+          "label": "per_scenario/urban/runs/untargeted/genie",
+          "n_cells": 12,
+          "meap_db": -44.22475707646814,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -45.0,
+            -43.32
+          ],
+          "meap_ci_censors": [
+            "le",
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 49,
+            "n": 300,
+            "asr_pct": 16.33,
+            "ci95_pct": [
+              12.58,
+              20.94
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 49,
+              "n": 300,
+              "asr_pct": 16.33,
+              "ci95_pct": [
+                12.58,
+                20.94
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 120,
+              "n": 300,
+              "asr_pct": 40.0,
+              "ci95_pct": [
+                34.62,
+                45.64
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 213,
+              "n": 300,
+              "asr_pct": 71.0,
+              "ci95_pct": [
+                65.63,
+                75.84
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 264,
+              "n": 300,
+              "asr_pct": 88.0,
+              "ci95_pct": [
+                83.83,
+                91.2
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 296,
+              "n": 300,
+              "asr_pct": 98.67,
+              "ci95_pct": [
+                96.62,
+                99.48
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "per_scenario/urban/runs/untargeted/cv2x_mask": {
+          "label": "per_scenario/urban/runs/untargeted/cv2x_mask",
+          "n_cells": 12,
+          "meap_db": -37.08333333333358,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -38.95,
+            -35.2
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 9,
+            "n": 300,
+            "asr_pct": 3.0,
+            "ci95_pct": [
+              1.59,
+              5.6
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 9,
+              "n": 300,
+              "asr_pct": 3.0,
+              "ci95_pct": [
+                1.59,
+                5.6
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 39,
+              "n": 300,
+              "asr_pct": 13.0,
+              "ci95_pct": [
+                9.66,
+                17.28
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 75,
+              "n": 300,
+              "asr_pct": 25.0,
+              "ci95_pct": [
+                20.44,
+                30.2
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 118,
+              "n": 300,
+              "asr_pct": 39.33,
+              "ci95_pct": [
+                33.97,
+                44.96
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 175,
+              "n": 300,
+              "asr_pct": 58.33,
+              "ci95_pct": [
+                52.68,
+                63.77
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 234,
+              "n": 300,
+              "asr_pct": 78.0,
+              "ci95_pct": [
+                72.97,
+                82.32
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 265,
+              "n": 300,
+              "asr_pct": 88.33,
+              "ci95_pct": [
+                84.21,
+                91.49
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 290,
+              "n": 300,
+              "asr_pct": 96.67,
+              "ci95_pct": [
+                93.97,
+                98.18
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 299,
+              "n": 300,
+              "asr_pct": 99.67,
+              "ci95_pct": [
+                98.14,
+                99.94
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "at_defense_C16": {
+      "file": "at_defense_results.json",
+      "curves": {
+        "defended/untargeted/runs/genie": {
+          "label": "defended/untargeted/runs/genie",
+          "n_cells": 10,
+          "meap_db": -37.46304347826098,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -38.39,
+            -36.54
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 6,
+            "n": 300,
+            "asr_pct": 2.0,
+            "ci95_pct": [
+              0.92,
+              4.29
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 6,
+              "n": 300,
+              "asr_pct": 2.0,
+              "ci95_pct": [
+                0.92,
+                4.29
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 25,
+              "n": 300,
+              "asr_pct": 8.33,
+              "ci95_pct": [
+                5.71,
+                12.01
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 94,
+              "n": 300,
+              "asr_pct": 31.33,
+              "ci95_pct": [
+                26.35,
+                36.79
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 169,
+              "n": 300,
+              "asr_pct": 56.33,
+              "ci95_pct": [
+                50.68,
+                61.83
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 242,
+              "n": 300,
+              "asr_pct": 80.67,
+              "ci95_pct": [
+                75.82,
+                84.74
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 277,
+              "n": 300,
+              "asr_pct": 92.33,
+              "ci95_pct": [
+                88.76,
+                94.84
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 298,
+              "n": 300,
+              "asr_pct": 99.33,
+              "ci95_pct": [
+                97.6,
+                99.82
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "defended/untargeted/runs/cv2x_mask": {
+          "label": "defended/untargeted/runs/cv2x_mask",
+          "n_cells": 10,
+          "meap_db": -23.07736720554295,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -25.8,
+            -20.47
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 1,
+            "n": 300,
+            "asr_pct": 0.33,
+            "ci95_pct": [
+              0.06,
+              1.86
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 1,
+              "n": 300,
+              "asr_pct": 0.33,
+              "ci95_pct": [
+                0.06,
+                1.86
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 3,
+              "n": 300,
+              "asr_pct": 1.0,
+              "ci95_pct": [
+                0.34,
+                2.9
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 11,
+              "n": 300,
+              "asr_pct": 3.67,
+              "ci95_pct": [
+                2.06,
+                6.45
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 28,
+              "n": 300,
+              "asr_pct": 9.33,
+              "ci95_pct": [
+                6.54,
+                13.16
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 50,
+              "n": 300,
+              "asr_pct": 16.67,
+              "ci95_pct": [
+                12.88,
+                21.3
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 76,
+              "n": 300,
+              "asr_pct": 25.33,
+              "ci95_pct": [
+                20.74,
+                30.55
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 121,
+              "n": 300,
+              "asr_pct": 40.33,
+              "ci95_pct": [
+                34.94,
+                45.97
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 166,
+              "n": 300,
+              "asr_pct": 55.33,
+              "ci95_pct": [
+                49.68,
+                60.86
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 244,
+              "n": 300,
+              "asr_pct": 81.33,
+              "ci95_pct": [
+                76.54,
+                85.34
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 284,
+              "n": 300,
+              "asr_pct": 94.67,
+              "ci95_pct": [
+                91.51,
+                96.69
+              ]
+            }
+          ]
+        },
+        "defended/targeted_noise/runs/genie": {
+          "label": "defended/targeted_noise/runs/genie",
+          "n_cells": 3,
+          "meap_db": -20.0,
+          "meap_censor": "le",
+          "meap_ci95_db": [
+            -20.0,
+            -20.0
+          ],
+          "meap_ci_censors": [
+            "le",
+            "le"
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -20.0,
+            "k": 74,
+            "n": 300,
+            "asr_pct": 24.67,
+            "ci95_pct": [
+              20.13,
+              29.84
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -20.0,
+              "k": 74,
+              "n": 300,
+              "asr_pct": 24.67,
+              "ci95_pct": [
+                20.13,
+                29.84
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 299,
+              "n": 300,
+              "asr_pct": 99.67,
+              "ci95_pct": [
+                98.14,
+                99.94
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "defended/targeted_noise/runs/cv2x_mask": {
+          "label": "defended/targeted_noise/runs/cv2x_mask",
+          "n_cells": 3,
+          "meap_db": -8.672683833289124,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -9.87,
+            -7.59
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -20.0,
+            "k": 2,
+            "n": 300,
+            "asr_pct": 0.67,
+            "ci95_pct": [
+              0.18,
+              2.4
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -20.0,
+              "k": 2,
+              "n": 300,
+              "asr_pct": 0.67,
+              "ci95_pct": [
+                0.18,
+                2.4
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 45,
+              "n": 300,
+              "asr_pct": 15.0,
+              "ci95_pct": [
+                11.4,
+                19.48
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 158,
+              "n": 300,
+              "asr_pct": 52.67,
+              "ci95_pct": [
+                47.02,
+                58.25
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "trades_C17": {
+      "file": "attack_results_urban_untargeted_trades.json",
+      "curves": {
+        "per_scenario/urban/runs/untargeted/genie": {
+          "label": "per_scenario/urban/runs/untargeted/genie",
+          "n_cells": 12,
+          "meap_db": -37.763774912075164,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -39.07,
+            -36.47
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 17,
+            "n": 299,
+            "asr_pct": 5.69,
+            "ci95_pct": [
+              3.58,
+              8.92
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 17,
+              "n": 299,
+              "asr_pct": 5.69,
+              "ci95_pct": [
+                3.58,
+                8.92
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 37,
+              "n": 299,
+              "asr_pct": 12.37,
+              "ci95_pct": [
+                9.11,
+                16.59
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 88,
+              "n": 299,
+              "asr_pct": 29.43,
+              "ci95_pct": [
+                24.55,
+                34.83
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 138,
+              "n": 299,
+              "asr_pct": 46.15,
+              "ci95_pct": [
+                40.59,
+                51.82
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 180,
+              "n": 299,
+              "asr_pct": 60.2,
+              "ci95_pct": [
+                54.56,
+                65.59
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 239,
+              "n": 299,
+              "asr_pct": 79.93,
+              "ci95_pct": [
+                75.03,
+                84.08
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 289,
+              "n": 299,
+              "asr_pct": 96.66,
+              "ci95_pct": [
+                93.95,
+                98.17
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 298,
+              "n": 299,
+              "asr_pct": 99.67,
+              "ci95_pct": [
+                98.13,
+                99.94
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 299,
+              "n": 299,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.73,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 299,
+              "n": 299,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.73,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 299,
+              "n": 299,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.73,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 299,
+              "n": 299,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.73,
+                100.0
+              ]
+            }
+          ]
+        },
+        "per_scenario/urban/runs/untargeted/cv2x_mask": {
+          "label": "per_scenario/urban/runs/untargeted/cv2x_mask",
+          "n_cells": 12,
+          "meap_db": -19.146877748460938,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -21.74,
+            -17.18
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 1,
+            "n": 299,
+            "asr_pct": 0.33,
+            "ci95_pct": [
+              0.06,
+              1.87
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 1,
+              "n": 299,
+              "asr_pct": 0.33,
+              "ci95_pct": [
+                0.06,
+                1.87
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 4,
+              "n": 299,
+              "asr_pct": 1.34,
+              "ci95_pct": [
+                0.52,
+                3.39
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 8,
+              "n": 299,
+              "asr_pct": 2.68,
+              "ci95_pct": [
+                1.36,
+                5.19
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 17,
+              "n": 299,
+              "asr_pct": 5.69,
+              "ci95_pct": [
+                3.58,
+                8.92
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 32,
+              "n": 299,
+              "asr_pct": 10.7,
+              "ci95_pct": [
+                7.68,
+                14.72
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 54,
+              "n": 299,
+              "asr_pct": 18.06,
+              "ci95_pct": [
+                14.11,
+                22.82
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 88,
+              "n": 299,
+              "asr_pct": 29.43,
+              "ci95_pct": [
+                24.55,
+                34.83
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 135,
+              "n": 299,
+              "asr_pct": 45.15,
+              "ci95_pct": [
+                39.61,
+                50.82
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 216,
+              "n": 299,
+              "asr_pct": 72.24,
+              "ci95_pct": [
+                66.91,
+                77.01
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 277,
+              "n": 299,
+              "asr_pct": 92.64,
+              "ci95_pct": [
+                89.11,
+                95.09
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 291,
+              "n": 299,
+              "asr_pct": 97.32,
+              "ci95_pct": [
+                94.81,
+                98.64
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 298,
+              "n": 299,
+              "asr_pct": 99.67,
+              "ci95_pct": [
+                98.13,
+                99.94
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "at_urban_alt_C16": {
+      "file": "attack_results_urban_untargeted_at.json",
+      "curves": {
+        "per_scenario/urban/runs/untargeted/genie": {
+          "label": "per_scenario/urban/runs/untargeted/genie",
+          "n_cells": 12,
+          "meap_db": -37.46304347826098,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -38.39,
+            -36.54
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 6,
+            "n": 300,
+            "asr_pct": 2.0,
+            "ci95_pct": [
+              0.92,
+              4.29
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 6,
+              "n": 300,
+              "asr_pct": 2.0,
+              "ci95_pct": [
+                0.92,
+                4.29
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 25,
+              "n": 300,
+              "asr_pct": 8.33,
+              "ci95_pct": [
+                5.71,
+                12.01
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 94,
+              "n": 300,
+              "asr_pct": 31.33,
+              "ci95_pct": [
+                26.35,
+                36.79
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 169,
+              "n": 300,
+              "asr_pct": 56.33,
+              "ci95_pct": [
+                50.68,
+                61.83
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 242,
+              "n": 300,
+              "asr_pct": 80.67,
+              "ci95_pct": [
+                75.82,
+                84.74
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 277,
+              "n": 300,
+              "asr_pct": 92.33,
+              "ci95_pct": [
+                88.76,
+                94.84
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 298,
+              "n": 300,
+              "asr_pct": 99.33,
+              "ci95_pct": [
+                97.6,
+                99.82
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "per_scenario/urban/runs/untargeted/cv2x_mask": {
+          "label": "per_scenario/urban/runs/untargeted/cv2x_mask",
+          "n_cells": 12,
+          "meap_db": -23.07736720554295,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -25.8,
+            -20.47
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 1,
+            "n": 300,
+            "asr_pct": 0.33,
+            "ci95_pct": [
+              0.06,
+              1.86
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 1,
+              "n": 300,
+              "asr_pct": 0.33,
+              "ci95_pct": [
+                0.06,
+                1.86
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 3,
+              "n": 300,
+              "asr_pct": 1.0,
+              "ci95_pct": [
+                0.34,
+                2.9
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 11,
+              "n": 300,
+              "asr_pct": 3.67,
+              "ci95_pct": [
+                2.06,
+                6.45
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 28,
+              "n": 300,
+              "asr_pct": 9.33,
+              "ci95_pct": [
+                6.54,
+                13.16
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 50,
+              "n": 300,
+              "asr_pct": 16.67,
+              "ci95_pct": [
+                12.88,
+                21.3
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 76,
+              "n": 300,
+              "asr_pct": 25.33,
+              "ci95_pct": [
+                20.74,
+                30.55
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 121,
+              "n": 300,
+              "asr_pct": 40.33,
+              "ci95_pct": [
+                34.94,
+                45.97
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 166,
+              "n": 300,
+              "asr_pct": 55.33,
+              "ci95_pct": [
+                49.68,
+                60.86
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 244,
+              "n": 300,
+              "asr_pct": 81.33,
+              "ci95_pct": [
+                76.54,
+                85.34
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 284,
+              "n": 300,
+              "asr_pct": 94.67,
+              "ci95_pct": [
+                91.51,
+                96.69
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 295,
+              "n": 300,
+              "asr_pct": 98.33,
+              "ci95_pct": [
+                96.16,
+                99.29
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "seed123_C12": {
+      "file": "attack_results_urban_untargeted_s123.json",
+      "curves": {
+        "per_scenario/urban/runs/untargeted/genie": {
+          "label": "per_scenario/urban/runs/untargeted/genie",
+          "n_cells": 12,
+          "meap_db": -45.0,
+          "meap_censor": "le",
+          "meap_ci95_db": [
+            -45.0,
+            -45.0
+          ],
+          "meap_ci_censors": [
+            "le",
+            "le"
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 75,
+            "n": 300,
+            "asr_pct": 25.0,
+            "ci95_pct": [
+              20.44,
+              30.2
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 75,
+              "n": 300,
+              "asr_pct": 25.0,
+              "ci95_pct": [
+                20.44,
+                30.2
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 147,
+              "n": 300,
+              "asr_pct": 49.0,
+              "ci95_pct": [
+                43.39,
+                54.63
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 202,
+              "n": 300,
+              "asr_pct": 67.33,
+              "ci95_pct": [
+                61.84,
+                72.39
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 255,
+              "n": 300,
+              "asr_pct": 85.0,
+              "ci95_pct": [
+                80.52,
+                88.6
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 295,
+              "n": 300,
+              "asr_pct": 98.33,
+              "ci95_pct": [
+                96.16,
+                99.29
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "per_scenario/urban/runs/untargeted/cv2x_mask": {
+          "label": "per_scenario/urban/runs/untargeted/cv2x_mask",
+          "n_cells": 12,
+          "meap_db": -38.147222222222325,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -39.39,
+            -36.94
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 5,
+            "n": 300,
+            "asr_pct": 1.67,
+            "ci95_pct": [
+              0.71,
+              3.84
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 5,
+              "n": 300,
+              "asr_pct": 1.67,
+              "ci95_pct": [
+                0.71,
+                3.84
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 40,
+              "n": 300,
+              "asr_pct": 13.33,
+              "ci95_pct": [
+                9.95,
+                17.65
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 94,
+              "n": 300,
+              "asr_pct": 31.33,
+              "ci95_pct": [
+                26.35,
+                36.79
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 141,
+              "n": 300,
+              "asr_pct": 47.0,
+              "ci95_pct": [
+                41.43,
+                52.65
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 188,
+              "n": 300,
+              "asr_pct": 62.67,
+              "ci95_pct": [
+                57.07,
+                67.95
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 223,
+              "n": 300,
+              "asr_pct": 74.33,
+              "ci95_pct": [
+                69.1,
+                78.95
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 257,
+              "n": 300,
+              "asr_pct": 85.67,
+              "ci95_pct": [
+                81.25,
+                89.18
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 280,
+              "n": 300,
+              "asr_pct": 93.33,
+              "ci95_pct": [
+                89.93,
+                95.64
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 292,
+              "n": 300,
+              "asr_pct": 97.33,
+              "ci95_pct": [
+                94.83,
+                98.64
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 298,
+              "n": 300,
+              "asr_pct": 99.33,
+              "ci95_pct": [
+                97.6,
+                99.82
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "seed456_C12": {
+      "file": "attack_results_urban_untargeted_s456.json",
+      "curves": {
+        "per_scenario/urban/runs/untargeted/genie": {
+          "label": "per_scenario/urban/runs/untargeted/genie",
+          "n_cells": 12,
+          "meap_db": -45.0,
+          "meap_censor": "le",
+          "meap_ci95_db": [
+            -45.0,
+            -44.46
+          ],
+          "meap_ci_censors": [
+            "le",
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 65,
+            "n": 300,
+            "asr_pct": 21.67,
+            "ci95_pct": [
+              17.38,
+              26.67
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 65,
+              "n": 300,
+              "asr_pct": 21.67,
+              "ci95_pct": [
+                17.38,
+                26.67
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 142,
+              "n": 300,
+              "asr_pct": 47.33,
+              "ci95_pct": [
+                41.75,
+                52.98
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 206,
+              "n": 300,
+              "asr_pct": 68.67,
+              "ci95_pct": [
+                63.21,
+                73.65
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 267,
+              "n": 300,
+              "asr_pct": 89.0,
+              "ci95_pct": [
+                84.95,
+                92.06
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 299,
+              "n": 300,
+              "asr_pct": 99.67,
+              "ci95_pct": [
+                98.14,
+                99.94
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "per_scenario/urban/runs/untargeted/cv2x_mask": {
+          "label": "per_scenario/urban/runs/untargeted/cv2x_mask",
+          "n_cells": 12,
+          "meap_db": -37.89494470774108,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -39.67,
+            -36.13
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 6,
+            "n": 300,
+            "asr_pct": 2.0,
+            "ci95_pct": [
+              0.92,
+              4.29
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 6,
+              "n": 300,
+              "asr_pct": 2.0,
+              "ci95_pct": [
+                0.92,
+                4.29
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 44,
+              "n": 300,
+              "asr_pct": 14.67,
+              "ci95_pct": [
+                11.11,
+                19.12
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 82,
+              "n": 300,
+              "asr_pct": 27.33,
+              "ci95_pct": [
+                22.6,
+                32.64
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 134,
+              "n": 300,
+              "asr_pct": 44.67,
+              "ci95_pct": [
+                39.14,
+                50.32
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 186,
+              "n": 300,
+              "asr_pct": 62.0,
+              "ci95_pct": [
+                56.39,
+                67.31
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 236,
+              "n": 300,
+              "asr_pct": 78.67,
+              "ci95_pct": [
+                73.68,
+                82.92
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 269,
+              "n": 300,
+              "asr_pct": 89.67,
+              "ci95_pct": [
+                85.71,
+                92.62
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 287,
+              "n": 300,
+              "asr_pct": 95.67,
+              "ci95_pct": [
+                92.73,
+                97.45
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 296,
+              "n": 300,
+              "asr_pct": 98.67,
+              "ci95_pct": [
+                96.62,
+                99.48
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 299,
+              "n": 300,
+              "asr_pct": 99.67,
+              "ci95_pct": [
+                98.14,
+                99.94
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "seed11_C12": {
+      "file": "attack_results_urban_untargeted_seed11.json",
+      "curves": {
+        "per_scenario/urban/runs/untargeted/genie": {
+          "label": "per_scenario/urban/runs/untargeted/genie",
+          "n_cells": 12,
+          "meap_db": -44.88448275862069,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -45.0,
+            -44.14
+          ],
+          "meap_ci_censors": [
+            "le",
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 58,
+            "n": 300,
+            "asr_pct": 19.33,
+            "ci95_pct": [
+              15.26,
+              24.18
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 58,
+              "n": 300,
+              "asr_pct": 19.33,
+              "ci95_pct": [
+                15.26,
+                24.18
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 145,
+              "n": 300,
+              "asr_pct": 48.33,
+              "ci95_pct": [
+                42.74,
+                53.97
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 214,
+              "n": 300,
+              "asr_pct": 71.33,
+              "ci95_pct": [
+                65.97,
+                76.16
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 270,
+              "n": 300,
+              "asr_pct": 90.0,
+              "ci95_pct": [
+                86.08,
+                92.91
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 295,
+              "n": 300,
+              "asr_pct": 98.33,
+              "ci95_pct": [
+                96.16,
+                99.29
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "per_scenario/urban/runs/untargeted/cv2x_mask": {
+          "label": "per_scenario/urban/runs/untargeted/cv2x_mask",
+          "n_cells": 11,
+          "meap_db": -38.02683504340978,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -39.81,
+            -36.26
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 14,
+            "n": 300,
+            "asr_pct": 4.67,
+            "ci95_pct": [
+              2.8,
+              7.68
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 14,
+              "n": 300,
+              "asr_pct": 4.67,
+              "ci95_pct": [
+                2.8,
+                7.68
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 45,
+              "n": 300,
+              "asr_pct": 15.0,
+              "ci95_pct": [
+                11.4,
+                19.48
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 83,
+              "n": 300,
+              "asr_pct": 27.67,
+              "ci95_pct": [
+                22.91,
+                32.99
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 126,
+              "n": 300,
+              "asr_pct": 42.0,
+              "ci95_pct": [
+                36.55,
+                47.65
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 185,
+              "n": 300,
+              "asr_pct": 61.67,
+              "ci95_pct": [
+                56.05,
+                66.99
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 230,
+              "n": 300,
+              "asr_pct": 76.67,
+              "ci95_pct": [
+                71.56,
+                81.1
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 268,
+              "n": 300,
+              "asr_pct": 89.33,
+              "ci95_pct": [
+                85.33,
+                92.34
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 284,
+              "n": 300,
+              "asr_pct": 94.67,
+              "ci95_pct": [
+                91.51,
+                96.69
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 296,
+              "n": 300,
+              "asr_pct": 98.67,
+              "ci95_pct": [
+                96.62,
+                99.48
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "real_wifi_C21": {
+      "file": "real_wifi_attack.json",
+      "curves": {
+        "frozen/genie/curve": {
+          "label": "frozen/genie/curve",
+          "n_cells": 12,
+          "meap_db": -45.0,
+          "meap_censor": "le",
+          "meap_ci95_db": [
+            -45.0,
+            -45.0
+          ],
+          "meap_ci_censors": [
+            "le",
+            "le"
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 69,
+            "n": 249,
+            "asr_pct": 27.71,
+            "ci95_pct": [
+              22.52,
+              33.58
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 69,
+              "n": 249,
+              "asr_pct": 27.71,
+              "ci95_pct": [
+                22.52,
+                33.58
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 110,
+              "n": 249,
+              "asr_pct": 44.18,
+              "ci95_pct": [
+                38.14,
+                50.39
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 176,
+              "n": 249,
+              "asr_pct": 70.68,
+              "ci95_pct": [
+                64.75,
+                75.99
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 213,
+              "n": 249,
+              "asr_pct": 85.54,
+              "ci95_pct": [
+                80.63,
+                89.37
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 245,
+              "n": 249,
+              "asr_pct": 98.39,
+              "ci95_pct": [
+                95.94,
+                99.37
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 249,
+              "n": 249,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.48,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 249,
+              "n": 249,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.48,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 249,
+              "n": 249,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.48,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 249,
+              "n": 249,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.48,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 249,
+              "n": 249,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.48,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 249,
+              "n": 249,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.48,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 249,
+              "n": 249,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.48,
+                100.0
+              ]
+            }
+          ]
+        },
+        "frozen/cv2x_mask/curve": {
+          "label": "frozen/cv2x_mask/curve",
+          "n_cells": 12,
+          "meap_db": -35.91286307054027,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -41.83,
+            -33.07
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 33,
+            "n": 249,
+            "asr_pct": 13.25,
+            "ci95_pct": [
+              9.59,
+              18.03
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 33,
+              "n": 249,
+              "asr_pct": 13.25,
+              "ci95_pct": [
+                9.59,
+                18.03
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 40,
+              "n": 249,
+              "asr_pct": 16.06,
+              "ci95_pct": [
+                12.02,
+                21.14
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 52,
+              "n": 249,
+              "asr_pct": 20.88,
+              "ci95_pct": [
+                16.3,
+                26.36
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 78,
+              "n": 249,
+              "asr_pct": 31.33,
+              "ci95_pct": [
+                25.88,
+                37.33
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 125,
+              "n": 249,
+              "asr_pct": 50.2,
+              "ci95_pct": [
+                44.03,
+                56.36
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 183,
+              "n": 249,
+              "asr_pct": 73.49,
+              "ci95_pct": [
+                67.69,
+                78.59
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 214,
+              "n": 249,
+              "asr_pct": 85.94,
+              "ci95_pct": [
+                81.08,
+                89.72
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 239,
+              "n": 249,
+              "asr_pct": 95.98,
+              "ci95_pct": [
+                92.77,
+                97.8
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 248,
+              "n": 249,
+              "asr_pct": 99.6,
+              "ci95_pct": [
+                97.76,
+                99.93
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 249,
+              "n": 249,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.48,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 249,
+              "n": 249,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.48,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 249,
+              "n": 249,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.48,
+                100.0
+              ]
+            }
+          ]
+        },
+        "finetuned/genie/curve": {
+          "label": "finetuned/genie/curve",
+          "n_cells": 12,
+          "meap_db": -45.0,
+          "meap_censor": "le",
+          "meap_ci95_db": [
+            -45.0,
+            -45.0
+          ],
+          "meap_ci_censors": [
+            "le",
+            "le"
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 74,
+            "n": 254,
+            "asr_pct": 29.13,
+            "ci95_pct": [
+              23.89,
+              35.0
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 74,
+              "n": 254,
+              "asr_pct": 29.13,
+              "ci95_pct": [
+                23.89,
+                35.0
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 124,
+              "n": 254,
+              "asr_pct": 48.82,
+              "ci95_pct": [
+                42.74,
+                54.94
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 175,
+              "n": 254,
+              "asr_pct": 68.9,
+              "ci95_pct": [
+                62.96,
+                74.27
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 230,
+              "n": 254,
+              "asr_pct": 90.55,
+              "ci95_pct": [
+                86.33,
+                93.57
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 252,
+              "n": 254,
+              "asr_pct": 99.21,
+              "ci95_pct": [
+                97.18,
+                99.78
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 254,
+              "n": 254,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.51,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 254,
+              "n": 254,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.51,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 254,
+              "n": 254,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.51,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 254,
+              "n": 254,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.51,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 254,
+              "n": 254,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.51,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 254,
+              "n": 254,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.51,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 254,
+              "n": 254,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.51,
+                100.0
+              ]
+            }
+          ]
+        },
+        "finetuned/cv2x_mask/curve": {
+          "label": "finetuned/cv2x_mask/curve",
+          "n_cells": 12,
+          "meap_db": -37.66949152542472,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -44.4,
+            -33.17
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 37,
+            "n": 254,
+            "asr_pct": 14.57,
+            "ci95_pct": [
+              10.76,
+              19.43
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 37,
+              "n": 254,
+              "asr_pct": 14.57,
+              "ci95_pct": [
+                10.76,
+                19.43
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 48,
+              "n": 254,
+              "asr_pct": 18.9,
+              "ci95_pct": [
+                14.56,
+                24.16
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 54,
+              "n": 254,
+              "asr_pct": 21.26,
+              "ci95_pct": [
+                16.68,
+                26.7
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 79,
+              "n": 254,
+              "asr_pct": 31.1,
+              "ci95_pct": [
+                25.73,
+                37.04
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 136,
+              "n": 254,
+              "asr_pct": 53.54,
+              "ci95_pct": [
+                47.4,
+                59.58
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 186,
+              "n": 254,
+              "asr_pct": 73.23,
+              "ci95_pct": [
+                67.47,
+                78.3
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 229,
+              "n": 254,
+              "asr_pct": 90.16,
+              "ci95_pct": [
+                85.87,
+                93.24
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 247,
+              "n": 254,
+              "asr_pct": 97.24,
+              "ci95_pct": [
+                94.42,
+                98.66
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 252,
+              "n": 254,
+              "asr_pct": 99.21,
+              "ci95_pct": [
+                97.18,
+                99.78
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 254,
+              "n": 254,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.51,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 254,
+              "n": 254,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.51,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 254,
+              "n": 254,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.51,
+                100.0
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "victim2_transfer_C22C23": {
+      "file": "victim2_transfer.json",
+      "curves": {
+        "resnet2resnet/genie": {
+          "label": "resnet2resnet/genie",
+          "n_cells": 12,
+          "meap_db": -29.16617647058826,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -29.82,
+            -28.56
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 2,
+            "n": 300,
+            "asr_pct": 0.67,
+            "ci95_pct": [
+              0.18,
+              2.4
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 2,
+              "n": 300,
+              "asr_pct": 0.67,
+              "ci95_pct": [
+                0.18,
+                2.4
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 3,
+              "n": 300,
+              "asr_pct": 1.0,
+              "ci95_pct": [
+                0.34,
+                2.9
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 8,
+              "n": 300,
+              "asr_pct": 2.67,
+              "ci95_pct": [
+                1.36,
+                5.17
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 43,
+              "n": 300,
+              "asr_pct": 14.33,
+              "ci95_pct": [
+                10.82,
+                18.75
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 145,
+              "n": 300,
+              "asr_pct": 48.33,
+              "ci95_pct": [
+                42.74,
+                53.97
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 259,
+              "n": 300,
+              "asr_pct": 86.33,
+              "ci95_pct": [
+                81.98,
+                89.76
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 297,
+              "n": 300,
+              "asr_pct": 99.0,
+              "ci95_pct": [
+                97.1,
+                99.66
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "resnet2resnet/cv2x_mask": {
+          "label": "resnet2resnet/cv2x_mask",
+          "n_cells": 12,
+          "meap_db": -25.472552348613725,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -26.68,
+            -24.51
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 1,
+            "n": 300,
+            "asr_pct": 0.33,
+            "ci95_pct": [
+              0.06,
+              1.86
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 1,
+              "n": 300,
+              "asr_pct": 0.33,
+              "ci95_pct": [
+                0.06,
+                1.86
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 1,
+              "n": 300,
+              "asr_pct": 0.33,
+              "ci95_pct": [
+                0.06,
+                1.86
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 2,
+              "n": 300,
+              "asr_pct": 0.67,
+              "ci95_pct": [
+                0.18,
+                2.4
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 12,
+              "n": 300,
+              "asr_pct": 4.0,
+              "ci95_pct": [
+                2.3,
+                6.86
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 65,
+              "n": 300,
+              "asr_pct": 21.67,
+              "ci95_pct": [
+                17.38,
+                26.67
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 149,
+              "n": 300,
+              "asr_pct": 49.67,
+              "ci95_pct": [
+                44.05,
+                55.29
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 216,
+              "n": 300,
+              "asr_pct": 72.0,
+              "ci95_pct": [
+                66.67,
+                76.78
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 265,
+              "n": 300,
+              "asr_pct": 88.33,
+              "ci95_pct": [
+                84.21,
+                91.49
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 299,
+              "n": 300,
+              "asr_pct": 99.67,
+              "ci95_pct": [
+                98.14,
+                99.94
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "dual2dual/genie": {
+          "label": "dual2dual/genie",
+          "n_cells": 12,
+          "meap_db": -44.22475707646814,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -45.0,
+            -43.32
+          ],
+          "meap_ci_censors": [
+            "le",
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 49,
+            "n": 300,
+            "asr_pct": 16.33,
+            "ci95_pct": [
+              12.58,
+              20.94
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 49,
+              "n": 300,
+              "asr_pct": 16.33,
+              "ci95_pct": [
+                12.58,
+                20.94
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 120,
+              "n": 300,
+              "asr_pct": 40.0,
+              "ci95_pct": [
+                34.62,
+                45.64
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 213,
+              "n": 300,
+              "asr_pct": 71.0,
+              "ci95_pct": [
+                65.63,
+                75.84
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 264,
+              "n": 300,
+              "asr_pct": 88.0,
+              "ci95_pct": [
+                83.83,
+                91.2
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 296,
+              "n": 300,
+              "asr_pct": 98.67,
+              "ci95_pct": [
+                96.62,
+                99.48
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "dual2dual/cv2x_mask": {
+          "label": "dual2dual/cv2x_mask",
+          "n_cells": 12,
+          "meap_db": -37.08333333333358,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -38.95,
+            -35.2
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 9,
+            "n": 300,
+            "asr_pct": 3.0,
+            "ci95_pct": [
+              1.59,
+              5.6
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 9,
+              "n": 300,
+              "asr_pct": 3.0,
+              "ci95_pct": [
+                1.59,
+                5.6
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 39,
+              "n": 300,
+              "asr_pct": 13.0,
+              "ci95_pct": [
+                9.66,
+                17.28
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 75,
+              "n": 300,
+              "asr_pct": 25.0,
+              "ci95_pct": [
+                20.44,
+                30.2
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 118,
+              "n": 300,
+              "asr_pct": 39.33,
+              "ci95_pct": [
+                33.97,
+                44.96
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 175,
+              "n": 300,
+              "asr_pct": 58.33,
+              "ci95_pct": [
+                52.68,
+                63.77
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 234,
+              "n": 300,
+              "asr_pct": 78.0,
+              "ci95_pct": [
+                72.97,
+                82.32
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 265,
+              "n": 300,
+              "asr_pct": 88.33,
+              "ci95_pct": [
+                84.21,
+                91.49
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 290,
+              "n": 300,
+              "asr_pct": 96.67,
+              "ci95_pct": [
+                93.97,
+                98.18
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 299,
+              "n": 300,
+              "asr_pct": 99.67,
+              "ci95_pct": [
+                98.14,
+                99.94
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "dual2resnet/genie": {
+          "label": "dual2resnet/genie",
+          "n_cells": 12,
+          "meap_db": -18.41049076097758,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -18.76,
+            -18.09
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 0,
+            "n": 300,
+            "asr_pct": 0.0,
+            "ci95_pct": [
+              0.0,
+              1.26
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 1,
+              "n": 300,
+              "asr_pct": 0.33,
+              "ci95_pct": [
+                0.06,
+                1.86
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 12,
+              "n": 300,
+              "asr_pct": 4.0,
+              "ci95_pct": [
+                2.3,
+                6.86
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 163,
+              "n": 300,
+              "asr_pct": 54.33,
+              "ci95_pct": [
+                48.68,
+                59.88
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 258,
+              "n": 300,
+              "asr_pct": 86.0,
+              "ci95_pct": [
+                81.62,
+                89.47
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "dual2resnet/cv2x_mask": {
+          "label": "dual2resnet/cv2x_mask",
+          "n_cells": 12,
+          "meap_db": -10.000000000000341,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -11.49,
+            -9.4
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 0,
+            "n": 300,
+            "asr_pct": 0.0,
+            "ci95_pct": [
+              0.0,
+              1.26
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 1,
+              "n": 300,
+              "asr_pct": 0.33,
+              "ci95_pct": [
+                0.06,
+                1.86
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 1,
+              "n": 300,
+              "asr_pct": 0.33,
+              "ci95_pct": [
+                0.06,
+                1.86
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 16,
+              "n": 300,
+              "asr_pct": 5.33,
+              "ci95_pct": [
+                3.31,
+                8.49
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 60,
+              "n": 300,
+              "asr_pct": 20.0,
+              "ci95_pct": [
+                15.87,
+                24.89
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 168,
+              "n": 300,
+              "asr_pct": 56.0,
+              "ci95_pct": [
+                50.34,
+                61.51
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 241,
+              "n": 300,
+              "asr_pct": 80.33,
+              "ci95_pct": [
+                75.46,
+                84.44
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 278,
+              "n": 300,
+              "asr_pct": 92.67,
+              "ci95_pct": [
+                89.15,
+                95.11
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 291,
+              "n": 300,
+              "asr_pct": 97.0,
+              "ci95_pct": [
+                94.4,
+                98.41
+              ]
+            }
+          ]
+        },
+        "resnet2dual/genie": {
+          "label": "resnet2dual/genie",
+          "n_cells": 12,
+          "meap_db": -21.01521739130452,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -21.89,
+            -20.03
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 0,
+            "n": 300,
+            "asr_pct": 0.0,
+            "ci95_pct": [
+              0.0,
+              1.26
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 5,
+              "n": 300,
+              "asr_pct": 1.67,
+              "ci95_pct": [
+                0.71,
+                3.84
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 74,
+              "n": 300,
+              "asr_pct": 24.67,
+              "ci95_pct": [
+                20.13,
+                29.84
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 194,
+              "n": 300,
+              "asr_pct": 64.67,
+              "ci95_pct": [
+                59.1,
+                69.86
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 259,
+              "n": 300,
+              "asr_pct": 86.33,
+              "ci95_pct": [
+                81.98,
+                89.76
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 294,
+              "n": 300,
+              "asr_pct": 98.0,
+              "ci95_pct": [
+                95.71,
+                99.08
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "resnet2dual/cv2x_mask": {
+          "label": "resnet2dual/cv2x_mask",
+          "n_cells": 12,
+          "meap_db": -17.999625046869216,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -18.8,
+            -17.22
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 0,
+            "n": 300,
+            "asr_pct": 0.0,
+            "ci95_pct": [
+              0.0,
+              1.26
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 2,
+              "n": 300,
+              "asr_pct": 0.67,
+              "ci95_pct": [
+                0.18,
+                2.4
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 28,
+              "n": 300,
+              "asr_pct": 9.33,
+              "ci95_pct": [
+                6.54,
+                13.16
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 108,
+              "n": 300,
+              "asr_pct": 36.0,
+              "ci95_pct": [
+                30.78,
+                41.58
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 198,
+              "n": 300,
+              "asr_pct": 66.0,
+              "ci95_pct": [
+                60.47,
+                71.13
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 270,
+              "n": 300,
+              "asr_pct": 90.0,
+              "ci95_pct": [
+                86.08,
+                92.91
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 296,
+              "n": 300,
+              "asr_pct": 98.67,
+              "ci95_pct": [
+                96.62,
+                99.48
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "csi_mismatch_C13": {
+      "file": "csi_mismatch.json",
+      "curves": {}
+    },
+    "atrural_C24": {
+      "file": "attack_results_rural_untargeted_atrural.json",
+      "curves": {
+        "per_scenario/rural/runs/untargeted/genie": {
+          "label": "per_scenario/rural/runs/untargeted/genie",
+          "n_cells": 12,
+          "meap_db": -35.25866528711872,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -36.35,
+            -34.37
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 2,
+            "n": 300,
+            "asr_pct": 0.67,
+            "ci95_pct": [
+              0.18,
+              2.4
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 2,
+              "n": 300,
+              "asr_pct": 0.67,
+              "ci95_pct": [
+                0.18,
+                2.4
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 5,
+              "n": 300,
+              "asr_pct": 1.67,
+              "ci95_pct": [
+                0.71,
+                3.84
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 63,
+              "n": 300,
+              "asr_pct": 21.0,
+              "ci95_pct": [
+                16.77,
+                25.96
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 144,
+              "n": 300,
+              "asr_pct": 48.0,
+              "ci95_pct": [
+                42.41,
+                53.64
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 219,
+              "n": 300,
+              "asr_pct": 73.0,
+              "ci95_pct": [
+                67.71,
+                77.71
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 267,
+              "n": 300,
+              "asr_pct": 89.0,
+              "ci95_pct": [
+                84.95,
+                92.06
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 297,
+              "n": 300,
+              "asr_pct": 99.0,
+              "ci95_pct": [
+                97.1,
+                99.66
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "per_scenario/rural/runs/untargeted/cv2x_mask": {
+          "label": "per_scenario/rural/runs/untargeted/cv2x_mask",
+          "n_cells": 12,
+          "meap_db": -21.890000000000207,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -23.36,
+            -20.39
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 0,
+            "n": 300,
+            "asr_pct": 0.0,
+            "ci95_pct": [
+              0.0,
+              1.26
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 1,
+              "n": 300,
+              "asr_pct": 0.33,
+              "ci95_pct": [
+                0.06,
+                1.86
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 9,
+              "n": 300,
+              "asr_pct": 3.0,
+              "ci95_pct": [
+                1.59,
+                5.6
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 32,
+              "n": 300,
+              "asr_pct": 10.67,
+              "ci95_pct": [
+                7.66,
+                14.67
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 77,
+              "n": 300,
+              "asr_pct": 25.67,
+              "ci95_pct": [
+                21.05,
+                30.9
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 106,
+              "n": 300,
+              "asr_pct": 35.33,
+              "ci95_pct": [
+                30.14,
+                40.9
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 148,
+              "n": 300,
+              "asr_pct": 49.33,
+              "ci95_pct": [
+                43.72,
+                54.96
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 218,
+              "n": 300,
+              "asr_pct": 72.67,
+              "ci95_pct": [
+                67.36,
+                77.4
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 282,
+              "n": 300,
+              "asr_pct": 94.0,
+              "ci95_pct": [
+                90.72,
+                96.17
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 297,
+              "n": 300,
+              "asr_pct": 99.0,
+              "ci95_pct": [
+                97.1,
+                99.66
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "pgd50_R1": {
+      "file": "pgd50_urban_untargeted.json",
+      "curves": {
+        "per_scenario/urban/runs/untargeted/genie": {
+          "label": "per_scenario/urban/runs/untargeted/genie",
+          "n_cells": 7,
+          "meap_db": -40.0,
+          "meap_censor": "le",
+          "meap_ci95_db": [
+            -40.0,
+            -40.0
+          ],
+          "meap_ci_censors": [
+            "le",
+            "le"
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -40.0,
+            "k": 138,
+            "n": 300,
+            "asr_pct": 46.0,
+            "ci95_pct": [
+              40.45,
+              51.65
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -40.0,
+              "k": 138,
+              "n": 300,
+              "asr_pct": 46.0,
+              "ci95_pct": [
+                40.45,
+                51.65
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 231,
+              "n": 300,
+              "asr_pct": 77.0,
+              "ci95_pct": [
+                71.91,
+                81.4
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 280,
+              "n": 300,
+              "asr_pct": 93.33,
+              "ci95_pct": [
+                89.93,
+                95.64
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 299,
+              "n": 300,
+              "asr_pct": 99.67,
+              "ci95_pct": [
+                98.14,
+                99.94
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "per_scenario/urban/runs/untargeted/cv2x_mask": {
+          "label": "per_scenario/urban/runs/untargeted/cv2x_mask",
+          "n_cells": 7,
+          "meap_db": -38.77666666666675,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -40.0,
+            -37.31
+          ],
+          "meap_ci_censors": [
+            "le",
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -40.0,
+            "k": 49,
+            "n": 300,
+            "asr_pct": 16.33,
+            "ci95_pct": [
+              12.58,
+              20.94
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -40.0,
+              "k": 49,
+              "n": 300,
+              "asr_pct": 16.33,
+              "ci95_pct": [
+                12.58,
+                20.94
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 94,
+              "n": 300,
+              "asr_pct": 31.33,
+              "ci95_pct": [
+                26.35,
+                36.79
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 192,
+              "n": 300,
+              "asr_pct": 64.0,
+              "ci95_pct": [
+                58.42,
+                69.22
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 286,
+              "n": 300,
+              "asr_pct": 95.33,
+              "ci95_pct": [
+                92.32,
+                97.2
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 298,
+              "n": 300,
+              "asr_pct": 99.33,
+              "ci95_pct": [
+                97.6,
+                99.82
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "margin10_C15": {
+      "file": "sensitivity_margin10_urban_untargeted.json",
+      "curves": {
+        "per_scenario/urban/runs/untargeted/genie": {
+          "label": "per_scenario/urban/runs/untargeted/genie",
+          "n_cells": 12,
+          "meap_db": -44.22475707646814,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -45.0,
+            -43.32
+          ],
+          "meap_ci_censors": [
+            "le",
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 49,
+            "n": 300,
+            "asr_pct": 16.33,
+            "ci95_pct": [
+              12.58,
+              20.94
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 49,
+              "n": 300,
+              "asr_pct": 16.33,
+              "ci95_pct": [
+                12.58,
+                20.94
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 120,
+              "n": 300,
+              "asr_pct": 40.0,
+              "ci95_pct": [
+                34.62,
+                45.64
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 213,
+              "n": 300,
+              "asr_pct": 71.0,
+              "ci95_pct": [
+                65.63,
+                75.84
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 264,
+              "n": 300,
+              "asr_pct": 88.0,
+              "ci95_pct": [
+                83.83,
+                91.2
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 296,
+              "n": 300,
+              "asr_pct": 98.67,
+              "ci95_pct": [
+                96.62,
+                99.48
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        },
+        "per_scenario/urban/runs/untargeted/cv2x_mask": {
+          "label": "per_scenario/urban/runs/untargeted/cv2x_mask",
+          "n_cells": 12,
+          "meap_db": -37.999143101971036,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -39.94,
+            -36.08
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 12,
+            "n": 300,
+            "asr_pct": 4.0,
+            "ci95_pct": [
+              2.3,
+              6.86
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 12,
+              "n": 300,
+              "asr_pct": 4.0,
+              "ci95_pct": [
+                2.3,
+                6.86
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 46,
+              "n": 300,
+              "asr_pct": 15.33,
+              "ci95_pct": [
+                11.7,
+                19.85
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 81,
+              "n": 300,
+              "asr_pct": 27.0,
+              "ci95_pct": [
+                22.29,
+                32.29
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 128,
+              "n": 300,
+              "asr_pct": 42.67,
+              "ci95_pct": [
+                37.2,
+                48.32
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 179,
+              "n": 300,
+              "asr_pct": 59.67,
+              "ci95_pct": [
+                54.03,
+                65.06
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 236,
+              "n": 300,
+              "asr_pct": 78.67,
+              "ci95_pct": [
+                73.68,
+                82.92
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 266,
+              "n": 300,
+              "asr_pct": 88.67,
+              "ci95_pct": [
+                84.58,
+                91.78
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 291,
+              "n": 300,
+              "asr_pct": 97.0,
+              "ci95_pct": [
+                94.4,
+                98.41
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 299,
+              "n": 300,
+              "asr_pct": 99.67,
+              "ci95_pct": [
+                98.14,
+                99.94
+              ]
+            },
+            {
+              "psr_db": 0.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 5.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            },
+            {
+              "psr_db": 10.0,
+              "k": 300,
+              "n": 300,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.74,
+                100.0
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "adaptive_at_R5": {
+      "file": "adaptive_at_s7_r5.json",
+      "curves": {
+        "runs/untargeted/cv2x_mask": {
+          "label": "runs/untargeted/cv2x_mask",
+          "n_cells": 6,
+          "meap_db": -32.699460107978545,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -34.03,
+            -31.38
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -35.0,
+            "k": 37,
+            "n": 300,
+            "asr_pct": 12.33,
+            "ci95_pct": [
+              9.08,
+              16.54
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -35.0,
+              "k": 37,
+              "n": 300,
+              "asr_pct": 12.33,
+              "ci95_pct": [
+                9.08,
+                16.54
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 87,
+              "n": 300,
+              "asr_pct": 29.0,
+              "ci95_pct": [
+                24.16,
+                34.37
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 178,
+              "n": 300,
+              "asr_pct": 59.33,
+              "ci95_pct": [
+                53.69,
+                64.74
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 225,
+              "n": 300,
+              "asr_pct": 75.0,
+              "ci95_pct": [
+                69.8,
+                79.56
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 265,
+              "n": 300,
+              "asr_pct": 88.33,
+              "ci95_pct": [
+                84.21,
+                91.49
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 299,
+              "n": 300,
+              "asr_pct": 99.67,
+              "ci95_pct": [
+                98.14,
+                99.94
+              ]
+            }
+          ]
+        },
+        "runs/untargeted/genie": {
+          "label": "runs/untargeted/genie",
+          "n_cells": 5,
+          "meap_db": -39.615891856247956,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -40.83,
+            -38.91
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 15,
+            "n": 300,
+            "asr_pct": 5.0,
+            "ci95_pct": [
+              3.05,
+              8.08
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 15,
+              "n": 300,
+              "asr_pct": 5.0,
+              "ci95_pct": [
+                3.05,
+                8.08
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 53,
+              "n": 300,
+              "asr_pct": 17.67,
+              "ci95_pct": [
+                13.77,
+                22.38
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 144,
+              "n": 300,
+              "asr_pct": 48.0,
+              "ci95_pct": [
+                42.41,
+                53.64
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 248,
+              "n": 300,
+              "asr_pct": 82.67,
+              "ci95_pct": [
+                77.98,
+                86.53
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 295,
+              "n": 300,
+              "asr_pct": 98.33,
+              "ci95_pct": [
+                96.16,
+                99.29
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "adaptive_trades_R5": {
+      "file": "adaptive_trades_s7_r5.json",
+      "curves": {
+        "runs/untargeted/cv2x_mask": {
+          "label": "runs/untargeted/cv2x_mask",
+          "n_cells": 7,
+          "meap_db": -29.562500000000025,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -31.34,
+            -28.37
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -35.0,
+            "k": 23,
+            "n": 299,
+            "asr_pct": 7.69,
+            "ci95_pct": [
+              5.18,
+              11.28
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -35.0,
+              "k": 23,
+              "n": 299,
+              "asr_pct": 7.69,
+              "ci95_pct": [
+                5.18,
+                11.28
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 55,
+              "n": 299,
+              "asr_pct": 18.39,
+              "ci95_pct": [
+                14.41,
+                23.18
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 110,
+              "n": 299,
+              "asr_pct": 36.79,
+              "ci95_pct": [
+                31.52,
+                42.39
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 186,
+              "n": 299,
+              "asr_pct": 62.21,
+              "ci95_pct": [
+                56.59,
+                67.52
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 267,
+              "n": 299,
+              "asr_pct": 89.3,
+              "ci95_pct": [
+                85.28,
+                92.32
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 296,
+              "n": 299,
+              "asr_pct": 99.0,
+              "ci95_pct": [
+                97.09,
+                99.66
+              ]
+            },
+            {
+              "psr_db": -5.0,
+              "k": 299,
+              "n": 299,
+              "asr_pct": 100.0,
+              "ci95_pct": [
+                98.73,
+                100.0
+              ]
+            }
+          ]
+        },
+        "runs/untargeted/genie": {
+          "label": "runs/untargeted/genie",
+          "n_cells": 5,
+          "meap_db": -40.024911032028825,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -41.59,
+            -39.08
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 18,
+            "n": 299,
+            "asr_pct": 6.02,
+            "ci95_pct": [
+              3.84,
+              9.31
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 18,
+              "n": 299,
+              "asr_pct": 6.02,
+              "ci95_pct": [
+                3.84,
+                9.31
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 60,
+              "n": 299,
+              "asr_pct": 20.07,
+              "ci95_pct": [
+                15.92,
+                24.97
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 130,
+              "n": 299,
+              "asr_pct": 43.48,
+              "ci95_pct": [
+                37.98,
+                49.14
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 190,
+              "n": 299,
+              "asr_pct": 63.55,
+              "ci95_pct": [
+                57.95,
+                68.8
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 271,
+              "n": 299,
+              "asr_pct": 90.64,
+              "ci95_pct": [
+                86.8,
+                93.44
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "adaptive_dual_R5": {
+      "file": "adaptive_dual_s7_r5.json",
+      "curves": {
+        "runs/untargeted/cv2x_mask": {
+          "label": "runs/untargeted/cv2x_mask",
+          "n_cells": 6,
+          "meap_db": -39.43081117927748,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -41.09,
+            -37.92
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -45.0,
+            "k": 17,
+            "n": 300,
+            "asr_pct": 5.67,
+            "ci95_pct": [
+              3.57,
+              8.89
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -45.0,
+              "k": 17,
+              "n": 300,
+              "asr_pct": 5.67,
+              "ci95_pct": [
+                3.57,
+                8.89
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 55,
+              "n": 300,
+              "asr_pct": 18.33,
+              "ci95_pct": [
+                14.36,
+                23.1
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 99,
+              "n": 300,
+              "asr_pct": 33.0,
+              "ci95_pct": [
+                27.92,
+                38.51
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 203,
+              "n": 300,
+              "asr_pct": 67.67,
+              "ci95_pct": [
+                62.18,
+                72.71
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 288,
+              "n": 300,
+              "asr_pct": 96.0,
+              "ci95_pct": [
+                93.14,
+                97.7
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 299,
+              "n": 300,
+              "asr_pct": 99.67,
+              "ci95_pct": [
+                98.14,
+                99.94
+              ]
+            }
+          ]
+        },
+        "runs/untargeted/genie": {
+          "label": "runs/untargeted/genie",
+          "n_cells": 5,
+          "meap_db": -45.472552348613725,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -46.68,
+            -44.53
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -50.0,
+            "k": 12,
+            "n": 300,
+            "asr_pct": 4.0,
+            "ci95_pct": [
+              2.3,
+              6.86
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -50.0,
+              "k": 12,
+              "n": 300,
+              "asr_pct": 4.0,
+              "ci95_pct": [
+                2.3,
+                6.86
+              ]
+            },
+            {
+              "psr_db": -45.0,
+              "k": 65,
+              "n": 300,
+              "asr_pct": 21.67,
+              "ci95_pct": [
+                17.38,
+                26.67
+              ]
+            },
+            {
+              "psr_db": -40.0,
+              "k": 153,
+              "n": 300,
+              "asr_pct": 51.0,
+              "ci95_pct": [
+                45.37,
+                56.61
+              ]
+            },
+            {
+              "psr_db": -35.0,
+              "k": 239,
+              "n": 300,
+              "asr_pct": 79.67,
+              "ci95_pct": [
+                74.75,
+                83.83
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 285,
+              "n": 300,
+              "asr_pct": 95.0,
+              "ci95_pct": [
+                91.92,
+                96.95
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "adaptive_at_R1": {
+      "file": "adaptive_at_s7_r1.json",
+      "curves": {
+        "runs/untargeted/cv2x_mask": {
+          "label": "runs/untargeted/cv2x_mask",
+          "n_cells": 6,
+          "meap_db": -31.562500000000213,
+          "meap_censor": null,
+          "meap_ci95_db": [
+            -32.93,
+            -30.16
+          ],
+          "meap_ci_censors": [
+            null,
+            null
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -35.0,
+            "k": 27,
+            "n": 300,
+            "asr_pct": 9.0,
+            "ci95_pct": [
+              6.26,
+              12.78
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -35.0,
+              "k": 27,
+              "n": 300,
+              "asr_pct": 9.0,
+              "ci95_pct": [
+                6.26,
+                12.78
+              ]
+            },
+            {
+              "psr_db": -30.0,
+              "k": 75,
+              "n": 300,
+              "asr_pct": 25.0,
+              "ci95_pct": [
+                20.44,
+                30.2
+              ]
+            },
+            {
+              "psr_db": -25.0,
+              "k": 161,
+              "n": 300,
+              "asr_pct": 53.67,
+              "ci95_pct": [
+                48.01,
+                59.23
+              ]
+            },
+            {
+              "psr_db": -20.0,
+              "k": 207,
+              "n": 300,
+              "asr_pct": 69.0,
+              "ci95_pct": [
+                63.55,
+                73.97
+              ]
+            },
+            {
+              "psr_db": -15.0,
+              "k": 256,
+              "n": 300,
+              "asr_pct": 85.33,
+              "ci95_pct": [
+                80.88,
+                88.89
+              ]
+            },
+            {
+              "psr_db": -10.0,
+              "k": 298,
+              "n": 300,
+              "asr_pct": 99.33,
+              "ci95_pct": [
+                97.6,
+                99.82
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "grid55_C12": {
+      "file": "attack_results_urban_untargeted_grid55.json",
+      "curves": {
+        "per_scenario/urban/runs/untargeted/genie": {
+          "label": "per_scenario/urban/runs/untargeted/genie",
+          "n_cells": 2,
+          "meap_db": null,
+          "meap_censor": "ge",
+          "meap_ci95_db": [
+            null,
+            null
+          ],
+          "meap_ci_censors": [
+            "ge",
+            "ge"
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -55.0,
+            "k": 0,
+            "n": 300,
+            "asr_pct": 0.0,
+            "ci95_pct": [
+              0.0,
+              1.26
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -55.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -50.0,
+              "k": 10,
+              "n": 300,
+              "asr_pct": 3.33,
+              "ci95_pct": [
+                1.82,
+                6.03
+              ]
+            }
+          ]
+        },
+        "per_scenario/urban/runs/untargeted/cv2x_mask": {
+          "label": "per_scenario/urban/runs/untargeted/cv2x_mask",
+          "n_cells": 2,
+          "meap_db": null,
+          "meap_censor": "ge",
+          "meap_ci95_db": [
+            null,
+            null
+          ],
+          "meap_ci_censors": [
+            "ge",
+            "ge"
+          ],
+          "asr_at_lowest_psr": {
+            "psr_db": -55.0,
+            "k": 0,
+            "n": 300,
+            "asr_pct": 0.0,
+            "ci95_pct": [
+              0.0,
+              1.26
+            ]
+          },
+          "k_roundtrip_flags": [],
+          "cells": [
+            {
+              "psr_db": -55.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            },
+            {
+              "psr_db": -50.0,
+              "k": 0,
+              "n": 300,
+              "asr_pct": 0.0,
+              "ci95_pct": [
+                0.0,
+                1.26
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  "headline_pairs": [
+    {
+      "label": "C8/C9 urban untargeted (canonical)",
+      "meap_genie_db": -44.22475707646814,
+      "meap_genie_ci95": [
+        -45.0,
+        -43.32
+      ],
+      "meap_mask_db": -37.08333333333358,
+      "meap_mask_ci95": [
+        -38.95,
+        -35.2
+      ],
+      "poc_db": 7.14,
+      "poc_ci95": [
+        4.37,
+        9.8
+      ],
+      "censors": [
+        null,
+        null
+      ]
+    },
+    {
+      "label": "C10 urban targeted-noise",
+      "meap_genie_db": -30.8340909090911,
+      "meap_genie_ci95": [
+        -31.76,
+        -29.92
+      ],
+      "meap_mask_db": -14.823684210526325,
+      "meap_mask_ci95": [
+        -16.18,
+        -13.66
+      ],
+      "poc_db": 16.01,
+      "poc_ci95": [
+        13.74,
+        18.1
+      ],
+      "censors": [
+        null,
+        null
+      ]
+    },
+    {
+      "label": "highway untargeted",
+      "meap_genie_db": -43.91930251419307,
+      "meap_genie_ci95": [
+        -44.83,
+        -43.06
+      ],
+      "meap_mask_db": -37.20865317515721,
+      "meap_mask_ci95": [
+        -38.76,
+        -35.65
+      ],
+      "poc_db": 6.71,
+      "poc_ci95": [
+        4.3,
+        9.18
+      ],
+      "censors": [
+        null,
+        null
+      ]
+    },
+    {
+      "label": "rural untargeted",
+      "meap_genie_db": -44.500000000000014,
+      "meap_genie_ci95": [
+        -45.0,
+        -43.79
+      ],
+      "meap_mask_db": -39.136504653567826,
+      "meap_mask_ci95": [
+        -40.91,
+        -36.82
+      ],
+      "poc_db": 5.36,
+      "poc_ci95": [
+        2.88,
+        8.18
+      ],
+      "censors": [
+        null,
+        null
+      ]
+    },
+    {
+      "label": "C16 AT urban untargeted",
+      "meap_genie_db": -37.46304347826098,
+      "meap_genie_ci95": [
+        -38.39,
+        -36.54
+      ],
+      "meap_mask_db": -23.07736720554295,
+      "meap_mask_ci95": [
+        -25.8,
+        -20.47
+      ],
+      "poc_db": 14.39,
+      "poc_ci95": [
+        10.74,
+        17.92
+      ],
+      "censors": [
+        null,
+        null
+      ]
+    },
+    {
+      "label": "C17 TRADES urban untargeted",
+      "meap_genie_db": -37.763774912075164,
+      "meap_genie_ci95": [
+        -39.07,
+        -36.47
+      ],
+      "meap_mask_db": -19.146877748460938,
+      "meap_mask_ci95": [
+        -21.74,
+        -17.18
+      ],
+      "poc_db": 18.62,
+      "poc_ci95": [
+        14.73,
+        21.89
+      ],
+      "censors": [
+        null,
+        null
+      ]
+    },
+    {
+      "label": "C12 seed 123",
+      "meap_genie_db": -45.0,
+      "meap_genie_ci95": [
+        -45.0,
+        -45.0
+      ],
+      "meap_mask_db": -38.147222222222325,
+      "meap_mask_ci95": [
+        -39.39,
+        -36.94
+      ],
+      "poc_db": 6.85,
+      "poc_ci95": [
+        5.61,
+        8.06
+      ],
+      "censors": [
+        "le",
+        null
+      ]
+    },
+    {
+      "label": "C12 seed 456",
+      "meap_genie_db": -45.0,
+      "meap_genie_ci95": [
+        -45.0,
+        -44.46
+      ],
+      "meap_mask_db": -37.89494470774108,
+      "meap_mask_ci95": [
+        -39.67,
+        -36.13
+      ],
+      "poc_db": 7.11,
+      "poc_ci95": [
+        4.79,
+        8.87
+      ],
+      "censors": [
+        "le",
+        null
+      ]
+    },
+    {
+      "label": "C12 attack seed 11",
+      "meap_genie_db": -44.88448275862069,
+      "meap_genie_ci95": [
+        -45.0,
+        -44.14
+      ],
+      "meap_mask_db": -38.02683504340978,
+      "meap_mask_ci95": [
+        -39.81,
+        -36.26
+      ],
+      "poc_db": 6.86,
+      "poc_ci95": [
+        4.33,
+        8.74
+      ],
+      "censors": [
+        null,
+        null
+      ]
+    },
+    {
+      "label": "C21 real-WiFi frozen",
+      "meap_genie_db": -45.0,
+      "meap_genie_ci95": [
+        -45.0,
+        -45.0
+      ],
+      "meap_mask_db": -35.91286307054027,
+      "meap_mask_ci95": [
+        -41.83,
+        -33.07
+      ],
+      "poc_db": 9.09,
+      "poc_ci95": [
+        3.17,
+        11.93
+      ],
+      "censors": [
+        "le",
+        null
+      ]
+    },
+    {
+      "label": "C21 real-WiFi finetuned",
+      "meap_genie_db": -45.0,
+      "meap_genie_ci95": [
+        -45.0,
+        -45.0
+      ],
+      "meap_mask_db": -37.66949152542472,
+      "meap_mask_ci95": [
+        -44.4,
+        -33.17
+      ],
+      "poc_db": 7.33,
+      "poc_ci95": [
+        0.6,
+        11.83
+      ],
+      "censors": [
+        "le",
+        null
+      ]
+    },
+    {
+      "label": "C24 AT-rural",
+      "meap_genie_db": -35.25866528711872,
+      "meap_genie_ci95": [
+        -36.35,
+        -34.37
+      ],
+      "meap_mask_db": -21.890000000000207,
+      "meap_mask_ci95": [
+        -23.36,
+        -20.39
+      ],
+      "poc_db": 13.37,
+      "poc_ci95": [
+        11.01,
+        15.96
+      ],
+      "censors": [
+        null,
+        null
+      ]
+    },
+    {
+      "label": "PGD-50 R=1 urban",
+      "meap_genie_db": -40.0,
+      "meap_genie_ci95": [
+        -40.0,
+        -40.0
+      ],
+      "meap_mask_db": -38.77666666666675,
+      "meap_mask_ci95": [
+        -40.0,
+        -37.31
+      ],
+      "poc_db": 1.22,
+      "poc_ci95": [
+        0.0,
+        2.69
+      ],
+      "censors": [
+        "le",
+        null
+      ]
+    },
+    {
+      "label": "ADAPTIVE PGD-50x5 vs AT",
+      "meap_genie_db": -39.615891856247956,
+      "meap_genie_ci95": [
+        -40.83,
+        -38.91
+      ],
+      "meap_mask_db": -32.699460107978545,
+      "meap_mask_ci95": [
+        -34.03,
+        -31.38
+      ],
+      "poc_db": 6.92,
+      "poc_ci95": [
+        4.88,
+        9.45
+      ],
+      "censors": [
+        null,
+        null
+      ]
+    },
+    {
+      "label": "ADAPTIVE PGD-50x5 vs TRADES",
+      "meap_genie_db": -40.024911032028825,
+      "meap_genie_ci95": [
+        -41.59,
+        -39.08
+      ],
+      "meap_mask_db": -29.562500000000025,
+      "meap_mask_ci95": [
+        -31.34,
+        -28.37
+      ],
+      "poc_db": 10.46,
+      "poc_ci95": [
+        7.74,
+        13.22
+      ],
+      "censors": [
+        null,
+        null
+      ]
+    },
+    {
+      "label": "ADAPTIVE PGD-50x5 vs undefended",
+      "meap_genie_db": -45.472552348613725,
+      "meap_genie_ci95": [
+        -46.68,
+        -44.53
+      ],
+      "meap_mask_db": -39.43081117927748,
+      "meap_mask_ci95": [
+        -41.09,
+        -37.92
+      ],
+      "poc_db": 6.04,
+      "poc_ci95": [
+        3.44,
+        8.76
+      ],
+      "censors": [
+        null,
+        null
+      ]
+    }
+  ]
+}
