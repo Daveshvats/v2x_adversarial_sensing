@@ -152,8 +152,8 @@ hypotheses H1–H3 embedded).
 under converged PGD-50 × 5 restarts (best-of-R per sample), the defenses keep
 +6.7 dB (AT) and +9.9 dB (TRADES) of mask-MEAP margin on the canonical
 defense seed — not the +14.0/+18.0 dB the PGD-10 protocol suggested.
-Decomposition: 8.5 of the 10.4 dB AT gap is step-starvation (PGD-50 R=1 alone
-reaches −31.6 dB); restarts add only 1.1 dB. Zero-init wins just 16–30%
+Decomposition: 8.5 of the 9.6 dB AT gap is step-starvation (PGD-50 R=1 alone
+reaches −31.6 dB; the TRADES total shift is 10.4 dB); restarts add only 1.1 dB. Zero-init wins just 16–30%
 of cells. Replicated on three independently trained defense seeds
 {42,43,53}: margins +9.8 ± 2.8 dB (AT) and +11.5 ± 1.8 dB (TRADES) — the
 canonical seed was the weakest draw, and the 3.5–5.5 dB defense-seed spread
@@ -168,7 +168,10 @@ experiment with the Table-7 unwanted-emissions template (official ETSI PDF,
 sha256-verified, machine-readable in `data/standards/en302571_tables.json`;
 FCC 47 CFR 95.3205 C-V2X OOB limits archived too) moves the compliant MEAP by
 only +0.36 dB (PoC 7.14→7.50): the price-of-compliance headline is not an
-artifact of the self-defined mask shape — and the real template is slightly
+artifact of the self-defined mask shape — and the **real-template numbers
+(urban untargeted: MEAP −36.7 dB, PoC 7.5 dB) are the canonical compliance
+headline**; the flat-cap figures are the disclosed attacker-favorable bound,
+and the real template is slightly
 MORE restrictive for the attacker. `results/etsi_mask_results.json`.
 
 **Harm chain (Wave 12, C35)**: disclosed-parameter link budget anchored to the

@@ -99,3 +99,26 @@ jobs:
           print(f"pre-PA OOB fraction: {oob.item():.2e} (< 1e-9) PASS")
           print("PHASE1 RELEASE GATE PASSED")
           EOF
+
+      - name: "Gate: recompute 5 stored MEAPs from result JSONs (pure python)"
+        run: |
+          python scripts/ci_recompute_meaps.py
+
+      - name: "Gate: red-team CLI smoke (quick grid, physics checks on)"
+        run: |
+          python scripts/v2x_redteam.py evaluate --victim dual \
+            --scenario urban --psr -30 -20 -10 --n-eval 30 --steps 5 --seed 7
+          python - <<'EOF'
+          import json
+          r = json.load(open("results/redteam_dual_cv2x_attacker_urban.json"))
+          # smoke assertions: physics checks recorded, mask attack non-inert
+          pc = r["physics_checks"]
+          assert pc["delta_oob_fraction"] < 1e-9, pc
+          assert pc["post_projection_budget_ratio_median"] <= 1.0 + 1e-6, pc
+          cells = r["mask_compliant"]["curve"]
+          if isinstance(cells, dict):   # keyed 'psr=XdB'
+              cells = cells.values()
+          asrs = [c["cond_asr"] for c in cells]
+          assert any(a > 20 for a in asrs), f"mask attack inert in smoke: {asrs}"
+          print("red-team CLI smoke PASS: mask ASRs", asrs)
+          EOF

@@ -84,8 +84,10 @@ component to its own lawful transmission. Such a device:
 
 * passes its emission constraints by construction — the perturbation is
   projected onto the transmitter's mask (we verified the attack survives
-  the real EN 302 571 Table 7 shape, 47 CFR 95.3205-style OOB limits, and
-  power-amplifier regrowth at appropriate backoff);
+  the real EN 302 571 Table 7 shape and power-amplifier regrowth at
+  appropriate backoff; the 47 CFR 95.3205 C-V2X OOB limits are extracted
+  and archived in the released artifact, with a 95.3205-shaped projection
+  run as the next queued check);
 * creates no enforcement signature — there is nothing to detect or fine
   under mask-shaped monitoring;
 * yet shifts the output of a learned coexistence classifier.

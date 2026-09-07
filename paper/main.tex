@@ -55,8 +55,9 @@ IEEE~802.11p are co-channel in the ITS band (the transition-period problem),
 with U-NII-4 Wi-Fi below the boundary. On TR~37.885-inspired urban, highway,
 and rural channels, an unconstrained (``genie'') attacker reaches 20\% conditional attack
 success at $-44$\,dB relative received power, while the mask-compliant attacker
-needs $-37$ to $-39$\,dB: an \emph{emission-mask price of compliance of
-5--7\,dB} (untargeted) and 16--18\,dB for targeted ``cloaking'' of an active
+needs $-37$ to $-39$\,dB ($-36.7$\,dB under the real ETSI EN 302 571
+Table-7 unwanted-emissions template): an \emph{emission-mask price of compliance of
+5--7\,dB} (7.5\,dB under the real template; untargeted) and 16--18\,dB for targeted ``cloaking'' of an active
 transmitter as noise. The absolute regime is the more alarming finding: an
 \emph{undefended} sensing CNN is broken by a rule-abiding transmitter operating
 tens of dB below the victim signal level (96.7\% conditional ASR at
@@ -93,7 +94,7 @@ price-of-compliance headline is not an artifact of the self-defined mask
 shape. Finally, a disclosed-parameter link-budget layer translates the
 sensing attack into fleet-scale harm: at the targeted 20\% false-IDLE
 operating point a rule-abiding attacker within the 33\,dBm ITS EIRP cap
-subtracts 9.5\,pp of BSM packet-reception ratio at 100\,m legit-link
+subtracts 9.4\,pp ($\pm$0.04 over 5 MC seeds) of BSM packet-reception ratio at 100\,m legit-link
 distance ($\sim$95 extra lost BSMs per 1000 transmitted). We propose Minimum Effective Attack Power (MEAP) and
 Price-of-Compliance (PoC) as physically grounded, transferable security
 metrics, and release the complete framework (waveform generators, channels,
@@ -125,10 +126,14 @@ roadmap projects volume deployment of direct-mode V2X radios in production
 vehicles~\cite{5gaa2024}. During and
 after this transition, coexistence sensing---determining \emph{which}
 technology is transmitting, not merely whether energy is present---becomes a
-safety-relevant function: roadside units and vehicles must distinguish C-V2X
+safety-relevant function: operators of roadside units and vehicles must
+distinguish C-V2X
 PC5, legacy 802.11p still on the road, and unlicensed Wi-Fi spilling up to the
-boundary. Deep learning classifiers are the natural candidate for this
-four-way technology recognition, following their success in wireless signal
+boundary. Deep learning classifiers are the leading \emph{proposed}
+candidate for this
+four-way technology recognition---in DAA, coexistence, and O-RAN RIC
+designs, though no deployed 2026 radio uses learned sensing
+(Section~\ref{sec:standards})---following their success in wireless signal
 classification~\cite{o2018,girmay2023}.
 
 The same classifiers, however, inherit the adversarial fragility of deep
@@ -611,7 +616,10 @@ prototype protocol of Table~\ref{tab:protocol}; all MEAPs resolved within
 the grid, no censoring). Training-seed stability (seeds 42/123/456, urban
 untargeted): compliant MEAP $-37.1/-38.1/-37.9$\,dB (mean $-37.7$, spread
 1.1\,dB); genie MEAP at or below the grid floor for 2 of 3 seeds, so the
-per-seed PoC (7.1/6.9/7.1\,dB) is a lower bound for those seeds.}
+per-seed PoC (7.1/6.9/7.1\,dB) is a lower bound for those seeds. The
+compliant column uses the idealized flat-cap mask; under the real ETSI
+EN 302 571 Table-7 template the urban untargeted row becomes $-36.7$\,dB
+MEAP, PoC $7.5$\,dB (Section~\ref{sec:etsimask}).}
 \label{tab:metrics}
 \begin{tabular}{llrrr}
 \toprule
@@ -779,7 +787,7 @@ TRADES remains the stronger one---but every defense claim in this paper
 should be read against the adaptive column.
 \item \textbf{The gap is step starvation, not restart luck.} On the AT
 model, PGD-50 \emph{without} restarts already reaches $-31.6$\,dB
-($8.5$\,dB of the $10.4$\,dB total shift); the four random restarts add
+($8.5$\,dB of the $9.6$\,dB total AT shift; the TRADES total is $10.4$\,dB); the four random restarts add
 only $1.1$\,dB. The original evaluation was simply not converged---the
  defended model's loss landscape needs more steps, and a 10-step budget
 understates the adversary. Evaluation protocol, not defense design, was
@@ -1035,8 +1043,8 @@ We therefore re-ran the canonical experiment (urban, untargeted, PGD-10,
 seed 7, same eval sets and budgets) with the projection replaced by the
 \emph{real} European ITS unwanted-emissions template: ETSI EN 302 571
 V1.2.1, Table~7 (10\,MHz channel), i.e.\ a flat $23$\,dBm/MHz in-channel
-PSD that steps down to $-3$, $-9$, $-17$, $-27$\,dBm/MHz at $\pm$4.5,
-$\pm$5, $\pm$10, $\pm$15\,MHz offsets from the attacker's carrier,
+PSD held flat to $\pm$4.5$\,$MHz that steps down to $-3$, $-9$, $-17$, $-27$\,dBm/MHz at $\pm$5,
+$\pm$5.5, $\pm$10, $\pm$15\,MHz offsets from the attacker's carrier,
 interpolated linearly in dB (values extracted from the official ETSI PDF
 and committed as machine-readable tables with provenance and file hash;
 see \texttt{data/standards/en302571\_tables.json}; the archived
@@ -1090,9 +1098,10 @@ scales by a device that is, by construction, inside ITS power rules.
 
 \paragraph{Harm} Figure~\ref{fig:harm} quantifies the downstream PRR.
 At the MEAP operating point (20\% false-IDLE, synchronized worst-case
-timing), the legitimate BSM PRR at 100\,m drops from 0.857 to 0.762
-($-9.5$\,pp; $\sim$95 extra lost BSMs per 1000 transmitted); at 150\,m,
-from 0.377 to 0.335; at the $-10$\,dB operating point, 0.857$\to$0.676
+timing), the legitimate BSM PRR at 100\,m drops from 0.852 to 0.758
+($-9.4$\,pp, $\pm0.04$\,pp over 5 Monte-Carlo seeds of the shadowing
+draws; $\sim$94 extra lost BSMs per 1000 transmitted); at 150\,m,
+from 0.390 to 0.347; at the $-10$\,dB operating point, 0.852$\to$0.671
 at 100\,m ($-18.1$\,pp). With packet-capture modeling the
 numbers are within 0.2\,pp. The average case matters as much as the
 worst case: if the attacker's energy detection is not synchronized to
@@ -1168,7 +1177,9 @@ O-RAN xApps, conformance extensions), and reads as forward-looking risk
 analysis, not as a vulnerability of shipping radios. Second, the sensing
 decision itself is cheap: re-measured on the Phase-1 pipeline (front-end
 STFT included, 86{,}052-parameter victim), median latency is 2.6\,ms per
-window on this project's shared 2-vCPU sandbox---about 37 sensing
+window on this project's shared 2-vCPU sandbox---$25.8\times$ the
+$102.4\,\mu$s window duration (not a continuous-stream rate), but still
+$\sim$37 sensing
 decisions per 100\,ms TR~37.885 latency budget, and 2.2\,ms amortized at
 batch 8. The earlier Phase-0 benchmark of the same architecture measured
 0.985\,ms model-only on faster hardware; both numbers are released with
@@ -1263,7 +1274,7 @@ attackers, not safety against the worst case. The mask idealization
 survives contact with the real ETSI EN 302 571 template (+0.4\,dB), and
 the harm chain closes the gap from sensing error to fleet consequence:
 inside ITS power rules, a synchronized attacker at the targeted 20\%
-false-IDLE point costs 9.5\,pp of BSM PRR at 100\,m. Two protocol
+false-IDLE point costs 9.4\,pp of BSM PRR at 100\,m. Two protocol
 lessons generalize beyond this paper: defense evaluations that are not
 converged (step-starved PGD, no restarts) will systematically overstate
 robustness---ours did, by a factor of two---and sensing-level ASR must be

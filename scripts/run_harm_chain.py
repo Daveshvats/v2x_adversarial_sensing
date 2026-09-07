@@ -137,7 +137,8 @@ def stage1_feasibility(psr_grid, asr_grid, meap_db, n, scenario):
 
 
 def prr_curves(psr_grid, asr_grid, psr_db, scenario, n, sigma,
-               p_overlap=P_OVERLAP, d_grid=None, n_mc=4000, seed=123):
+               p_overlap=P_OVERLAP, d_grid=None, n_mc=4000, seed=123,
+               keep_round=True):
     """Monte-Carlo PRR(D) for the baseline and the attacked condition.
     Returns dict with curves for both collision models + the random-timing
     average case."""
@@ -179,7 +180,7 @@ def prr_curves(psr_grid, asr_grid, psr_db, scenario, n, sigma,
         p_eff = asr * p_rand
         att_avg.append((1 - p_eff) * base[-1] + p_eff * surv_c)
 
-    return {
+    out = {
         "d_m": d_grid.tolist(),
         "psr_db": round(psr_db, 2),
         "false_idle_rate_pct": round(100 * asr, 2),
@@ -188,9 +189,47 @@ def prr_curves(psr_grid, asr_grid, psr_db, scenario, n, sigma,
         "prr_attacked_capture": [round(v, 4) for v in att_cap],
         "prr_attacked_random_timing": [round(v, 4) for v in att_avg],
     }
+    if not keep_round:
+        out["prr_baseline"] = [float(v) for v in base]
+        out["prr_attacked_nocapture"] = [float(v) for v in att_nocap]
+        out["prr_attacked_capture"] = [float(v) for v in att_cap]
+        out["prr_attacked_random_timing"] = [float(v) for v in att_avg]
+    return out
+
+
+def prr_curves_multi(psr_grid, asr_grid, psr_db, scenario, n, sigma,
+                     seeds, p_overlap=P_OVERLAP, n_mc=4000):
+    """Run prr_curves per seed; return (mean-std-rounded dict, per-seed dict).
+    Wave 14 / council round-2 34-c item: Monte-Carlo error bands on the
+    harm-chain PRR deltas (previously a single MC seed, n=4000)."""
+    per_seed = {}
+    for s in seeds:
+        c = prr_curves(psr_grid, asr_grid, psr_db, scenario, n, sigma,
+                       p_overlap=p_overlap, n_mc=n_mc, seed=s,
+                       keep_round=False)
+        per_seed[str(s)] = c
+    keys = ["prr_baseline", "prr_attacked_nocapture",
+            "prr_attacked_capture", "prr_attacked_random_timing"]
+    agg = {"d_m": per_seed[str(seeds[0])]["d_m"],
+           "psr_db": per_seed[str(seeds[0])]["psr_db"],
+           "false_idle_rate_pct": per_seed[str(seeds[0])]["false_idle_rate_pct"]}
+    for k in keys:
+        arr = np.array([per_seed[str(s)][k] for s in seeds])  # (n_seed, n_D)
+        agg[k] = [round(float(v), 4) for v in arr.mean(0)]
+        agg[k + "_std"] = [round(float(v), 5) for v in arr.std(0)]
+    agg["mc_seeds"] = list(seeds)
+    return agg, per_seed
 
 
 def main():
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--mc-seeds", type=int, default=5,
+                    help="number of Monte-Carlo seeds (Wave 14 / 34-c item; "
+                         "default 5; seeds 123/101/202/303/404)")
+    args = ap.parse_args()
+    MC_SEEDS = [123, 101, 202, 303, 404][:max(1, args.mc_seeds)]
+
     psr_grid, asr_grid, meap = load_targeted_curve("urban")
     n = SCENARIO_N["urban"]
 
@@ -223,16 +262,40 @@ def main():
         "stage1_attacker_feasibility": stage1_feasibility(
             psr_grid, asr_grid, meap, n, "urban"),
         "stage2_prr": {},
+        "stage2_prr_per_seed": {},
         "stage3_fleet_metrics": {},
+        "mc_error_bands": {},
         "sensitivity": {},
+        "mc_seeds": MC_SEEDS,
     }
 
     # stage 2: PRR curves at three attack operating points
+    # (Wave 14: seed-ensemble mean curves; per-seed runs stored alongside)
     for tag, psr in [("at_meap_20pct", meap),
                      ("at_psr_minus10", -10.0),
                      ("at_psr_0", 0.0)]:
-        report["stage2_prr"][tag] = prr_curves(
-            psr_grid, asr_grid, psr, "urban", n, SHADOW_URBAN)
+        agg, per_seed = prr_curves_multi(
+            psr_grid, asr_grid, psr, "urban", n, SHADOW_URBAN, MC_SEEDS)
+        report["stage2_prr"][tag] = agg
+        report["stage2_prr_per_seed"][tag] = per_seed
+
+        # MC error bands on the headline deltas (no-capture model)
+        d = np.array(agg["d_m"])
+        for D0 in (100.0, 150.0, 200.0):
+            idx = int(np.argmin(np.abs(d - D0)))
+            dps = []
+            for s in MC_SEEDS:
+                c = per_seed[str(s)]
+                dps.append(100 * (c["prr_baseline"][idx]
+                                  - c["prr_attacked_nocapture"][idx]))
+            dps = np.array(dps)
+            report["mc_error_bands"].setdefault(tag, {})[f"D={D0:.0f}m"] = {
+                "dprr_pp_mean": round(float(dps.mean()), 2),
+                "dprr_pp_std": round(float(dps.std()), 3),
+                "dprr_pp_min": round(float(dps.min()), 2),
+                "dprr_pp_max": round(float(dps.max()), 2),
+                "n_mc_seeds": len(MC_SEEDS),
+            }
 
     # stage 3: fleet deltas at safety-relevant distances
     for tag in ("at_meap_20pct", "at_psr_minus10"):
