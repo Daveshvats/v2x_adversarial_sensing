@@ -174,6 +174,17 @@ headline**; the flat-cap figures are the disclosed attacker-favorable bound,
 and the real template is slightly
 MORE restrictive for the attacker. `results/etsi_mask_results.json`.
 
+**Conformance-domain enforcement (Wave 14, C41 — council 34-b blocker)**:
+the Table-7 limits are enforced in the standard's own measurement domain
+(1-MHz RBW, mean-power detector, dense overlapping centres; water-filling
+projection; post-PA verified by measurement): compliant MEAP **−37.37 dB /
+PoC 6.86** — 0.65 dB weaker for the attacker than the per-bin template
+(mean-power limits permit in-band concentration), 0.28 dB weaker than the
+flat cap. Post-PA worst excess 0.00 dBr at Rapp IBO 13 dB across every
+window of every PSR cell. The PoC headline is robust across all three
+enforcement domains within ±0.5 dB. `results/conformance_results.json` +
+`src/conformance.py`.
+
 **Harm chain (Wave 12, C35)**: disclosed-parameter link budget anchored to the
 measured targeted-noise ASR curve: at the 20% false-IDLE point the attacker
 stays under the 33 dBm ITS EIRP cap to ~650 m (cloaked TX at 100 m);

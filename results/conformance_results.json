@@ -1,0 +1,110 @@
+{
+ "experiment": "Conformance-domain enforcement: EN 302 571 Table-7 limits enforced in the clause-6.4.2-style measurement domain (1-MHz RBW mean power, dense 0.5-MHz overlapping centres) vs per-FFT-bin caps",
+ "config": {
+  "scenario": "urban",
+  "mode": "untargeted",
+  "steps": 10,
+  "seed": 7,
+  "n_eval_per_class": 100,
+  "attack_pgd_alpha_frac": 0.25,
+  "psd_cap_margin": 2.0,
+  "psr_db": [
+   -45.0,
+   -40.0
+  ],
+  "attacker_carrier_fc_mhz_rel_5895": 5.0,
+  "measurement_domain": "mean power per 1-MHz band (RBW=1 MHz, centres every 0.5 MHz, overlapping; linear-in-dB interpolated Table-7 limits at centre offsets)",
+  "standard_source": "data/standards/en302571_tables.json (official ETSI PDF, sha256 667a939...)",
+  "pa_check": "Rapp p=3.0, IBO 13.0 dB (C30 compliant backoff), post-PA measured with the same RBW/mean-power domain",
+  "projection": "per-band proportional water-filling, 8 iters, residual disclosed per cell"
+ },
+ "runs": {
+  "untargeted/conformance_rbw": {
+   "psr=-45dB": {
+    "cond_asr": 4.33,
+    "robust_acc": 95.67,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=-40dB": {
+    "cond_asr": 13.33,
+    "robust_acc": 86.67,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=-35dB": {
+    "cond_asr": 26.0,
+    "robust_acc": 74.0,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=-30dB": {
+    "cond_asr": 38.33,
+    "robust_acc": 61.67,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=-25dB": {
+    "cond_asr": 57.0,
+    "robust_acc": 43.0,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=-20dB": {
+    "cond_asr": 74.67,
+    "robust_acc": 25.33,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=-15dB": {
+    "cond_asr": 90.67,
+    "robust_acc": 9.33,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=-10dB": {
+    "cond_asr": 98.67,
+    "robust_acc": 1.33,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=-5dB": {
+    "cond_asr": 100.0,
+    "robust_acc": 0.0,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=+0dB": {
+    "cond_asr": 100.0,
+    "robust_acc": 0.0,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   }
+  }
+ },
+ "elapsed_s": 86.7,
+ "clean_acc_active": 1.0,
+ "summary": {
+  "meap_conformance_rbw_db": -37.367797947908656,
+  "meap_conformance_censor": null,
+  "meap_etsi_perbin_db": -36.719775070290844,
+  "meap_flat_cap_db": -37.08333333333358,
+  "meap_genie_db": -44.22475707646814,
+  "delta_conf_minus_etsi_db": -0.648,
+  "delta_conf_minus_flat_db": -0.284,
+  "poc_conformance_db": 6.86,
+  "post_pa_worst_excess_dbr_max": 0.0,
+  "post_pa_worst_excess_dbr_mean": 0.0,
+  "verdict_note": "positive delta = measurement-domain enforcement WEAKER for the attacker than the named reference; the per-bin arms are NOT measurement-equivalent (see per-bin-ETSI RBW-domain violation, quantified in the paper text from the unit check)"
+ }
+}

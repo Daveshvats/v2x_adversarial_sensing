@@ -56,8 +56,10 @@ with U-NII-4 Wi-Fi below the boundary. On TR~37.885-inspired urban, highway,
 and rural channels, an unconstrained (``genie'') attacker reaches 20\% conditional attack
 success at $-44$\,dB relative received power, while the mask-compliant attacker
 needs $-37$ to $-39$\,dB ($-36.7$\,dB under the real ETSI EN 302 571
-Table-7 unwanted-emissions template): an \emph{emission-mask price of compliance of
-5--7\,dB} (7.5\,dB under the real template; untargeted) and 16--18\,dB for targeted ``cloaking'' of an active
+Table-7 unwanted-emissions template, $-37.4$\,dB when the limits are
+enforced in the standard's 1-MHz-RBW mean-power measurement domain): an \emph{emission-mask price of compliance of
+5--7\,dB} (7.5\,dB under the real template, 6.9\,dB in the measurement
+domain; untargeted) and 16--18\,dB for targeted ``cloaking'' of an active
 transmitter as noise. The absolute regime is the more alarming finding: an
 \emph{undefended} sensing CNN is broken by a rule-abiding transmitter operating
 tens of dB below the victim signal level (96.7\% conditional ASR at
@@ -619,7 +621,9 @@ untargeted): compliant MEAP $-37.1/-38.1/-37.9$\,dB (mean $-37.7$, spread
 per-seed PoC (7.1/6.9/7.1\,dB) is a lower bound for those seeds. The
 compliant column uses the idealized flat-cap mask; under the real ETSI
 EN 302 571 Table-7 template the urban untargeted row becomes $-36.7$\,dB
-MEAP, PoC $7.5$\,dB (Section~\ref{sec:etsimask}).}
+MEAP, PoC $7.5$\,dB, and $-37.4$\,dB / PoC $6.9$\,dB when the limits are
+enforced in the clause-6.4.2-style 1-MHz-RBW mean-power measurement domain
+(Sections~\ref{sec:etsimask}--\ref{sec:conformance}).}
 \label{tab:metrics}
 \begin{tabular}{llrrr}
 \toprule
@@ -1070,6 +1074,37 @@ mask is not merely a convenience---it is (slightly) attacker-favorable,
 which is the conservative direction for every defense claim in this
 paper. Artifact: \texttt{results/etsi\_mask\_results.json} (ETSI curve,
 flat-cap reference, shape-delta, and the verbatim template knots).
+
+\paragraph{Enforcing the mask in the standard's measurement domain}
+\label{sec:conformance}
+The Table-7 limits are not per-Fourier-bin numbers: clause 6.4.2-style
+conformance measures \emph{mean power spectral density} through a
+measurement receiver with a 1\,MHz resolution bandwidth (the table's own
+units) and a mean-power detector. A per-bin projection is therefore not
+measurement-equivalent: measured in the RBW domain, our per-bin-ETSI
+projections can exceed the Table-7 limits at the steep knot transitions by
+more than $12$\,dB (the 1-MHz measurement averages across the $-26$\,dB
+cliff at $\pm$5\,MHz). We therefore re-ran the canonical experiment a third
+time with the feasible set defined \emph{directly in the measurement
+domain}: for every overlapping 1-MHz measurement band (centres every
+0.5\,MHz, linear-in-dB interpolated limits), the mean per-bin FFT power
+must stay within the Table-7 value at that centre offset; the projection is
+a per-band water-filling shrink with residual violation below
+$0.005$\,dBr, and the same budget and normalization conventions as the
+other arms. The result: compliant MEAP $-37.4$\,dB, PoC $6.9$\,dB. The
+measurement-domain constraint is $0.65$\,dB \emph{weaker} for the attacker
+than the per-bin template (a mean-power limit legally permits in-band
+spectral concentration that per-bin caps forbid) and $0.28$\,dB weaker than
+the flat cap; post-amplifier compliance at the Wave-11 backoff (Rapp,
+IBO 13\,dB) is verified \emph{by measurement}---worst excess $0.00$\,dBr
+across every window of every PSR cell. The price-of-compliance headline is
+thus robust across all three enforcement domains (flat idealization,
+per-bin real template, standard's RBW/mean-power domain) within
+$\pm$0.5\,dB, which is the strongest statement about mask modeling this
+simulation-only study can make. Absolute calibration and true conformance
+benches (real RBW/detector chains) remain disclosed future work.
+Artifact: \texttt{results/conformance\_results.json} and
+\texttt{src/conformance.py}.
 
 \subsection{From sensing error to safety harm: BSM delivery}
 \label{sec:harm}
