@@ -1,18 +1,37 @@
 {
   "title": "The Price of Compliance: emission-mask-constrained adversarial attacks on deep learning spectrum sensing in the 5.9 GHz ITS band (research framework)",
-  "description": "<p>Complete Phase-1 research framework: post-FCC 5.9 GHz coexistence waveform generators (C-V2X PC5, 802.11p, U-NII-4 Wi-Fi), TR 37.885-inspired channels, a differentiable receiver front-end, the mask-constrained waveform-domain adversarial attack (the Compliant Attacker), mask-matched adversarial training defense, MEAP / Price-of-Compliance metrics, and the paper draft with its claim-verification matrix. All result JSONs embed configuration and seeds.</p><p>Waves 6-9 additions in this release: real over-the-air 802.11 captures (Fontaine/UGent, CC BY-NC-SA, data/real_wifi with ATTRIBUTION.md) as the WiFi class, a second victim architecture with surrogate-transfer evaluation, a 3-training-seed protocol, a TRADES defense ablation, and the one-command v2x-redteam evaluation CLI with in-run mask-physics gates. Code: MIT. Embedded real-capture data: CC BY-NC-SA.</p>",
+  "description": "<p>Complete Phase-1 research framework: post-FCC 5.9 GHz coexistence waveform generators (C-V2X PC5, 802.11p, U-NII-4 Wi-Fi), TR 37.885-inspired channels, a differentiable receiver front-end, the mask-constrained waveform-domain adversarial attack (the Compliant Attacker), mask-matched adversarial training defense, MEAP / Price-of-Compliance metrics, and the paper draft with its claim-verification matrix. All result JSONs embed configuration and seeds.</p><p>Wave 10-14 additions in this release: enforcement of the REAL regulatory limits (ETSI EN 302 571 Table-7 per-bin, its 1-MHz-RBW mean-power measurement domain, and the US 47 CFR 95.3205-shaped domain, all post-PA-verified at 0.00 dBr), attack-seed replication ({7,11,22} x 3 defense models with per-window capture), paired-bootstrap MEAP/PoC confidence intervals, a K-receiver cooperative-sensing fusion baseline (+25.3 dB detection gain, PoC unchanged), 5-seed Monte-Carlo harm-chain error bands, an 86-check independent audit script, and CI gates (MEAP recompute + red-team CLI smoke). Waves 6-9 additions previously: real over-the-air 802.11 captures (Fontaine/UGent, CC BY-NC-SA, data/real_wifi with ATTRIBUTION.md) as the WiFi class, a second victim architecture with surrogate-transfer evaluation, a 3-training-seed protocol, a TRADES defense ablation, and the one-command v2x-redteam evaluation CLI with in-run mask-physics gates. Code: MIT. Embedded real-capture data: CC BY-NC-SA.</p>",
   "creators": [
-    {"name": "Dhankhar, Parveen", "affiliation": "Department of Computer Science and Engineering, Vaish College of Engineering, Rohtak, India"},
-    {"name": "Vats, Davesh", "affiliation": "Department of Computer Science and Engineering, Vaish College of Engineering, Rohtak, India"}
+    {
+      "name": "Dhankhar, Parveen",
+      "affiliation": "Department of Computer Science and Engineering, Vaish College of Engineering, Rohtak, India"
+    },
+    {
+      "name": "Vats, Davesh",
+      "affiliation": "Department of Computer Science and Engineering, Vaish College of Engineering, Rohtak, India"
+    }
   ],
-  "keywords": ["spectrum sensing", "V2X", "C-V2X", "adversarial machine learning", "emission mask", "wireless security", "deep learning", "PyTorch", "reproducibility"],
+  "keywords": [
+    "spectrum sensing",
+    "V2X",
+    "C-V2X",
+    "adversarial machine learning",
+    "emission mask",
+    "wireless security",
+    "deep learning",
+    "PyTorch",
+    "reproducibility"
+  ],
   "license": "MIT",
   "language": "eng",
   "upload_type": "software",
-  "version": "phase1-1.2.0",
-  "publication_date": "2026-09-06",
+  "version": "phase1-1.4.0",
+  "publication_date": "2026-09-08",
   "access_right": "open",
   "related_identifiers": [
-    {"identifier": "https://github.com/Daveshvats/v2x_adversarial_sensing", "relation": "isSupplementTo"}
+    {
+      "identifier": "https://github.com/Daveshvats/v2x_adversarial_sensing",
+      "relation": "isSupplementTo"
+    }
   ]
 }
