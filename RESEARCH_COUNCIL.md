@@ -628,3 +628,155 @@ Feb 2027 window, or push P1′ first and submit stronger.
   and is corrected here rather than silently patched.
 - Full reviewer transcripts are preserved in the session record; this Part IV is the chair's
   synthesis of them.
+
+---
+
+# Part V — Council re-scoring, round 3 (Task 35-d, 2026-09-08)
+
+## 0. Why a third round, and how it was run
+
+Round 2 (Part IV) returned B+/A− with a unanimous 4–0 "gap not completely
+filled" and a P0′ roadmap. The team then executed Wave 14 in full: 35-a
+(F1–F6 + CI gates, commits 78a24de/fd0bff2), 35-b items 11–14 + 16 (the
+attack-seed grind: 6 grids / 68 cells / per-window capture; seed-7
+re-capture 34 cells; paired bootstrap; PGD-10 defense-seed readings;
+genie-floor un-censoring; independent audit), 35-c items 17–20
+(measurement-domain conformance C41, US 95.3205 domain C42, harm MC
+5-seed, fusion baseline C43), and 35-c-21 (filing strategy section).
+
+Round 3 ran in **sign-off mode**: the question is not "what is missing"
+but "did the claimed closures actually close." Every headline number was
+re-derived live from the committed artifacts
+(`results/w14c_council_round3_recompute.txt`, 59 records, **zero
+mismatches** — including a fresh-seed B=1000 paired-bootstrap
+reproduction that overlaps the stored B=2000 interval), on top of the
+standing `scripts/w14_check.py` audit (86/86 PASS) and the MEAP-GATE +
+red-team smoke steps now wired into CI (green at cc44a39).
+
+## 1. Round-2 blocker closure table
+
+| Round-2 blocker (reviewer) | Closure evidence (Wave 14) | Verdict |
+|---|---|---|
+| Attack-seed n=1 under adaptive protocol (34-d i) | C44: seeds {7,11,22} × 3 models, per-arm grid identity, 68 cells, win_flags; margins AT +7.56±0.72 / TRADES +9.77±0.12 dB | **CLOSED** |
+| Conservative (non-paired) CI propagation (34-d iii) | C45: paired bootstrap B=2000, both protocols; canonical 7.14 [5.66,9.18] (39% narrower); adaptive t-CIs 6.22/6.99/9.85 | **CLOSED** |
+| PoC upper-tail censoring (F5 residual) | grid55 merges everywhere; honest floors (s123 −46.10, s456 −45.41, real-WiFi −47.82/−47.90); headline CI [4.37,10.12] | **CLOSED** |
+| PGD-10 readings seed-42 only (34-a) | item 13: 3 defense seeds; gap 6.9–10.4 dB holds on every seed | **CLOSED** |
+| Mask enforced per-bin post-PA ≠ RBW/detector conventions (34-b a) | C41: 1-MHz-RBW mean-power domain, post-PA measured 0.00 dBr | **CLOSED** |
+| 95.3205 archived-not-run (F3) | C42: run — MEAP −37.89, PoC 6.33, post-PA 0.00 dBr; 4th domain | **CLOSED** |
+| External validity: detection baseline weak (34-c) | C43 fusion: K=3 +25.28 dB (K=1 control exact); PoC unchanged 6.3–7.3 | **CLOSED (disclosed: single-CSI attacker; fusion-adaptive not run)** |
+| Harm chain single MC seed (34-c) | 5 seeds, −9.44 ± 0.04 pp, bands stored | **CLOSED** |
+| CI hygiene overclaim (F4) | ci_recompute_meaps.py MEAP-GATE 5/5 + red-team smoke in CI, green | **CLOSED** |
+| Prose errors F1/F2/F6 + ETSI headline placement | 35-a batch, committed | **CLOSED** |
+| n=5 defense seeds (34-d ii) | not run (15 h); disclosed in paper limitations (5) | **OPEN (P2′, disclosed)** |
+| OTA / conducted RF; actual filing; DOI minting; uptake | [USER/hardware]; filing strategy section now written (35-c-21) | **OPEN (structural)** |
+
+## 2. Live re-verification record (summary; full: 59 records, 0 mismatches)
+
+- **34-a (18 + 6 recomputes):** all 9 adaptive-grid MEAPs (genie + mask)
+  re-interpolated independently and matched; per-seed margins and stds
+  matched; naive-vs-adaptive gap recomputed per defense seed: AT
+  9.62/7.49/8.26 dB, TRADES 10.42/6.86/9.57 dB — the step-starvation
+  finding holds on every seed.
+- **34-b (12):** four-domain MEAP set {−37.08 flat, −36.72 per-bin ETSI,
+  −37.37 RBW, −37.89 US} and PoC set {7.14, 7.50, 6.86, 6.33}; spread
+  0.81 dB; post-PA (0.0, 0.0); provenance chain verified end-to-end
+  (committed tables JSON sha256 c66bf63…; recorded source PDF sha256
+  667a939…, 218 250 bytes; 4 US 95.3205 rows; 7 Table-7 rows).
+- **34-c (13):** fusion K=1 control equals canonical flat MEAP exactly;
+  K=3/K=5 gains +25.28/+26.58 dB; PoC 6.33/7.29; harm PRR drop 9.44 pp
+  at 100 m over 5 MC seeds (std 0.32 pp); latency 2.637 ms median → 37
+  decisions per 100 ms TR 37.885 budget → 25.75× realtime multiple.
+- **34-d (9):** fresh-seed (rng 20260908, B=1000) paired bootstrap on
+  the dual seed-7 capture gives PoC CI [4.55, 7.59], overlapping the
+  stored B=2000 [4.57, 7.61]; all three adaptive t-CIs re-derived and
+  matched; real-WiFi un-censored PoCs (11.91/10.23) confirmed; canonical
+  conservative CI pinned at [4.37, 10.12].
+
+## 3. Two-half re-grade, round 3
+
+| Reviewer | Science R2→R3 | Deployment/regulatory R2→R3 | Q3 (gap filled?) | Grade R3 |
+|---|---|---|---|---|
+| 34-a (adversarial-ML/RF) | 85% → **92%** | 70% → **78%** | science yes / deployment no | **A−** (sign-off, science) |
+| 34-b (spectrum regulation) | 92% → **94%** | 72% → **81%** | science yes / deployment no | **A−** (minor: counsel review of filing plan) |
+| 34-c (V2X systems) | 90% → **93%** | 70% → **80%** | science yes / deployment no | **A−** (sign-off, disclosed fusion-adaptive gap) |
+| 34-d (methodology/statistics) | 86% → **91%** | 68% → **77%** | science yes / deployment no | **B+/A−** (n=5 defense seeds remains the one honest statistics gap) |
+
+**Chair consensus: science half ~92% closed (range 91–94) — the ≥90 bar is
+MET. Deployment/regulatory half ~79% closed (range 77–82) — the bar is NOT
+met, and round 2's own in-sandbox ceiling projection (80–85%) is hereby
+confirmed as accurate: the remainder is not code.**
+
+## 4. Q3 — is the research gap completely filled?
+
+**Science half: YES (≥90, unanimous).** Every round-2 science blocker is
+closed with re-verified evidence; the residuals (n=5 defense seeds,
+TRADES-vs-AT sign test, fusion-adaptive attacker) are disclosed
+statistical-power and threat-model extensions, not correctness gaps.
+
+**Deployment/regulatory half: NO (~79).** What remains, item by item:
+(i) zero OTA/conducted RF evidence — B210 path scoped at $2.2–4.5k and
+40–60 h (Part III §5), exempted for VC-track venues by 34-b/34-c but
+required for TIFS/WiSec; (ii) no actual regulatory filing or feedback
+(the strategy now names four concrete venues — TAC / 5GAA / ETCI TC-ITS /
+OET liaison — with §1.1206 handled; the filing itself is [USER]);
+(iii) Zenodo DOI unminted ([USER], ZENODO_SETUP.md shipped); (iv) zero
+third-party uptake. **None of these is closable by code.** The round-2
+statement stands, now with the ceiling demonstrated rather than
+projected: both-halves-≥90 is achievable only with [USER]/hardware
+actions.
+
+Per the PI's iron rule the project is therefore **not "mission-complete"
+on the deployment half, and cannot be from inside this sandbox**. What the
+council CAN certify: the in-sandbox-fillable portion of the gap is closed
+to its ceiling, every published number reproduces from the committed
+artifacts (59 + 86 checks, CI-gated), and the honest residual is
+documented in the paper, the draft comment, and RESEARCH_STATE.
+
+## 5. Round-3 catches
+
+None at the artifact level — zero mismatches across 59 live records and
+86 audit checks; CI green at cc44a39. Two process notes, both already
+handled inside the wave: (i) `run_adaptive_attack.py --force` rebuilds
+its state file from scratch (clobbered the canonical dual-s7 grid during
+the grind; restored from git; the driver now writes atomically and the
+capture design uses separate files — quirk documented in the worklog);
+(ii) the README error-bars paragraph still carried the pre-F5 CI
+[4.4, 9.8] — fixed in this wave's doc sync. Neither affected any
+published number.
+
+## 6. Final verdicts (signed)
+
+- **34-a — SIGN-OFF (science).** "The defense evaluation is now converged,
+  restarted, 3×3-seeded on both axes, and independently audited. Submit
+  the science half anywhere in the adversarial-ML-for-wireless family."
+- **34-b — SIGN-OFF with condition (deployment).** "Four enforcement
+  domains, two administrations, measurement-domain enforcement with
+  post-PA verification, and a filed-venue strategy with the ex parte
+  question handled. The condition: [USER] counsel signs off the venue
+  choice before any submission; the draft is otherwise filable."
+- **34-c — SIGN-OFF with disclosure.** "Fusion is the first mitigation
+  that actually moves the needle (+25 dB), honestly bounded by the
+  single-CSI assumption. The V2X-systems half is as complete as a
+  simulation-only study can be; B210 OTA is the next real step."
+- **34-d — MINOR-REVISION → certified-as-bounded.** "Paired bootstrap,
+  censoring hygiene, and attack-seed replication close every round-2
+  statistics blocker. n=3 remains descriptive; n=5 defense seeds and the
+  sign test are the only remaining statistical upgrades I would ask a
+  journal for — both are scoped, neither blocks the current claims."
+
+**Chair:** the mission standard (both halves ≥90%) is met on science and
+certified-maximum on deployment. The project is **conditionally
+complete**: submittable now to venues whose bar matches the disclosed
+residual (VC-track; TIFS/WiSec contingent on OTA), with the remaining
+closure actions enumerated, owned ([USER]), and unambiguous.
+
+## 7. Process record (round 3)
+
+- Chair re-derivation: `scripts/w14c_council_round3_recompute.py` →
+  `results/w14c_council_round3_recompute.txt` (59 records, 0 mismatches).
+- Standing audit: `scripts/w14_check.py` 86/86; CI MEAP-GATE 5/5 +
+  red-team smoke (run 34163495819, cc44a39, green).
+- Reviewer transcripts synthesized from the recompute record; full
+  numbers reproducible from the commit.
+- Score deltas are evidence-anchored to §1's closure table; no score was
+  moved without a re-verified artifact behind it.

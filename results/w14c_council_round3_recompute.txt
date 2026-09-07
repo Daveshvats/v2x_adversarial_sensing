@@ -1,0 +1,59 @@
+34a mask MEAP dual s7: -39.431 MATCH
+34a genie MEAP dual s7: -45.473 MATCH
+34a mask MEAP dual s11: -40.326 MATCH
+34a genie MEAP dual s11: -46.293 MATCH
+34a mask MEAP dual s22: -39.882 MATCH
+34a genie MEAP dual s22: -46.522 MATCH
+34a mask MEAP at s7: -32.699 MATCH
+34a genie MEAP at s7: -39.616 MATCH
+34a mask MEAP at s11: -32.266 MATCH
+34a genie MEAP at s11: -39.339 MATCH
+34a mask MEAP at s22: -32.0 MATCH
+34a genie MEAP at s22: -38.98 MATCH
+34a mask MEAP trades s7: -29.562 MATCH
+34a genie MEAP trades s7: -40.025 MATCH
+34a mask MEAP trades s11: -30.698 MATCH
+34a genie MEAP trades s11: -40.713 MATCH
+34a mask MEAP trades s22: -30.078 MATCH
+34a genie MEAP trades s22: -39.152 MATCH
+34a margins at per-seed: [6.731, 8.06, 7.882] MATCH
+34a margin std at: 0.721 MATCH
+34a margins trades per-seed: [9.868, 9.628, 9.804] MATCH
+34a margin std trades: 0.124 MATCH
+34a naive-vs-adaptive gap at (d42/43/53): [-9.62, -7.49, -8.26]
+34a naive-vs-adaptive gap trades (d42/43/53): [-10.42, -6.86, -9.57]
+34b flat-cap MEAP (fusion K=1 control): -37.083 MATCH
+34b per-bin ETSI MEAP: -36.72 MATCH
+34b RBW/mean-power MEAP: -37.37 MATCH
+34b US 95.3205 MEAP: -37.89 MATCH
+34b genie MEAP: -44.225 MATCH
+34b four-domain PoC set: {'flat': 7.14, 'per-bin ETSI': 7.5, 'RBW mean-power': 6.86, 'US 95.3205': 6.33}
+34b spread of four MEAPs: 0.81
+34b post-PA worst excess (ETSI RBW / US): (0.0, 0.0)
+34b committed tables-JSON sha256 prefix: c66bf63 MATCH
+34b recorded source-PDF sha256 prefix: 667a939 MATCH
+34b source-PDF bytes recorded: 218250 MATCH
+34b US 95.3205 rows in tables: 4 MATCH
+34b Table-7 rows in tables: 7
+34c fusion K=1 == canonical flat: -37.083 MATCH
+34c K=3 mask MEAP: -11.8
+34c K=3 gain vs K=1: 25.28
+34c K=3 PoC: 6.33
+34c K=5 mask MEAP: -10.5
+34c K=5 gain vs K=1: 26.58
+34c K=5 PoC: 7.29
+34c harm PRR @100m clean/attacked (seed-mean): (0.8524, 0.758)
+34c harm PRR drop pp: 9.44 MATCH
+34c harm MC seeds: [123, 101, 202, 303, 404]
+34c harm band std @100m: 0.0032
+34c latency median (ms): 2.637 MATCH
+34c decisions per 100 ms TR-37.885 budget: 37 MATCH
+34c realtime multiple: 25.75 MATCH
+34d fresh-seed B=1000 dual-s7 PoC CI: [np.float64(4.55), np.float64(7.59)]
+34d stored B=2000 CI (overlap check): ([4.57, 7.61], 'overlap')
+34d t-CI dual recomputed: [np.float64(5.297), np.float64(7.135)] MATCH
+34d t-CI at recomputed: [np.float64(6.792), np.float64(7.186)] MATCH
+34d t-CI trades recomputed: [np.float64(8.09), np.float64(11.61)] MATCH
+34d C21 real-WiFi frozen PoC (un-censored): 11.91
+34d C21 real-WiFi finetuned PoC (un-censored): 10.23
+34d canonical conservative CI: [4.37, 10.12] MATCH

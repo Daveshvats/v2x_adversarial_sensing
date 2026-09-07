@@ -85,9 +85,10 @@ component to its own lawful transmission. Such a device:
 * passes its emission constraints by construction — the perturbation is
   projected onto the transmitter's mask (we verified the attack survives
   the real EN 302 571 Table 7 shape and power-amplifier regrowth at
-  appropriate backoff; the 47 CFR 95.3205 C-V2X OOB limits are extracted
-  and archived in the released artifact, with a 95.3205-shaped projection
-  run as the next queued check);
+  appropriate backoff; the 47 CFR 95.3205 C-V2X OOB limits are extracted,
+  archived, and the 95.3205-shaped projection has been RUN: compliant
+  MEAP -37.9 dB, PoC 6.3 dB, post-PA worst excess 0.00 dBr — the attack
+  survives all four enforcement domains we model);
 * creates no enforcement signature — there is nothing to detect or fine
   under mask-shaped monitoring;
 * yet shifts the output of a learned coexistence classifier.
@@ -225,3 +226,48 @@ re-derive every headline number from the stored data):
 * Receiver-robustness policy lineage: FCC's long-standing receiver
   interference-resilience workstream (TAC) and the 5.9 GHz transition
   orders cited above.
+
+
+## Filing strategy (35-c-21; where this goes — [USER] to file, counsel to
+review)
+
+WT 23-287 — the docket whose conventions this draft follows — closed with
+the 2024 Second Report & Order; a new comment there is moot. The finding
+has four live routes, in order of fit:
+
+1. **FCC Technological Advisory Council (TAC).** The receiver-robustness
+   angle (a compliant transmitter can shift a learned sensor) belongs in
+   a TAC working-session presentation, not a docket: TAC is advisory,
+   meetings are public and transcribed, and the submission cost is a
+   slide deck + speaker request. No ex parte issues arise (advisory
+   bodies are outside 47 CFR 1.1206's decisional-personnel scope). Ask:
+   receiver-robustness language in any coexistence-guidance product.
+2. **5GAA technical working groups.** The C-V2X deployment constituency.
+   Contribution via a member organization under NDA-free technical WG
+   conventions; the artifact maps to security/safety work items. The
+   harm-chain numbers (BSM PRR -9.4 pp at 100 m) are the hook.
+3. **ETSI TC-ITS.** The measurement-domain finding (per-FFT-bin mask
+   projections are NOT measurement-equivalent to clause-6.4.2 RBW/mean
+   power; the difference is attacker-visible at +0.65 dB) is directly
+   relevant to EN 302 571 maintenance and conformance-method discussion;
+   route via a national member body.
+4. **FCC OET laboratory liaison.** For the measurement-convention
+   questions only (RBW/detector treatment of projected emissions), as a
+   technical inquiry rather than a filing.
+
+**Ex parte note (47 CFR 1.1206):** if the [USER] chooses a
+permit-but-disclose route that involves commission decisional personnel,
+oral ex parte presentations require notice in the docket (written notice
+for off-the-record communications; the TAC route avoids the question
+entirely). Counsel should confirm current applicability — the
+transition-era dockets are closed and the default route above is
+non-docketed.
+
+**What each venue receives:** this draft (venue-adapted), the paper PDF,
+the repository (Zenodo DOI once minted — [USER]), and the four-domain
+compliance table (flat / per-bin ETSI / RBW mean-power / US 95.3205:
+PoC 6.3-7.5 dB, all post-PA-verified at 0.00 dBr excess).
+
+**Plainly not done here:** no filing of any kind has been made; no
+regulatory feedback exists; the DOI is not minted. These are [USER]
+actions tracked in RESEARCH_STATE.
