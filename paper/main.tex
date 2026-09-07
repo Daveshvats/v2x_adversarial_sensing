@@ -67,7 +67,10 @@ a purpose-optimized waveform at the same implied power is far stronger. As the m
 the compliant-attacker threshold by $+14$\,dB under the evaluation attack
 (PGD-10)---but a converged adaptive attack (PGD-50 with random restarts)
 recovers most of that margin, leaving $+6.7$\,dB of honestly adaptive
-robustness at zero clean-accuracy cost, and the decomposition attributes the
+robustness on the canonical defense seed (replicated across three defense
+training seeds: $+9.8\pm2.8$\,dB for AT, $+11.5\pm1.8$\,dB for TRADES---the
+$3.5$--$5.5$\,dB seed spread is itself a certification finding), and the
+decomposition attributes the
 gap to evaluation step-starvation rather than restart luck. These conclusions are stress-tested beyond the prototype protocol: three
 training seeds move the compliant threshold by at most 1.1\,dB; replacing
 the WiFi class with real over-the-air 802.11 captures (recorded at
@@ -179,7 +182,8 @@ Our contributions are:
   at deeply negative PSR; the legacy feature-space $\epsilon$-ball assumes a
   hidden power budget we make measurable; and mask-matched adversarial
   training shifts the compliant-attacker threshold by $+14$\,dB under the
-  evaluation attack ($+6.7$\,dB against the converged adaptive attack;
+  evaluation attack ($+6.7$\,dB against the converged adaptive attack on the
+  canonical defense seed; $+9.8\pm2.8$\,dB across three defense seeds;
   Section~\ref{sec:adaptive}) at no
   clean-accuracy cost. Compliance \emph{delays} the attack; so does the
   defense; neither prevents it.
@@ -548,9 +552,9 @@ first row; the full protocol is released with the repository.}
 \toprule
 Setting & Value (prototype) \\
 \midrule
-Training & seeds 42/123/456 (undefended headline), 3{,}200 train / 800 val windows, SNR [5,25]\,dB \\
+Training & seeds 42/123/456 (undefended headline), 3{,}200 train / 800 val windows, SNR [5,25]\,dB; defenses seed 42 + replication seeds 43/53 (adaptive margins, 3-seed) \\
 Attack & seed 7, 300 active-tx windows, PGD-10, $\alpha=0.25$ \\
-Adaptive attack & PGD-50, 5 restarts (zero-init + 4 random), best-of-R per sample \\
+Adaptive attack & PGD-50, 5 restarts (zero-init + 4 random), best-of-R per sample; 3 defense seeds \\
 PSD cap margin & 2.0 (flat-cap idealization; relaxing to 10 moves PoC by $-0.9$\,dB) \\
 PSR grid & $-45$ to $+10$\,dB, 12 points \\
 MEAP threshold & 20\% conditional ASR \\
@@ -779,25 +783,44 @@ control model loses only $2.3$\,dB to the adaptive protocol, confirming
 that the canonical undefended numbers (MEAP $-37.1$\,dB) were not an
 artifact of a weak attack, and that restarts matter exactly where the
 defense makes the optimization landscape harder.
+\item \textbf{Defense-seed replication: the single-seed margin was the weak
+draw.} We repeated the adaptive evaluation on two additional independently
+trained defenses per family (AT and TRADES retrained from scratch with
+seeds 43 and 53; identical recipe; clean accuracy 99.3--100\%, so the
+defense trains reliably). The AT margin is
+$+6.7/+12.3/+10.3$\,dB across defense seeds $\{42,43,53\}$ and the TRADES
+margin $+9.9/+13.4/+11.4$\,dB: means $+9.8$\,dB (AT, range $5.5$\,dB) and
+$+11.5$\,dB (TRADES, range $3.5$\,dB). Three things follow. First, the
+canonical seed 42 happened to be the \emph{weakest} draw for both families,
+so the single-seed numbers understate mean robustness. Second, the
+$3.5$--$5.5$\,dB defense-seed spread is $3$--$5\times$ the $1.1$\,dB
+training-seed spread of the undefended headline---single-seed defense
+evaluation is not certification-grade, and we label ours accordingly.
+Third, the ordering TRADES~$>$~AT holds on every seed, and both adaptive
+margins remain far below their PGD-10 values ($+14.0$/$+18.0$\,dB): the
+step-starvation finding is robust in direction, but its magnitude is
+seed-dependent.
 \end{enumerate}
 
 \begin{table}
 \centering\small
 \caption{Adaptive-attack evaluation (urban, untargeted, attack seed 7,
 300 active windows; PGD-50, 5 restarts, best-of-R per sample). The PGD-10
-column is the canonical protocol from Table~\ref{tab:protocol}; the
-$\Delta$ column is the defense margin over the undefended control under
-the SAME attack protocol. Wilson 95\% CIs on the MEAPs are
+column is the canonical protocol from Table~\ref{tab:protocol}; the margin
+columns are over the undefended control under the SAME attack protocol
+(undefended adaptive MEAP $-39.4$\,dB). The final column replicates the
+adaptive attack on three independently trained defenses per family
+(seeds 42/43/53; mean$\,\pm$\,sample std). Wilson 95\% CIs on the MEAPs are
 $\pm$1.3--1.6\,dB.}
 \label{tab:adaptive}
-\begin{tabular}{lccc|cc}
+\begin{tabular}{lccc|ccc}
 \toprule
- & \multicolumn{3}{c|}{mask MEAP (dB)} & \multicolumn{2}{c}{defense margin (dB)} \\
-Victim & PGD-10 & PGD-50 R$=$1 & PGD-50 R$=$5 & PGD-10 & adaptive \\
+ & \multicolumn{3}{c|}{mask MEAP (dB)} & \multicolumn{3}{c}{defense margin (dB)} \\
+Victim & PGD-10 & PGD-50 R$=$1 & PGD-50 R$=$5 & PGD-10 & adaptive (s42) & adaptive (3-seed) \\
 \midrule
-Undefended & $-37.1$ & --- & $-39.4$ & --- & --- \\
-AT & $-23.1$ & $-31.6$ & $-32.7$ & $+14.0$ & $+6.7$ \\
-TRADES & $-19.1$ & --- & $-29.6$ & $+18.0$ & $+9.9$ \\
+Undefended & $-37.1$ & --- & $-39.4$ & --- & --- & --- \\
+AT & $-23.1$ & $-31.6$ & $-32.7$ & $+14.0$ & $+6.7$ & $+9.8\pm2.8$ \\
+TRADES & $-19.1$ & --- & $-29.6$ & $+18.0$ & $+9.9$ & $+11.5\pm1.8$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -810,7 +833,11 @@ protocol was leaving attack strength on the table everywhere, and most
 where the defense had made the landscape harder. Repro artifacts:
 results/adaptive\_\{at,trades,dual\}\_s7\_r5.json (R$=$5) and
 adaptive\_at\_s7\_r1.json (R$=$1 decomposition), each cell with
-conditional ASR, eligibility, and the win histogram.
+conditional ASR, eligibility, and the win histogram; the defense-seed
+replication adds results/adaptive\_\{at,trades\}\_\{d43,d53\}\_s7\_r5.json
+plus the re-derivation and independent audit in
+results/w13\_defense\_seed\_replication.json (checked by
+scripts/w13\_check.py, F1--F8).
 
 \subsection{Real over-the-air signals in the loop}
 \label{sec:realwifi}
@@ -1133,15 +1160,20 @@ the defense side.
 (5)~Prototype scale: undefended headline now carries three training seeds
 (mask MEAP spread 1.1\,dB), two attack seeds, 300 windows, PGD-10 (PGD-50
 and seed stability checked on key conditions: shifts $\le$1.7\,dB); the
-defense study and the TRADES ablation remain single-seed (seed 42), as does
-the adaptive-attack evaluation (attack seed 7, 5 restarts). Confidence
+adaptive margins are replicated across three defense training seeds
+(spread 3.5--5.5\,dB, larger than the undefended training-seed spread),
+while the PGD-10 defense readings and the TRADES-vs-AT comparison at
+PGD-10 remain seed-42 single-seed; the adaptive evaluation fixes the attack
+seed at 7 (5 restarts), so attack-seed variance is covered only on the
+undefended model. Confidence
 intervals are Wilson binomial on sampling noise only; model-seed variance
-(1.1\,dB) is a separate, additive source.
+(1.1\,dB undefended, 3.5--5.5\,dB defended) is a separate, additive source.
 (6)~The phase-difference stream contributes nothing on this task; the
 ``phase-aware'' framing of our prior work is retired honestly.
 (7)~The adversarially-trained defense's robustness is confined to its
 training power range ($-25$ to $-5$\,dB); attacks at parity or above still
-succeed. The TRADES ablation and the rural transfer are single-seed.
+succeed. The rural transfer and the PGD-10 TRADES reading are single-seed
+(the adaptive margins are 3-seed).
 (8)~The real-capture study uses 96 gated bursts from three capture
 locations (74 eval / 22 train windows); PC5, 802.11p and the noise class
 remain synthetic, and the real class is 802.11 captured at 5240\,MHz
@@ -1195,8 +1227,10 @@ end-to-end framework give regulators, standards bodies, and O-RAN security
 engineers a physically grounded, certification-style way to measure---and,
 with mask-matched adversarial training, to
 raise---the cost of attacking deep-learning spectrum sensing: $+6.7$\,dB
-against a converged adaptive attacker at zero clean-accuracy cost (AT),
-$+9.9$\,dB with a TRADES variant at 0.75\,pp clean cost. The
+against a converged adaptive attacker at zero clean-accuracy cost (AT,
+canonical defense seed; $+9.8\pm2.8$\,dB across three defense seeds),
+$+9.9$\,dB with a TRADES variant at 0.75\,pp clean cost ($+11.5\pm1.8$\,dB
+3-seed). The
 stress-tests say the same thing in more ways: seed-stable, real-signal-valid,
 architecture-discriminating, error-barred, and now adaptive-attack
 certified---the numbers move, the conclusions do

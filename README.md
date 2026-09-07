@@ -146,13 +146,20 @@ post-PA compliant at backoff. Verification of compliance must happen at
 the PA output port. `results/papr_pa_results.json` (pre-registered
 hypotheses H1–H3 embedded).
 
-**Adaptive attacks (Wave 12, C33)**: under converged PGD-50 × 5 restarts
-(best-of-R per sample), the defenses keep +6.7 dB (AT) and +9.9 dB (TRADES) of
-mask-MEAP margin — not the +14.0/+18.0 dB the PGD-10 protocol suggested.
+**Adaptive attacks (Wave 12, C33) + defense-seed replication (Wave 13, C37)**:
+under converged PGD-50 × 5 restarts (best-of-R per sample), the defenses keep
++6.7 dB (AT) and +9.9 dB (TRADES) of mask-MEAP margin on the canonical
+defense seed — not the +14.0/+18.0 dB the PGD-10 protocol suggested.
 Decomposition: 8.5 of the 10.4 dB AT gap is step-starvation (PGD-50 R=1 alone
 reaches −31.6 dB); restarts add only 1.1 dB. Zero-init wins just 16–30%
-of cells. `results/adaptive_{at,trades,dual}_s7_r5.json` +
-`adaptive_at_s7_r1.json`.
+of cells. Replicated on three independently trained defense seeds
+{42,43,53}: margins +9.8 ± 2.8 dB (AT) and +11.5 ± 1.8 dB (TRADES) — the
+canonical seed was the weakest draw, and the 3.5–5.5 dB defense-seed spread
+itself disqualifies single-seed defense evaluation for certification-style
+claims. `results/adaptive_{at,trades,dual}_s7_r5.json` +
+`adaptive_{at,trades}_{d43,d53}_s7_r5.json` +
+`adaptive_at_s7_r1.json` + `w13_defense_seed_replication.json`
+(audit: `scripts/w13_check.py`).
 
 **Real ETSI EN 302 571 mask (Wave 12, C34)**: re-running the canonical
 experiment with the Table-7 unwanted-emissions template (official ETSI PDF,

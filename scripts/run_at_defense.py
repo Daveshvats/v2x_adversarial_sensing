@@ -76,9 +76,21 @@ from attack_mask import cconv, waveform_pgd
 from run_train import build_dataset
 
 OUT = os.path.join(ROOT, "results")
-CKPT = os.path.join(OUT, "at_checkpoint.pt")
-FINAL = os.path.join(OUT, "checkpoint_dual_at.pt")
-REPORT = os.path.join(OUT, "at_train_report.json")
+
+
+def _paths(tag):
+    """Output paths for a training run. tag=None -> legacy exact paths
+    (results/at_checkpoint.pt etc., seed-42 canonical artifacts).
+    tag='s43' -> results/at_checkpoint_s43.pt, ..._report_s43.json,
+    results/checkpoint_dual_at_s43.pt (per-seed replication artifacts)."""
+    if not tag:
+        return (os.path.join(OUT, "at_checkpoint.pt"),
+                os.path.join(OUT, "checkpoint_dual_at.pt"),
+                os.path.join(OUT, "at_train_report.json"))
+    return (os.path.join(OUT, f"at_checkpoint_{tag}.pt"),
+            os.path.join(OUT, f"checkpoint_dual_at_{tag}.pt"),
+            os.path.join(OUT, f"at_train_report_{tag}.json"))
+
 
 
 # ---------------------------------------------------------------------------
@@ -180,11 +192,16 @@ def main():
     ap.add_argument("--gauss-prob", type=float, default=0.3)
     ap.add_argument("--gauss-std", type=float, default=0.02)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--tag", default=None,
+                    help="suffix for per-seed artifacts (e.g. 's43'; "
+                         "default keeps the canonical seed-42 paths)")
     ap.add_argument("--resume", action="store_true",
-                    help="continue from results/at_checkpoint.pt")
+                    help="continue from results/at_checkpoint[ _tag].pt")
     ap.add_argument("--max-time-sec", type=float, default=230.0,
                     help="stop cleanly at an epoch boundary before this")
     args = ap.parse_args()
+
+    CKPT, FINAL, REPORT = _paths(args.tag)
 
     cfg = {"epochs_total": args.epochs, "at_prob": args.at_prob,
            "steps": args.steps, "psr_lo": args.psr_lo, "psr_hi": args.psr_hi,
@@ -237,6 +254,10 @@ def main():
         if old.get("epochs_total", 0) > args.epochs:
             print("ERROR: --epochs lower than checkpoint's total target.",
                   flush=True)
+            sys.exit(2)
+        if old.get("seed") != args.seed:
+            print(f"ERROR: checkpoint seed {old.get('seed')} != --seed "
+                  f"{args.seed} (wrong --tag?).", flush=True)
             sys.exit(2)
         model.load_state_dict(ck["model"])
         opt.load_state_dict(ck["optimizer"])

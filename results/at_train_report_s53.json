@@ -1,0 +1,176 @@
+{
+  "experiment": "mask-matched adversarial training (standard AT, matched to the compliant-attacker threat model)",
+  "config": {
+    "epochs_total": 16,
+    "at_prob": 0.5,
+    "steps": 5,
+    "psr_lo": -25.0,
+    "psr_hi": -5.0,
+    "psd_margin": 2.0,
+    "batch_size": 64,
+    "lr": 0.0005,
+    "cutmix_prob": 0.3,
+    "gauss_prob": 0.3,
+    "gauss_std": 0.02,
+    "seed": 53
+  },
+  "recipe": "v3 recipe from run_train.py (Adam 5e-4, cosine, label smoothing 0.1, TF-CutMix 0.3, Gaussian aug 0.3/0.02) + adversarial minibatches per cfg",
+  "at_scheme": {
+    "generator": "waveform_pgd against the CURRENT training model (standard AT, not TRADES)",
+    "band": {
+      "lo": 0.0,
+      "hi": 10.0
+    },
+    "psd_margin": 2.0,
+    "targeted": false,
+    "psr_train_db": [
+      -25.0,
+      -5.0
+    ],
+    "channel": "fresh draw per AT batch, urban/highway alternating by batch index",
+    "budget_reference": "per-sample window energy of the clean (augmented) training waveform",
+    "model_mode_during_generation": "eval (BN running stats, dropout off); train mode for loss step"
+  },
+  "n_train": 3200,
+  "n_val": 800,
+  "classes": [
+    "C-V2X-PC5",
+    "802.11p",
+    "WiFi-U-NII4",
+    "Noise"
+  ],
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 1.2677,
+      "val_acc": 0.5288,
+      "n_adv_batches": 25,
+      "n_batches": 50,
+      "epoch_s": 51.5
+    },
+    {
+      "epoch": 2,
+      "loss": 1.1147,
+      "val_acc": 0.7912,
+      "n_adv_batches": 26,
+      "n_batches": 50,
+      "epoch_s": 52.7
+    },
+    {
+      "epoch": 3,
+      "loss": 1.026,
+      "val_acc": 0.9362,
+      "n_adv_batches": 30,
+      "n_batches": 50,
+      "epoch_s": 58.5
+    },
+    {
+      "epoch": 4,
+      "loss": 0.9018,
+      "val_acc": 0.5337,
+      "n_adv_batches": 28,
+      "n_batches": 50,
+      "epoch_s": 54.8
+    },
+    {
+      "epoch": 5,
+      "loss": 0.785,
+      "val_acc": 0.7325,
+      "n_adv_batches": 24,
+      "n_batches": 50,
+      "epoch_s": 48.6
+    },
+    {
+      "epoch": 6,
+      "loss": 0.7295,
+      "val_acc": 0.6,
+      "n_adv_batches": 28,
+      "n_batches": 50,
+      "epoch_s": 55.1
+    },
+    {
+      "epoch": 7,
+      "loss": 0.6612,
+      "val_acc": 0.6662,
+      "n_adv_batches": 23,
+      "n_batches": 50,
+      "epoch_s": 47.6
+    },
+    {
+      "epoch": 8,
+      "loss": 0.711,
+      "val_acc": 0.7437,
+      "n_adv_batches": 26,
+      "n_batches": 50,
+      "epoch_s": 50.7
+    },
+    {
+      "epoch": 9,
+      "loss": 0.6021,
+      "val_acc": 0.5525,
+      "n_adv_batches": 19,
+      "n_batches": 50,
+      "epoch_s": 40.8
+    },
+    {
+      "epoch": 10,
+      "loss": 0.6166,
+      "val_acc": 0.9875,
+      "n_adv_batches": 26,
+      "n_batches": 50,
+      "epoch_s": 49.7
+    },
+    {
+      "epoch": 11,
+      "loss": 0.6162,
+      "val_acc": 0.9862,
+      "n_adv_batches": 21,
+      "n_batches": 50,
+      "epoch_s": 42.9
+    },
+    {
+      "epoch": 12,
+      "loss": 0.6077,
+      "val_acc": 0.9463,
+      "n_adv_batches": 25,
+      "n_batches": 50,
+      "epoch_s": 48.3
+    },
+    {
+      "epoch": 13,
+      "loss": 0.6025,
+      "val_acc": 1.0,
+      "n_adv_batches": 28,
+      "n_batches": 50,
+      "epoch_s": 56.2
+    },
+    {
+      "epoch": 14,
+      "loss": 0.6555,
+      "val_acc": 1.0,
+      "n_adv_batches": 28,
+      "n_batches": 50,
+      "epoch_s": 56.4
+    },
+    {
+      "epoch": 15,
+      "loss": 0.6836,
+      "val_acc": 1.0,
+      "n_adv_batches": 30,
+      "n_batches": 50,
+      "epoch_s": 56.9
+    },
+    {
+      "epoch": 16,
+      "loss": 0.6444,
+      "val_acc": 1.0,
+      "n_adv_batches": 24,
+      "n_batches": 50,
+      "epoch_s": 46.8
+    }
+  ],
+  "best_val_acc": 1.0,
+  "completed": true,
+  "elapsed_total_s": 817.5,
+  "threads": 1
+}

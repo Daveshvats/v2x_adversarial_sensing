@@ -45,9 +45,19 @@ from run_train import build_dataset
 from run_at_defense import generate_adversarial_batch, evaluate, atomic_save
 
 OUT = os.path.join(ROOT, "results")
-CKPT = os.path.join(OUT, "trades_checkpoint.pt")
-FINAL = os.path.join(OUT, "checkpoint_dual_trades.pt")
-REPORT = os.path.join(OUT, "trades_train_report.json")
+
+
+def _paths(tag):
+    """tag=None -> canonical seed-42 paths; tag='s43' -> per-seed files
+    (trades_checkpoint_s43.pt, checkpoint_dual_trades_s43.pt,
+    trades_train_report_s43.json)."""
+    if not tag:
+        return (os.path.join(OUT, "trades_checkpoint.pt"),
+                os.path.join(OUT, "checkpoint_dual_trades.pt"),
+                os.path.join(OUT, "trades_train_report.json"))
+    return (os.path.join(OUT, f"trades_checkpoint_{tag}.pt"),
+            os.path.join(OUT, f"checkpoint_dual_trades_{tag}.pt"),
+            os.path.join(OUT, f"trades_train_report_{tag}.json"))
 
 
 def train_epoch_trades(model, frontend, opt, sched, tr_w, tr_y, cfg, np_rng):
@@ -108,9 +118,13 @@ def main():
     ap.add_argument("--gauss-prob", type=float, default=0.3)
     ap.add_argument("--gauss-std", type=float, default=0.02)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--tag", default=None,
+                    help="suffix for per-seed artifacts (e.g. 's43')")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--max-time-sec", type=float, default=480.0)
     args = ap.parse_args()
+
+    CKPT, FINAL, REPORT = _paths(args.tag)
 
     cfg = {"epochs_total": args.epochs, "beta": args.beta,
            "at_prob": args.at_prob, "steps": args.steps,

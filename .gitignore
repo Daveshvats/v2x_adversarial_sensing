@@ -16,6 +16,9 @@ checkpoints/
 # the 3-seed protocol need them; ~8 MB total; all configs recorded in the
 # result JSONs). If you add throwaway .pt files, delete them explicitly.
 
+# dataset cache (regenerable deterministically via build_dataset(seed, n))
+results/dataset_cache/
+
 # --- OS / editor ---
 .DS_Store
 Thumbs.db

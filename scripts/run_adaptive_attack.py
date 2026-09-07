@@ -63,13 +63,20 @@ DEFAULT_PSR = {
 }
 
 
-def res_path(defense, seed, restarts):
-    return os.path.join(OUT, f"adaptive_{defense}_s{seed}_r{restarts}.json")
+def res_path(defense, seed, restarts, tag=""):
+    return os.path.join(OUT, f"adaptive_{defense}{tag}_s{seed}_r{restarts}.json")
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--defense", required=True, choices=list(CKPTS))
+    ap.add_argument("--ckpt", default=None,
+                    help="override checkpoint filename (relative to "
+                         "results/), e.g. checkpoint_dual_at_s43.pt for "
+                         "defense-seed replication")
+    ap.add_argument("--tag", default="",
+                    help="label suffix in the results filename, e.g. _d43 "
+                         "-> adaptive_at_d43_s7_r5.json (defense seed 43)")
     ap.add_argument("--steps", type=int, default=50)
     ap.add_argument("--restarts", type=int, default=10)
     ap.add_argument("--psr", nargs="+", type=float, default=None)
@@ -91,7 +98,9 @@ def main():
     psr_grid = args.psr if args.psr else DEFAULT_PSR[args.defense]
 
     # ---- load defense ----
-    ck_name, desc = CKPTS[args.defense]
+    ck_name = args.ckpt if args.ckpt else CKPTS[args.defense][0]
+    desc = (f"{CKPTS[args.defense][1]} (ckpt {ck_name})" if args.ckpt
+            else CKPTS[args.defense][1])
     ck = torch.load(os.path.join(OUT, ck_name), map_location="cpu",
                     weights_only=False)
     model = DualStreamModel()
@@ -114,7 +123,7 @@ def main():
     print(f"[adaptive] clean acc on active tx: {clean_acc*100:.2f}%",
           flush=True)
 
-    fname = res_path(args.defense, args.seed, args.restarts)
+    fname = res_path(args.defense, args.seed, args.restarts, args.tag)
     if os.path.exists(fname) and not args.force:
         results = json.load(open(fname))
     else:
