@@ -74,7 +74,7 @@ results/                  checkpoints + JSONs (all embed config/seed; archive in
 data/real_wifi/           9 raw USRP captures (CC BY-NC-SA; see ATTRIBUTION.md)
 paper/                    main.tex + main.pdf + CLAIMS.md + figs/
 ONE_PAGER.md              plain-language summary for engineers and regulators
-REGULATORY_COMMENT_DRAFT.md   draft public comment on learning-based coexistence sensing
+REGULATORY_COMMENT_DRAFT.md   filable-form draft public comment (filer block, CFR/FR cites, PUEA lineage, CI-carrying numbers)
 ```
 
 ## Prototype results (in this repo, CPU; corrected axis)
