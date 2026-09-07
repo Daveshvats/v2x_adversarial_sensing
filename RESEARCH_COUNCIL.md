@@ -457,3 +457,174 @@ The science core is real, novel enough for the niche, and unusually well-audited
 - The chair verified the worklog entries of 21-a/21-b/21-c/21-d, adjudicated the 68.5%/67.35% discrepancy against `real_wifi_checks.json` / the finetuned-arm derivation, and merged the four must-do lists into the P0/P1/P2 roadmap above, deduplicating overlaps (adaptive-attack eval: 21-a #2 ≡ 21-d #2; real mask: 21-a #3 ≡ 21-b #1; harm bridge: 21-c #1; hygiene: 21-d #5 ≡ 21-c #5).
 - This document is committed to the repository as part of the integrity trail; the mechanical P0 text fixes identified by the council (claims-vs-backing slips, band label, front-door overreach, dependency breakage) are executed as Wave 12 in the immediately following commits.
 
+
+
+---
+
+# Part IV — Council re-scoring, round 2 (Task 34, 2026-09-07)
+
+## 0. Why a second round, and how it was run
+
+After the round-1 verdict, the team executed the **entire P0 and P1 roadmap**: releases
+`phase1-v1.2` (P0 closure: adaptive attacks, real ETSI 302 571 mask, harm chain, error bars) and
+`phase1-v1.3` (P1 closure: defense-seed replication, C4 leakage fix, latency + margin-stratified
++ detector, filable regulatory draft); branch tip `222f57c`, CI gate genuinely running. The chair
+re-derived every headline number from the committed JSONs, compiled an evidence-delta dossier
+(`/home/z/my-project/council_rescore_dossier.md`), and re-convened the **same four reviewers**
+(now 34-a/34-b/34-c/34-d), blind to each other, each receiving: the dossier, RESEARCH_STATE.md,
+their own round-1 transcript, and a **mandatory live spot-check duty** (3–4 recomputations each).
+
+Across the four re-reviews, **20+ live recomputations were performed** (3-seed margins and
+aggregates, PoC CI propagation, Wilson widths, ETSI A/B via independent 20%-crossing
+interpolation, 650 m EIRP feasibility from the FSPL anchor, PRR delta, latency medians, C4
+counts, both audit scripts). **Every headline number matched.** Five new claim-vs-backing
+findings were caught (§4 below) — the audit machinery keeps earning its keep.
+
+## 1. Re-graded gap-closure scorecard (round 2)
+
+| # | Criterion | Round 1 | Round 2 (consensus) | Evidence |
+|---|---|---|---|---|
+| 1 | Compliance-constrained attack viability | DONE | **DONE** (stronger) | adaptive PGD-50×R=5 arms; C4 eval leak dead (250/1000→0/1000, A/B ≤1.3 pp); 3 scenarios × 2 modes × 2 victims stand |
+| 2 | Quantified cost (PoC/MEAP with uncertainty, converged attacks) | PARTIAL | **DONE−** | Wilson 95% on every ASR cell; PoC 7.14 dB CI [4.37, 9.80→**10.11** (F5)]; converged PGD-50×R5; genie un-censored at −55 dB. Residuals: attack-seed n=1; conservative (non-paired) propagation |
+| 3 | Defense (matched, seeded, adaptively evaluated) | PARTIAL | **DONE−** | 3 defense seeds × adaptive: AT +9.76±2.80 dB, TRADES +11.52±1.75 dB; +14/+18 headline honestly retired; R=1 decomposition blames the evaluator. Residuals: attack seed 7 only; PGD-10 readings seed-42; TRADES-vs-AT not statistically resolved at n=3 |
+| 4 | Physical realism | PARTIAL | **PARTIAL↑** | real EN 302 571 Table-7 archived (sha256) + enforced in-chain (+0.36 dB A/B); C4 dead. Still: memoryless Rapp PA, 5.24 GHz U-NII-1 n=74 captures, never transmitted |
+| 5 | Deployment story (who consumes the label; consequence measured) | NOT MEASURED | **MEASURED (parametric)** | PRR 0.857→0.762 @D=100 m (−9.45 pp, 94.5 extra lost BSMs/1000); EIRP feasible to 650 m; 2.64 ms median with hardware honesty; §7 placement rewrite. Residuals: single MC seed, no MAC/mobility, no OTA |
+| 6 | Regulatory-grade compliance claim | NOT DONE | **PARTIAL (high)** | standard actually read + hashed; MEAP exists in dBm and meters; filable-form draft (WT 23-287 conventions, CFR/FR cites). Residuals: per-bin post-PA enforcement ≠ RBW/detector conventions (Lim. 2/10); draft "verified" overstatement (F3); unfiled, no feedback loop |
+| 7 | External validity (third-party victim, detection, uptake) | NOT DONE | **PARTIAL (weak)** | first detection baseline actually run (confidence gate AUROC 0.70–0.76, honestly reported as failing in the compliance regime); margin tertiles published. Still: all victims self-trained, no DOI/uptake, Zhao-style DDB cited not run |
+
+## 2. Two-half re-grade, per reviewer
+
+| Reviewer | Science R1→R2 | Deployment/regulatory R1→R2 | Q3 (gap filled?) | Grade R1→R2 |
+|---|---|---|---|---|
+| 34-a (adversarial-ML/RF, TIFS/TWC) | ~70–75% → **85%** | ~40% → **70%** | **NO** | novelty A−, rigor B+→**A−** |
+| 34-b (spectrum regulation, ex-FCC OET/ETSI) | → **92%** | → **72%** | **NO** | B−→**B+**, NEEDS-WORK→minor-revision |
+| 34-c (V2X systems, T-VT/VC) | → **90%** | → **70%** | **NO** | B−→**B+**, MAJOR→minor-revision |
+| 34-d (methodology/statistics) | → **86%** | → **68%** | **NO** | B−→**B+** MINOR-REV |
+
+**Chair consensus: science half ~88% closed (range 86–92, was 70–75); deployment/regulatory half
+~70% closed (range 68–72, was ~40).** Progress since round 1: +15 pp science, +30 pp deployment —
+delivered by ~45 h of executed P0+P1 work, zero new science required, exactly as round 1 predicted.
+
+## 3. Q3 — is the research gap completely filled? **NO. Unanimous, 4–0.**
+
+P0 is empty ✓. Reproducibility holds ✓ (all 20+ round-2 recomputations matched — the second
+independent full-verification pass). But the mission bar requires **both halves ≥ 90%**:
+
+- **Deployment/regulatory (68–72%) blocked by:** (i) zero OTA/conducted RF evidence; (ii) harm
+  chain parametric — one Monte-Carlo seed, no MAC/mobility; (iii) mask enforced per-bin post-PA,
+  not per EN 302 571 §6.4.2 / 47 CFR 95.3205 RBW+detector measurement conventions; (iv) draft
+  unfiled, no regulatory feedback loop; (v) zero third-party uptake (Zenodo DOI user-owned and
+  unactioned).
+- **Science (86–92%) held under/at the bar by:** attack-seed n=1 under the adaptive protocol (the
+  defense headline is 3 defense seeds × **one** attack seed — 34-d); n=3 descriptive statistics
+  where inference is invited (t-CI on the AT mean ±7.0 dB; TRADES-vs-AT sign test p=0.25 — 34-d);
+  conservative CI propagation; PoC upper-tail censoring (F5).
+
+Per the PI's iron rule, the project remains **not done** — but it has crossed from
+"not submission-ready" to **conditionally submittable** (§6).
+
+## 4. Round-2 catches (new findings, chair-adjudicated against the files)
+
+- **F1 — "8.5 of the 10.4 dB total shift" misattributes TRADES's total to AT.** AT's total
+  PGD-10→adaptive shift is **9.6 dB** (8.48 step-starvation + 1.14 restarts, from
+  `adaptive_at_s7_r1.json`); 10.41 dB is **TRADES's** shift (−19.15→−29.56). Affected:
+  `paper/main.tex:782`, `README.md:155`, `paper/CLAIMS.md` C33. *(34-a and 34-d independently;
+  chair-confirmed.)*
+- **F2 — Table-7 knot prose misquote.** The standard: 23 dBm/MHz flat to ±4.5 MHz, −3 @ ±5.0,
+  −9 @ ±5.5, −17 @ ±10, −27 @ ±15. The paper prose (`main.tex:1036–39`) shifts the knots
+  (assigns −3 to ±4.5 and −9 to ±5). Code + archived JSON are correct; prose only. *(34-b;
+  chair-confirmed.)*
+- **F3 — Draft overstatement.** `REGULATORY_COMMENT_DRAFT.md:87` says the attack was "verified"
+  against "47 CFR 95.3205-style OOB limits"; C34 itself says extracted/archived only — the
+  95.3205-shaped projection was never run. Fix: "archived", or run the projection. *(34-b;
+  chair-confirmed.)*
+- **F4 — CI hygiene overclaim (the chair's own).** The P0-4 demand included "CI step recomputing
+  5 stored MEAPs (pure python) + red-team CLI". **Never landed**: `.github/workflows/ci.yml` at
+  `222f57c` contains no such step (gate = clean-acc + mask-projection invariant + checkpoint
+  presence). The round-2 dossier repeated the overclaim; 34-d caught it — precisely the
+  claim-vs-artifact slip class this council exists to catch. Landed parts: `scikit-learn` in
+  requirements ✓, C4 re-seed ✓, gate repaired + running ✓. *(34-d; chair-verified and
+  self-corrected here.)*
+- **F5 — PoC CI upper tail.** The headline genie curve is `'le'`-censored at −45 dB while the CI
+  file reports `censors:[null,null]`; merging the committed −55 dB grid cells gives genie MEAP
+  −45.31 → honest PoC CI upper ≈ **10.11**, not 9.80. *(34-d; chair-confirmed.)*
+- **F6 — minor.** Intro placement drift (`main.tex:128`, present-tense "roadside units and
+  vehicles must distinguish…") vs the honest §7 placement *(34-c)*; and the chair's dossier
+  sign-slip on the ETSI A/B direction — correct reading: **+0.36 dB = the real Table-7 shape is
+  slightly MORE restrictive for the attacker** (in-channel edge shaping binds harder than the OOB
+  skirt it grants); the paper and CLAIMS C34 had it right, and the threat conclusion is robust
+  either way *(34-a, 34-b).*
+
+## 5. Round-2 consolidated roadmap
+
+**P0′ — before ANY submission (mechanical, ~10–14 h):**
+1. Fix F1, F2, F3, F6 text slips (paper + README + CLAIMS + draft) — 1.5 h
+2. Land the deferred CI step: pure-python MEAP recompute + red-team CLI in `ci.yml` (F4) — 1–2 h
+3. PoC CI censoring fix (F5): merge grid55 genie cells / disclose upper ≈10.11 — 1 h
+4. Promote the ETSI-shaped numbers (MEAP −36.72, PoC 7.50) to the compliance headline in the
+   abstract + Table 4 (the flat cap becomes the disclosed conservative bound) — 1–2 h *(34-b)*
+5. Harm-chain Monte-Carlo ≥5 seeds, error bands on the −9.45 pp figure — 3–5 h *(34-c)*
+6. Zenodo DOI (user-owned) + paper DOI fields — 0.5–2 h
+7. Cover letter stating plainly vs RadioShock/Kim: no OTA, no certified defense — 1 h *(34-a)*
+8. Print the realtime multiple (25.75×) beside the 37-decisions/100 ms claim — 0.5 h *(34-c)*
+
+**P1′ — statistical + regulatory substance (~20–35 h):**
+9. Attack seeds {11, 22} × {dual, AT-s42, TRADES-s42} adaptive cells → margins over attack seeds — 8 h *(34-a, 34-d)*
+10. PGD-10 readings on s43/s53; un-censor s123/s456 + real-WiFi genie floors — 7 h *(34-d)*
+11. Paired-bootstrap MEAP/PoC CIs (resample shared windows; kills the width overstatement) — 5 h *(34-d)*
+12. ≥5 defense seeds, variance components, t-CIs; demote n=3 mean±std to descriptive — 15 h *(34-d)*
+13. RBW-convolution + mean-detector enforcement at the PA output; EN 302 571 §6.4.2
+    commensuration note — 6–10 h *(34-b)*
+14. Filing strategy: WT 23-287 windows closed; realistic channels FCC TAC receiver-robustness,
+    5GAA, ETSI TC-ITS; §1.1206 notice for any staff presentation — 2–4 h + counsel *(34-b)*
+15. One real detection comparison (Zhao-style DDB or cooperative-sensing fusion) — 4–6 h *(34-c)*
+
+**P2′ — top-tier track (unchanged):** conducted OTA 2× B210 ($2.2–4.5k, 40–60 h — 34-b and 34-c
+both release the *Vehicular Communications* track from this; it is mandatory only for
+TIFS/WiSec); ns-3/ms-van3t MAC+mobility (40–80 h); third-party victim + joint (no-CSI ×
+surrogate) ablation (12–20 h); AutoAttack ensemble + EOT (15–20 h); CDL/QuaDRiGa (10–16 h).
+
+## 6. Round-2 verdicts (signed)
+
+- **34-a** (adversarial-ML/RF): *"In round 1 I said the +14 dB claim was one strong attack away
+  from collapse; the team ran that attack, watched the margin halve, and now lead the abstract
+  with the honest numbers plus a 3-seed mean — that is how a referee should be answered."*
+  Rigor raised to A−. *"For Vehicular Communications: strong, honest, one mechanical pass away.
+  For TIFS/WiSec: buy the B210s."*
+- **34-b** (regulation): *"I write as the round-1 holdout, and I hold less now."* Predicted the
+  real mask would strengthen the threat; corrected for the record (it costs the attacker 0.36 dB
+  more — conclusion robust either way). *"Fix the four pre-submission items and this can walk its
+  compliance talk; walk it to TAC or 5GAA, not into a dormant docket."*
+- **34-c** (V2X systems): *"I demanded three things: a number behind 'safety,' a sensor with an
+  honest address, and a latency claim that survives reading the JSON. All three arrived."* *
+  "Do not call the gap completely filled — call it three-quarters filled, and finish the rest
+  before claiming done."*
+- **34-d** (methodology): *"The paper I graded B− for having zero confidence intervals now
+  carries Wilson intervals on every ASR cell, a converged adaptive evaluation that halved the
+  defense headline and correctly blamed the evaluator, and a 3-seed replication confirming seed
+  42 was a weak draw — my round-1 objections were answered substantively, not cosmetically."*
+  *"~18 h blocks submission; ~35 h more reaches the gold standard."*
+
+**Chair synthesis:** Round 1 asked ~25–35 h of honesty-engineering; the team delivered ~45 h and
+retired every P0/P1 objection with numbers, not prose. The re-grade is real: science 70–75→88%,
+deployment 40→70%, grades B−→B+/A−, three of four verdicts moved from MAJOR-REVISION to
+minor-revision. The unanimity on Q3 is equally real: the gap is **not** completely filled — the
+deployment half is blocked by transmission evidence, conformance conventions, filing, and uptake,
+none of which are paper edits. The five fresh catches (F1–F6), including one aimed at the chair's
+own dossier, show the number-hygiene failure mode recurs at a rate of roughly one slip per wave —
+which is exactly why the release gate and audit scripts must keep running. The decision now in
+front of the PI: execute P0′ (~10–14 h) and submit to *Vehicular Communications* in the Dec 2026–
+Feb 2027 window, or push P1′ first and submit stronger.
+
+## 7. Process record (round 2)
+
+- Convened by the chair (Task ID 34) on 2026-09-07; same four personas as round 1, launched in
+  parallel, blind to each other's round-2 positions.
+- Each member received the chair's evidence-delta dossier (built after the chair re-derived every
+  post-round-1 headline number from the committed JSONs), RESEARCH_STATE.md, and their own round-1
+  transcript; each was required to perform ≥3 live recomputations.
+- The chair adjudicated all conflicts against the files: F1–F6 verified as listed above; the
+  68.5/67.35-style discrepancy class did not recur. One dossier claim (F4) was falsified by 34-d
+  and is corrected here rather than silently patched.
+- Full reviewer transcripts are preserved in the session record; this Part IV is the chair's
+  synthesis of them.
