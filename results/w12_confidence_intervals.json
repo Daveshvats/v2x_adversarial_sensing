@@ -2753,29 +2753,49 @@
    "curves": {
     "per_scenario/urban/runs/untargeted/genie": {
      "label": "per_scenario/urban/runs/untargeted/genie",
-     "n_cells": 12,
-     "meap_db": -45.0,
-     "meap_censor": "le",
+     "n_cells": 14,
+     "meap_db": -46.10277900308795,
+     "meap_censor": null,
      "meap_ci95_db": [
-      -45.0,
-      -45.0
+      -47.0,
+      -45.11
      ],
      "meap_ci_censors": [
-      "le",
-      "le"
+      null,
+      null
      ],
      "asr_at_lowest_psr": {
-      "psr_db": -45.0,
-      "k": 75,
+      "psr_db": -55.0,
+      "k": 0,
       "n": 300,
-      "asr_pct": 25.0,
+      "asr_pct": 0.0,
       "ci95_pct": [
-       20.44,
-       30.2
+       0.0,
+       1.26
       ]
      },
      "k_roundtrip_flags": [],
      "cells": [
+      {
+       "psr_db": -55.0,
+       "k": 0,
+       "n": 300,
+       "asr_pct": 0.0,
+       "ci95_pct": [
+        0.0,
+        1.26
+       ]
+      },
+      {
+       "psr_db": -50.0,
+       "k": 7,
+       "n": 300,
+       "asr_pct": 2.33,
+       "ci95_pct": [
+        1.13,
+        4.74
+       ]
+      },
       {
        "psr_db": -45.0,
        "k": 75,
@@ -3052,29 +3072,49 @@
    "curves": {
     "per_scenario/urban/runs/untargeted/genie": {
      "label": "per_scenario/urban/runs/untargeted/genie",
-     "n_cells": 12,
-     "meap_db": -45.0,
-     "meap_censor": "le",
+     "n_cells": 14,
+     "meap_db": -45.41052114060986,
+     "meap_censor": null,
      "meap_ci95_db": [
-      -45.0,
+      -46.43,
       -44.46
      ],
      "meap_ci_censors": [
-      "le",
+      null,
       null
      ],
      "asr_at_lowest_psr": {
-      "psr_db": -45.0,
-      "k": 65,
+      "psr_db": -55.0,
+      "k": 0,
       "n": 300,
-      "asr_pct": 21.67,
+      "asr_pct": 0.0,
       "ci95_pct": [
-       17.38,
-       26.67
+       0.0,
+       1.26
       ]
      },
      "k_roundtrip_flags": [],
      "cells": [
+      {
+       "psr_db": -55.0,
+       "k": 0,
+       "n": 300,
+       "asr_pct": 0.0,
+       "ci95_pct": [
+        0.0,
+        1.26
+       ]
+      },
+      {
+       "psr_db": -50.0,
+       "k": 4,
+       "n": 300,
+       "asr_pct": 1.33,
+       "ci95_pct": [
+        0.52,
+        3.38
+       ]
+      },
       {
        "psr_db": -45.0,
        "k": 65,
@@ -3640,29 +3680,49 @@
    "curves": {
     "frozen/genie/curve": {
      "label": "frozen/genie/curve",
-     "n_cells": 12,
-     "meap_db": -45.0,
-     "meap_censor": "le",
+     "n_cells": 14,
+     "meap_db": -47.82417582417598,
+     "meap_censor": null,
      "meap_ci95_db": [
-      -45.0,
-      -45.0
+      -49.63,
+      -46.03
      ],
      "meap_ci_censors": [
-      "le",
-      "le"
+      null,
+      null
      ],
      "asr_at_lowest_psr": {
-      "psr_db": -45.0,
-      "k": 69,
+      "psr_db": -55.0,
+      "k": 15,
       "n": 249,
-      "asr_pct": 27.71,
+      "asr_pct": 6.02,
       "ci95_pct": [
-       22.52,
-       33.58
+       3.68,
+       9.7
       ]
      },
      "k_roundtrip_flags": [],
      "cells": [
+      {
+       "psr_db": -55.0,
+       "k": 15,
+       "n": 249,
+       "asr_pct": 6.02,
+       "ci95_pct": [
+        3.68,
+        9.7
+       ]
+      },
+      {
+       "psr_db": -50.0,
+       "k": 35,
+       "n": 249,
+       "asr_pct": 14.06,
+       "ci95_pct": [
+        10.28,
+        18.92
+       ]
+      },
       {
        "psr_db": -45.0,
        "k": 69,
@@ -3934,29 +3994,49 @@
     },
     "finetuned/genie/curve": {
      "label": "finetuned/genie/curve",
-     "n_cells": 12,
-     "meap_db": -45.0,
-     "meap_censor": "le",
+     "n_cells": 14,
+     "meap_db": -47.90025412960623,
+     "meap_censor": null,
      "meap_ci95_db": [
-      -45.0,
-      -45.0
+      -49.44,
+      -46.37
      ],
      "meap_ci_censors": [
-      "le",
-      "le"
+      null,
+      null
      ],
      "asr_at_lowest_psr": {
-      "psr_db": -45.0,
-      "k": 74,
+      "psr_db": -55.0,
+      "k": 16,
       "n": 254,
-      "asr_pct": 29.13,
+      "asr_pct": 6.3,
       "ci95_pct": [
-       23.89,
-       35.0
+       3.91,
+       9.99
       ]
      },
      "k_roundtrip_flags": [],
      "cells": [
+      {
+       "psr_db": -55.0,
+       "k": 16,
+       "n": 254,
+       "asr_pct": 6.3,
+       "ci95_pct": [
+        3.91,
+        9.99
+       ]
+      },
+      {
+       "psr_db": -50.0,
+       "k": 34,
+       "n": 254,
+       "asr_pct": 13.39,
+       "ci95_pct": [
+        9.74,
+        18.12
+       ]
+      },
       {
        "psr_db": -45.0,
        "k": 74,
@@ -7057,31 +7137,31 @@
   },
   {
    "label": "C12 seed 123",
-   "meap_genie_db": -45.0,
+   "meap_genie_db": -46.10277900308795,
    "meap_genie_ci95": [
-    -45.0,
-    -45.0
+    -47.0,
+    -45.11
    ],
    "meap_mask_db": -38.147222222222325,
    "meap_mask_ci95": [
     -39.39,
     -36.94
    ],
-   "poc_db": 6.85,
+   "poc_db": 7.96,
    "poc_ci95": [
-    5.61,
-    8.06
+    5.72,
+    10.06
    ],
    "censors": [
-    "le",
+    null,
     null
    ]
   },
   {
    "label": "C12 seed 456",
-   "meap_genie_db": -45.0,
+   "meap_genie_db": -45.41052114060986,
    "meap_genie_ci95": [
-    -45.0,
+    -46.43,
     -44.46
    ],
    "meap_mask_db": -37.89494470774108,
@@ -7089,13 +7169,13 @@
     -39.67,
     -36.13
    ],
-   "poc_db": 7.11,
+   "poc_db": 7.52,
    "poc_ci95": [
     4.79,
-    8.87
+    10.3
    ],
    "censors": [
-    "le",
+    null,
     null
    ]
   },
@@ -7123,45 +7203,45 @@
   },
   {
    "label": "C21 real-WiFi frozen",
-   "meap_genie_db": -45.0,
+   "meap_genie_db": -47.82417582417598,
    "meap_genie_ci95": [
-    -45.0,
-    -45.0
+    -49.63,
+    -46.03
    ],
    "meap_mask_db": -35.91286307054027,
    "meap_mask_ci95": [
     -41.83,
     -33.07
    ],
-   "poc_db": 9.09,
+   "poc_db": 11.91,
    "poc_ci95": [
-    3.17,
-    11.93
+    4.2,
+    16.56
    ],
    "censors": [
-    "le",
+    null,
     null
    ]
   },
   {
    "label": "C21 real-WiFi finetuned",
-   "meap_genie_db": -45.0,
+   "meap_genie_db": -47.90025412960623,
    "meap_genie_ci95": [
-    -45.0,
-    -45.0
+    -49.44,
+    -46.37
    ],
    "meap_mask_db": -37.66949152542472,
    "meap_mask_ci95": [
     -44.4,
     -33.17
    ],
-   "poc_db": 7.33,
+   "poc_db": 10.23,
    "poc_ci95": [
-    0.6,
-    11.83
+    1.97,
+    16.27
    ],
    "censors": [
-    "le",
+    null,
     null
    ]
   },

@@ -1,0 +1,127 @@
+{
+ "experiment": "US 47 CFR 95.3205-shaped conformance-domain enforcement: C-V2X OBU unwanted-emissions limits (89 FR 100855) as RBW/mean-power constraints (100-kHz RBW within 1 MHz of the channel edge, 1-MHz RBW further out, flat-per-region limits)",
+ "config": {
+  "scenario": "urban",
+  "mode": "untargeted",
+  "steps": 10,
+  "seed": 7,
+  "n_eval_per_class": 100,
+  "attack_pgd_alpha_frac": 0.25,
+  "psd_cap_margin": 2.0,
+  "psr_db": [
+   -45.0,
+   -40.0,
+   -35.0,
+   -30.0,
+   -25.0,
+   -20.0,
+   -15.0,
+   -10.0,
+   -5.0,
+   0.0
+  ],
+  "attacker_carrier_fc_mhz_rel_5895": 5.0,
+  "measurement_domain": "mean power per band; RBW 100 kHz for centres within 1 MHz of the attacker channel edge (step 0.05 MHz), RBW 1 MHz elsewhere (step 0.5 MHz, overlapping)",
+  "standard_source": "data/standards/en302571_tables.json fcc_47cfr_95_3205 rows (eCFR, 89 FR 100855; corrected 90 FR 5724)",
+  "interpretation": [
+   "limits keyed to the attacker's 10-MHz CHANNEL edge (archived rows say offset_from_band_edge; for an adjacent-channel in-band attacker the channel edge is the binding reference)",
+   "-16 dBm/100 kHz = -6 dBm/MHz equivalent = -29 dB rel the 23 dBm/MHz in-channel anchor; -13 dBm/MHz -> -36 dB rel; -16 dBm/MHz -> -39 dB rel",
+   "RBW and limit keyed to the measurement centre (measurement-receiver convention)",
+   "flat limit per offset region (step boundaries at 1 and 5 MHz, literal reading; no interpolation knots in the US rule)",
+   "in-channel unconstrained by the OOB table (0 dB rel, same in-channel treatment as the ETSI/flat arms)",
+   "PSR-relative budget convention identical to project_etsi/project_conform"
+  ],
+  "pa_check": "Rapp p=3.0, IBO 13.0 dB (C30 compliant backoff), post-PA measured with measure_us (same band structure)",
+  "projection": "per-band proportional water-filling, 8 iters, residual disclosed per cell"
+ },
+ "runs": {
+  "untargeted/conformance_us": {
+   "psr=-45dB": {
+    "cond_asr": 4.0,
+    "robust_acc": 96.0,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=-40dB": {
+    "cond_asr": 14.67,
+    "robust_acc": 85.33,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=-35dB": {
+    "cond_asr": 27.33,
+    "robust_acc": 72.67,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=-30dB": {
+    "cond_asr": 44.67,
+    "robust_acc": 55.33,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=-25dB": {
+    "cond_asr": 63.0,
+    "robust_acc": 37.0,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=-20dB": {
+    "cond_asr": 83.0,
+    "robust_acc": 17.0,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=-15dB": {
+    "cond_asr": 94.33,
+    "robust_acc": 5.67,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=-10dB": {
+    "cond_asr": 99.67,
+    "robust_acc": 0.33,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=-5dB": {
+    "cond_asr": 100.0,
+    "robust_acc": 0.0,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   },
+   "psr=+0dB": {
+    "cond_asr": 100.0,
+    "robust_acc": 0.0,
+    "n_eligible": 300,
+    "proj_residual_dbr_worst": 0.0,
+    "post_pa_worst_excess_dbr": 0.0
+   }
+  }
+ },
+ "elapsed_s": 108.7,
+ "clean_acc_active": 1.0,
+ "summary": {
+  "meap_conformance_us_db": -37.89494470774108,
+  "meap_conformance_us_censor": null,
+  "meap_etsi_rbw_db": -37.367797947908656,
+  "meap_etsi_perbin_db": -36.719775070290844,
+  "meap_flat_cap_db": -37.08333333333358,
+  "meap_genie_db": -44.22475707646814,
+  "delta_us_minus_etsi_rbw_db": -0.527,
+  "delta_us_minus_flat_db": -0.812,
+  "poc_conformance_us_db": 6.33,
+  "post_pa_worst_excess_dbr_max": 0.0,
+  "post_pa_worst_excess_dbr_mean": 0.0,
+  "verdict_note": "positive delta = the US 95.3205-shaped enforcement is WEAKER for the attacker than the named reference (attack needs MORE power); all three enforcement domains compared under the identical protocol"
+ }
+}

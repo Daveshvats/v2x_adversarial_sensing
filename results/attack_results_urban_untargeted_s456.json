@@ -91,6 +91,16 @@
             "cond_asr": 100.0,
             "robust_acc": 0.0,
             "n_eligible": 300
+          },
+          "psr=-55dB": {
+            "cond_asr": 0.0,
+            "n_eligible": 300,
+            "robust_acc": 100.0
+          },
+          "psr=-50dB": {
+            "cond_asr": 1.33,
+            "n_eligible": 300,
+            "robust_acc": 98.67
           }
         },
         "untargeted/cv2x_mask": {
@@ -158,16 +168,15 @@
       },
       "summary": {
         "untargeted": {
-          "meap_genie_db": -45.0,
-          "meap_genie_censor": "le",
+          "meap_genie_db": -45.41052114060986,
+          "meap_genie_censor": null,
           "meap_cv2x_mask_db": -37.89494470774108,
           "meap_cv2x_mask_censor": null,
-          "price_of_compliance_db": 7.105055292258918,
-          "poc_censor": {
-            "genie": "le",
-            "poc_bias": "lower bound (genie MEAP censored at grid floor)"
-          },
+          "price_of_compliance_db": 7.515576432868777,
+          "poc_censor": null,
           "genie_curve": [
+            0.0,
+            1.33,
             21.67,
             47.33,
             68.67,

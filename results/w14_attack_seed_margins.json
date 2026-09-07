@@ -1,0 +1,734 @@
+{
+  "experiment": "Attack-seed replication of adaptive-attack margins (council 34-d blocker i: attack seed was fixed at 7)",
+  "protocol": {
+    "attack": "PGD-50 x R=5 best-of restarts, urban, untargeted",
+    "attack_seeds": [
+      7,
+      11,
+      22
+    ],
+    "defense_models": "canonical seed-42 trio (checkpoint_dual.pt, checkpoint_dual_at.pt, checkpoint_dual_trades.pt)",
+    "n_eval_per_class": 100,
+    "margin_definition": "mask_MEAP(defense, s) - mask_MEAP(dual, s), seed-matched undefended reference (same formula as w13 defense-seed study)",
+    "per_arm_grids": {
+      "dual": {
+        "genie": [
+          -50,
+          -45,
+          -40,
+          -35,
+          -30
+        ],
+        "cv2x_mask": [
+          -45,
+          -40,
+          -35,
+          -30,
+          -25,
+          -20
+        ]
+      },
+      "at": {
+        "genie": [
+          -45,
+          -40,
+          -35,
+          -30,
+          -25
+        ],
+        "cv2x_mask": [
+          -35,
+          -30,
+          -25,
+          -20,
+          -15,
+          -10
+        ]
+      },
+      "trades": {
+        "genie": [
+          -45,
+          -40,
+          -35,
+          -30,
+          -25
+        ],
+        "cv2x_mask": [
+          -35,
+          -30,
+          -25,
+          -20,
+          -15,
+          -10,
+          -5
+        ]
+      }
+    }
+  },
+  "defenses": {
+    "dual": {
+      "rows": [
+        {
+          "attack_seed": 7,
+          "meap_genie_db": -45.473,
+          "meap_genie_censor": null,
+          "meap_mask_db": -39.431,
+          "meap_mask_censor": null,
+          "poc_db": 6.042,
+          "poc_censor": null,
+          "genie_grid": [
+            -50.0,
+            -45.0,
+            -40.0,
+            -35.0,
+            -30.0
+          ],
+          "mask_grid": [
+            -45.0,
+            -40.0,
+            -35.0,
+            -30.0,
+            -25.0,
+            -20.0
+          ],
+          "genie_curve": [
+            4.0,
+            21.67,
+            51.0,
+            79.67,
+            95.0
+          ],
+          "mask_curve": [
+            5.67,
+            18.33,
+            33.0,
+            67.67,
+            96.0,
+            99.67
+          ],
+          "win_flags": {
+            "genie": {
+              "capture": false
+            },
+            "cv2x_mask": {
+              "capture": false
+            }
+          },
+          "elapsed_s": 2773.7,
+          "margin_vs_dual_db": 0.0
+        },
+        {
+          "attack_seed": 11,
+          "meap_genie_db": -46.293,
+          "meap_genie_censor": null,
+          "meap_mask_db": -40.326,
+          "meap_mask_censor": null,
+          "poc_db": 5.967,
+          "poc_censor": null,
+          "genie_grid": [
+            -50.0,
+            -45.0,
+            -40.0,
+            -35.0,
+            -30.0
+          ],
+          "mask_grid": [
+            -45.0,
+            -40.0,
+            -35.0,
+            -30.0,
+            -25.0,
+            -20.0
+          ],
+          "genie_curve": [
+            5.67,
+            25.0,
+            55.67,
+            80.0,
+            97.0
+          ],
+          "mask_curve": [
+            5.67,
+            21.0,
+            38.33,
+            71.67,
+            95.0,
+            100.0
+          ],
+          "win_flags": {
+            "genie": {
+              "capture": true,
+              "n_cells": 5,
+              "flag_len_uniform": true,
+              "flag_len": [
+                300
+              ],
+              "frac_clean_wrong": 0.0
+            },
+            "cv2x_mask": {
+              "capture": true,
+              "n_cells": 6,
+              "flag_len_uniform": true,
+              "flag_len": [
+                300
+              ],
+              "frac_clean_wrong": 0.0
+            }
+          },
+          "elapsed_s": 3312.8,
+          "margin_vs_dual_db": 0.0
+        },
+        {
+          "attack_seed": 22,
+          "meap_genie_db": -46.522,
+          "meap_genie_censor": null,
+          "meap_mask_db": -39.882,
+          "meap_mask_censor": null,
+          "poc_db": 6.64,
+          "poc_censor": null,
+          "genie_grid": [
+            -50.0,
+            -45.0,
+            -40.0,
+            -35.0,
+            -30.0
+          ],
+          "mask_grid": [
+            -45.0,
+            -40.0,
+            -35.0,
+            -30.0,
+            -25.0,
+            -20.0
+          ],
+          "genie_curve": [
+            4.0,
+            27.0,
+            49.33,
+            77.67,
+            94.67
+          ],
+          "mask_curve": [
+            4.67,
+            19.67,
+            33.67,
+            68.33,
+            93.0,
+            100.0
+          ],
+          "win_flags": {
+            "genie": {
+              "capture": true,
+              "n_cells": 5,
+              "flag_len_uniform": true,
+              "flag_len": [
+                300
+              ],
+              "frac_clean_wrong": 0.0
+            },
+            "cv2x_mask": {
+              "capture": true,
+              "n_cells": 6,
+              "flag_len_uniform": true,
+              "flag_len": [
+                300
+              ],
+              "frac_clean_wrong": 0.0
+            }
+          },
+          "elapsed_s": 2602.5,
+          "margin_vs_dual_db": 0.0
+        }
+      ],
+      "aggregates": {
+        "n_attack_seeds": 3,
+        "margin_mean_db": 0.0,
+        "margin_range_db": 0.0,
+        "margin_std_db": 0.0,
+        "per_seed_margins_db": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "poc_mean_db": 6.216,
+        "poc_range_db": 0.673,
+        "poc_std_db": 0.369,
+        "per_seed_poc_db": [
+          6.042,
+          5.967,
+          6.64
+        ]
+      }
+    },
+    "at": {
+      "rows": [
+        {
+          "attack_seed": 7,
+          "meap_genie_db": -39.616,
+          "meap_genie_censor": null,
+          "meap_mask_db": -32.699,
+          "meap_mask_censor": null,
+          "poc_db": 6.916,
+          "poc_censor": null,
+          "genie_grid": [
+            -45.0,
+            -40.0,
+            -35.0,
+            -30.0,
+            -25.0
+          ],
+          "mask_grid": [
+            -35.0,
+            -30.0,
+            -25.0,
+            -20.0,
+            -15.0,
+            -10.0
+          ],
+          "genie_curve": [
+            5.0,
+            17.67,
+            48.0,
+            82.67,
+            98.33
+          ],
+          "mask_curve": [
+            12.33,
+            29.0,
+            59.33,
+            75.0,
+            88.33,
+            99.67
+          ],
+          "win_flags": {
+            "genie": {
+              "capture": false
+            },
+            "cv2x_mask": {
+              "capture": false
+            }
+          },
+          "elapsed_s": 3194.2,
+          "margin_vs_dual_db": 6.732
+        },
+        {
+          "attack_seed": 11,
+          "meap_genie_db": -39.339,
+          "meap_genie_censor": null,
+          "meap_mask_db": -32.266,
+          "meap_mask_censor": null,
+          "poc_db": 7.074,
+          "poc_censor": null,
+          "genie_grid": [
+            -45.0,
+            -40.0,
+            -35.0,
+            -30.0,
+            -25.0
+          ],
+          "mask_grid": [
+            -35.0,
+            -30.0,
+            -25.0,
+            -20.0,
+            -15.0,
+            -10.0
+          ],
+          "genie_curve": [
+            4.0,
+            14.67,
+            55.0,
+            85.67,
+            98.67
+          ],
+          "mask_curve": [
+            8.33,
+            29.67,
+            59.0,
+            75.0,
+            89.0,
+            99.67
+          ],
+          "win_flags": {
+            "genie": {
+              "capture": true,
+              "n_cells": 5,
+              "flag_len_uniform": true,
+              "flag_len": [
+                300
+              ],
+              "frac_clean_wrong": 0.0
+            },
+            "cv2x_mask": {
+              "capture": true,
+              "n_cells": 6,
+              "flag_len_uniform": true,
+              "flag_len": [
+                300
+              ],
+              "frac_clean_wrong": 0.0
+            }
+          },
+          "elapsed_s": 2633.6,
+          "margin_vs_dual_db": 8.06
+        },
+        {
+          "attack_seed": 22,
+          "meap_genie_db": -38.98,
+          "meap_genie_censor": null,
+          "meap_mask_db": -32.0,
+          "meap_mask_censor": null,
+          "poc_db": 6.98,
+          "poc_censor": null,
+          "genie_grid": [
+            -45.0,
+            -40.0,
+            -35.0,
+            -30.0,
+            -25.0
+          ],
+          "mask_grid": [
+            -35.0,
+            -30.0,
+            -25.0,
+            -20.0,
+            -15.0,
+            -10.0
+          ],
+          "genie_curve": [
+            3.68,
+            13.38,
+            45.82,
+            84.95,
+            98.33
+          ],
+          "mask_curve": [
+            8.36,
+            27.76,
+            57.53,
+            78.26,
+            90.3,
+            99.67
+          ],
+          "win_flags": {
+            "genie": {
+              "capture": true,
+              "n_cells": 5,
+              "flag_len_uniform": true,
+              "flag_len": [
+                300
+              ],
+              "frac_clean_wrong": 0.0033
+            },
+            "cv2x_mask": {
+              "capture": true,
+              "n_cells": 6,
+              "flag_len_uniform": true,
+              "flag_len": [
+                300
+              ],
+              "frac_clean_wrong": 0.0033
+            }
+          },
+          "elapsed_s": 2821.8,
+          "margin_vs_dual_db": 7.882
+        }
+      ],
+      "aggregates": {
+        "n_attack_seeds": 3,
+        "margin_mean_db": 7.558,
+        "margin_range_db": 1.328,
+        "margin_std_db": 0.721,
+        "per_seed_margins_db": [
+          6.732,
+          8.06,
+          7.882
+        ],
+        "poc_mean_db": 6.99,
+        "poc_range_db": 0.158,
+        "poc_std_db": 0.079,
+        "per_seed_poc_db": [
+          6.916,
+          7.074,
+          6.98
+        ]
+      }
+    },
+    "trades": {
+      "rows": [
+        {
+          "attack_seed": 7,
+          "meap_genie_db": -40.025,
+          "meap_genie_censor": null,
+          "meap_mask_db": -29.563,
+          "meap_mask_censor": null,
+          "poc_db": 10.462,
+          "poc_censor": null,
+          "genie_grid": [
+            -45.0,
+            -40.0,
+            -35.0,
+            -30.0,
+            -25.0
+          ],
+          "mask_grid": [
+            -35.0,
+            -30.0,
+            -25.0,
+            -20.0,
+            -15.0,
+            -10.0,
+            -5.0
+          ],
+          "genie_curve": [
+            6.02,
+            20.07,
+            43.48,
+            63.55,
+            90.64
+          ],
+          "mask_curve": [
+            7.69,
+            18.39,
+            36.79,
+            62.21,
+            89.3,
+            99.0,
+            100.0
+          ],
+          "win_flags": {
+            "genie": {
+              "capture": false
+            },
+            "cv2x_mask": {
+              "capture": false
+            }
+          },
+          "elapsed_s": 3015.0,
+          "margin_vs_dual_db": 9.868
+        },
+        {
+          "attack_seed": 11,
+          "meap_genie_db": -40.713,
+          "meap_genie_censor": null,
+          "meap_mask_db": -30.698,
+          "meap_mask_censor": null,
+          "poc_db": 10.016,
+          "poc_censor": null,
+          "genie_grid": [
+            -45.0,
+            -40.0,
+            -35.0,
+            -30.0,
+            -25.0
+          ],
+          "mask_grid": [
+            -35.0,
+            -30.0,
+            -25.0,
+            -20.0,
+            -15.0,
+            -10.0,
+            -5.0
+          ],
+          "genie_curve": [
+            6.0,
+            22.33,
+            41.67,
+            63.33,
+            90.67
+          ],
+          "mask_curve": [
+            7.67,
+            22.0,
+            36.67,
+            57.0,
+            88.33,
+            99.33,
+            100.0
+          ],
+          "win_flags": {
+            "genie": {
+              "capture": true,
+              "n_cells": 5,
+              "flag_len_uniform": true,
+              "flag_len": [
+                300
+              ],
+              "frac_clean_wrong": 0.0
+            },
+            "cv2x_mask": {
+              "capture": true,
+              "n_cells": 7,
+              "flag_len_uniform": true,
+              "flag_len": [
+                300
+              ],
+              "frac_clean_wrong": 0.0
+            }
+          },
+          "elapsed_s": 2868.0,
+          "margin_vs_dual_db": 9.628
+        },
+        {
+          "attack_seed": 22,
+          "meap_genie_db": -39.152,
+          "meap_genie_censor": null,
+          "meap_mask_db": -30.078,
+          "meap_mask_censor": null,
+          "poc_db": 9.074,
+          "poc_censor": null,
+          "genie_grid": [
+            -45.0,
+            -40.0,
+            -35.0,
+            -30.0,
+            -25.0
+          ],
+          "mask_grid": [
+            -35.0,
+            -30.0,
+            -25.0,
+            -20.0,
+            -15.0,
+            -10.0,
+            -5.0
+          ],
+          "genie_curve": [
+            4.04,
+            15.49,
+            42.09,
+            66.67,
+            90.24
+          ],
+          "mask_curve": [
+            7.41,
+            20.2,
+            34.01,
+            63.3,
+            88.55,
+            98.99,
+            99.66
+          ],
+          "win_flags": {
+            "genie": {
+              "capture": true,
+              "n_cells": 5,
+              "flag_len_uniform": true,
+              "flag_len": [
+                300
+              ],
+              "frac_clean_wrong": 0.01
+            },
+            "cv2x_mask": {
+              "capture": true,
+              "n_cells": 7,
+              "flag_len_uniform": true,
+              "flag_len": [
+                300
+              ],
+              "frac_clean_wrong": 0.01
+            }
+          },
+          "elapsed_s": 2832.4,
+          "margin_vs_dual_db": 9.804
+        }
+      ],
+      "aggregates": {
+        "n_attack_seeds": 3,
+        "margin_mean_db": 9.767,
+        "margin_range_db": 0.24,
+        "margin_std_db": 0.124,
+        "per_seed_margins_db": [
+          9.868,
+          9.628,
+          9.804
+        ],
+        "poc_mean_db": 9.851,
+        "poc_range_db": 1.388,
+        "poc_std_db": 0.709,
+        "per_seed_poc_db": [
+          10.462,
+          10.016,
+          9.074
+        ]
+      }
+    }
+  },
+  "checks": {
+    "dual_s7_present": true,
+    "dual_s11_present": true,
+    "dual_s22_present": true,
+    "at_s7_present": true,
+    "at_s11_present": true,
+    "at_s22_present": true,
+    "trades_s7_present": true,
+    "trades_s11_present": true,
+    "trades_s22_present": true,
+    "dual_s7_summary_match": true,
+    "dual_s7_uncensored": true,
+    "dual_s11_summary_match": true,
+    "dual_s11_uncensored": true,
+    "dual_s22_summary_match": true,
+    "dual_s22_uncensored": true,
+    "dual_genie_grid_identity_across_seeds": true,
+    "dual_cv2x_mask_grid_identity_across_seeds": true,
+    "at_s7_summary_match": true,
+    "at_s7_uncensored": true,
+    "at_s11_summary_match": true,
+    "at_s11_uncensored": true,
+    "at_s22_summary_match": true,
+    "at_s22_uncensored": true,
+    "at_genie_grid_identity_across_seeds": true,
+    "at_cv2x_mask_grid_identity_across_seeds": true,
+    "trades_s7_summary_match": true,
+    "trades_s7_uncensored": true,
+    "trades_s11_summary_match": true,
+    "trades_s11_uncensored": true,
+    "trades_s22_summary_match": true,
+    "trades_s22_uncensored": true,
+    "trades_genie_grid_identity_across_seeds": true,
+    "trades_cv2x_mask_grid_identity_across_seeds": true
+  },
+  "headline": {
+    "at_margin_over_attack_seeds_db": {
+      "n_attack_seeds": 3,
+      "margin_mean_db": 7.558,
+      "margin_range_db": 1.328,
+      "margin_std_db": 0.721,
+      "per_seed_margins_db": [
+        6.732,
+        8.06,
+        7.882
+      ],
+      "poc_mean_db": 6.99,
+      "poc_range_db": 0.158,
+      "poc_std_db": 0.079,
+      "per_seed_poc_db": [
+        6.916,
+        7.074,
+        6.98
+      ]
+    },
+    "trades_margin_over_attack_seeds_db": {
+      "n_attack_seeds": 3,
+      "margin_mean_db": 9.767,
+      "margin_range_db": 0.24,
+      "margin_std_db": 0.124,
+      "per_seed_margins_db": [
+        9.868,
+        9.628,
+        9.804
+      ],
+      "poc_mean_db": 9.851,
+      "poc_range_db": 1.388,
+      "poc_std_db": 0.709,
+      "per_seed_poc_db": [
+        10.462,
+        10.016,
+        9.074
+      ]
+    },
+    "comparison_note": "defense-seed spread (w13, attack seed 7): AT +9.76 +/- 2.80 dB over defense seeds {42,43,53}; attack-seed spread here is measured on the same margin formula with the canonical seed-42 models"
+  }
+}

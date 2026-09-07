@@ -45,7 +45,14 @@
     "n_synth_per_class": 100,
     "n_real_wifi": 74,
     "real_wifi_protocol": "no synthetic victim channel (real channel in capture); noise at drawn SNR; PSR ref = window energy (unit power => 2048)",
-    "location_split": "eval=uz; train=rabot+reep (disjoint capture locations)"
+    "location_split": "eval=uz; train=rabot+reep (disjoint capture locations)",
+    "w14b_uncensor_update": {
+      "what": "genie (and real-WiFi-only mask) floors extended to -55 dB with protocol-identical PGD-10 cells (35-b-14); stored cells above -45 dB unchanged; MEAPs/PoCs recomputed",
+      "new_psrs_db": [
+        -55.0,
+        -50.0
+      ]
+    }
   },
   "frozen": {
     "clean_acc_per_class": {
@@ -115,10 +122,20 @@
           "cond_asr": 100.0,
           "n_eligible": 249,
           "robust_acc": 0.0
+        },
+        "psr=-55dB": {
+          "cond_asr": 6.02,
+          "n_eligible": 249,
+          "robust_acc": null
+        },
+        "psr=-50dB": {
+          "cond_asr": 14.06,
+          "n_eligible": 249,
+          "robust_acc": null
         }
       },
-      "meap_db": -45.0,
-      "censor": "le"
+      "meap_db": -47.82417582417598,
+      "censor": null
     },
     "cv2x_mask": {
       "curve": {
@@ -199,9 +216,11 @@
         "psr=-5dB": 100.0,
         "psr=+0dB": 100.0,
         "psr=+5dB": 100.0,
-        "psr=+10dB": 100.0
+        "psr=+10dB": 100.0,
+        "psr=-55dB": 30.61,
+        "psr=-50dB": 55.1
       },
-      "meap_db": -45.0,
+      "meap_db": -55.0,
       "censor": "le"
     },
     "cv2x_mask_real_wifi_only": {
@@ -217,12 +236,14 @@
         "psr=-5dB": 100.0,
         "psr=+0dB": 100.0,
         "psr=+5dB": 100.0,
-        "psr=+10dB": 100.0
+        "psr=+10dB": 100.0,
+        "psr=-55dB": 16.33,
+        "psr=-50dB": 42.86
       },
-      "meap_db": -45.0,
-      "censor": "le"
+      "meap_db": -54.30833019223523,
+      "censor": null
     },
-    "price_of_compliance_db": 9.087136929459732
+    "price_of_compliance_db": 11.911312753635713
   },
   "elapsed_s": 289.1,
   "finetuned": {
@@ -294,10 +315,20 @@
           "cond_asr": 100.0,
           "n_eligible": 254,
           "robust_acc": 0.0
+        },
+        "psr=-55dB": {
+          "cond_asr": 6.3,
+          "n_eligible": 254,
+          "robust_acc": null
+        },
+        "psr=-50dB": {
+          "cond_asr": 13.39,
+          "n_eligible": 254,
+          "robust_acc": null
         }
       },
-      "meap_db": -45.0,
-      "censor": "le"
+      "meap_db": -47.90025412960623,
+      "censor": null
     },
     "cv2x_mask": {
       "curve": {
@@ -365,6 +396,6 @@
       "meap_db": -37.66666666666765,
       "censor": null
     },
-    "price_of_compliance_db": 7.330508474575282
+    "price_of_compliance_db": 10.230762604181514
   }
 }

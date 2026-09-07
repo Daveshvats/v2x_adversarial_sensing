@@ -1,0 +1,197 @@
+{
+  "experiment": "PGD-10 baseline attack on TRADES, defense seed 43 (naive-vs-adaptive gap per defense seed, 35-b-13)",
+  "config": {
+    "scenario": "urban",
+    "mode": "untargeted",
+    "steps": 10,
+    "seed": 7,
+    "n_eval_per_class": 100,
+    "attack_pgd_alpha_frac": 0.25,
+    "psd_cap_margin": 2.0,
+    "psr_db": [
+      -45.0,
+      -40.0,
+      -35.0,
+      -30.0,
+      -25.0,
+      -20.0,
+      -15.0,
+      -10.0,
+      -5.0,
+      0.0
+    ],
+    "psr_reference": "clean received-signal window energy (pre-noise)",
+    "mask_band_mhz": {
+      "lo": 0.0,
+      "hi": 10.0
+    },
+    "genie": "power-only, no PSD cap",
+    "protocol": "identical to run_at_eval.py / at_defense_results.json (s42) \u2014 same eval set, same attack seed, same grids"
+  },
+  "checkpoint": "checkpoint_dual_trades_s43.pt",
+  "clean_acc_active": 0.9967,
+  "runs": {
+    "untargeted/genie": {
+      "psr=-45dB": {
+        "cond_asr": 0.0,
+        "robust_acc": 99.67,
+        "n_eligible": 299
+      },
+      "psr=-40dB": {
+        "cond_asr": 1.67,
+        "robust_acc": 98.0,
+        "n_eligible": 299
+      },
+      "psr=-35dB": {
+        "cond_asr": 13.04,
+        "robust_acc": 86.67,
+        "n_eligible": 299
+      },
+      "psr=-30dB": {
+        "cond_asr": 30.77,
+        "robust_acc": 69.0,
+        "n_eligible": 299
+      },
+      "psr=-25dB": {
+        "cond_asr": 53.51,
+        "robust_acc": 46.33,
+        "n_eligible": 299
+      },
+      "psr=-20dB": {
+        "cond_asr": 76.59,
+        "robust_acc": 23.33,
+        "n_eligible": 299
+      },
+      "psr=-15dB": {
+        "cond_asr": 88.96,
+        "robust_acc": 11.0,
+        "n_eligible": 299
+      },
+      "psr=-10dB": {
+        "cond_asr": 99.33,
+        "robust_acc": 0.67,
+        "n_eligible": 299
+      },
+      "psr=-5dB": {
+        "cond_asr": 100.0,
+        "robust_acc": 0.0,
+        "n_eligible": 299
+      },
+      "psr=+0dB": {
+        "cond_asr": 100.0,
+        "robust_acc": 0.0,
+        "n_eligible": 299
+      }
+    },
+    "untargeted/cv2x_mask": {
+      "psr=-45dB": {
+        "cond_asr": 0.0,
+        "robust_acc": 99.67,
+        "n_eligible": 299
+      },
+      "psr=-40dB": {
+        "cond_asr": 0.0,
+        "robust_acc": 99.67,
+        "n_eligible": 299
+      },
+      "psr=-35dB": {
+        "cond_asr": 0.0,
+        "robust_acc": 99.67,
+        "n_eligible": 299
+      },
+      "psr=-30dB": {
+        "cond_asr": 0.67,
+        "robust_acc": 99.0,
+        "n_eligible": 299
+      },
+      "psr=-25dB": {
+        "cond_asr": 4.68,
+        "robust_acc": 95.0,
+        "n_eligible": 299
+      },
+      "psr=-20dB": {
+        "cond_asr": 18.39,
+        "robust_acc": 81.33,
+        "n_eligible": 299
+      },
+      "psr=-15dB": {
+        "cond_asr": 28.76,
+        "robust_acc": 71.0,
+        "n_eligible": 299
+      },
+      "psr=-10dB": {
+        "cond_asr": 44.48,
+        "robust_acc": 55.33,
+        "n_eligible": 299
+      },
+      "psr=-5dB": {
+        "cond_asr": 69.57,
+        "robust_acc": 30.33,
+        "n_eligible": 299
+      },
+      "psr=+0dB": {
+        "cond_asr": 96.99,
+        "robust_acc": 3.0,
+        "n_eligible": 299
+      }
+    }
+  },
+  "summary": {
+    "untargeted": {
+      "meap_genie_db": -33.037225042301294,
+      "meap_genie_censor": null,
+      "meap_cv2x_mask_db": -19.22372227579564,
+      "meap_cv2x_mask_censor": null,
+      "price_of_compliance_db": 13.813502766505653,
+      "poc_censor": null,
+      "genie_curve": [
+        0.0,
+        1.67,
+        13.04,
+        30.77,
+        53.51,
+        76.59,
+        88.96,
+        99.33,
+        100.0,
+        100.0
+      ],
+      "mask_curve": [
+        0.0,
+        0.0,
+        0.0,
+        0.67,
+        4.68,
+        18.39,
+        28.76,
+        44.48,
+        69.57,
+        96.99
+      ],
+      "psr_genie": [
+        -45.0,
+        -40.0,
+        -35.0,
+        -30.0,
+        -25.0,
+        -20.0,
+        -15.0,
+        -10.0,
+        -5.0,
+        0.0
+      ],
+      "psr_mask": [
+        -45.0,
+        -40.0,
+        -35.0,
+        -30.0,
+        -25.0,
+        -20.0,
+        -15.0,
+        -10.0,
+        -5.0,
+        0.0
+      ]
+    }
+  }
+}

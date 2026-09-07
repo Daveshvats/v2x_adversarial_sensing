@@ -92,6 +92,13 @@ def main():
                          "(the two settings can use different PSR grids)")
     ap.add_argument("--max-time-sec", type=float, default=420.0)
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--store-per-window", action="store_true",
+                    help="store per-window attack outcomes per cell "
+                         "(win_flags: 1 = eligible+success, 0 = eligible+"
+                         "fail, -1 = clean-wrong/not eligible) for the "
+                         "paired-bootstrap CIs (35-b-11). Cells stored "
+                         "without flags are NOT re-run; use --force to "
+                         "recompute them with flags")
     args = ap.parse_args()
 
     t0 = time.time()
@@ -185,7 +192,7 @@ def main():
         rob = (out["preds"] == y).float().mean().item()
         wr = out["win_restart"].tolist()
         n_r0 = sum(1 for w in wr if w == 0)
-        results["runs"].setdefault(key, {})[pk] = {
+        cell_rec = {
             "cond_asr": round(100 * c_asr, 2),
             "robust_acc": round(100 * rob, 2),
             "n_eligible": n_elig,
@@ -193,11 +200,22 @@ def main():
                                  for r in sorted(set(wr))},
             "frac_zero_init_wins": round(n_r0 / max(n_elig, 1), 4),
         }
+        if args.store_per_window:
+            # -1 = clean-wrong (not eligible), 0 = eligible + attack failed,
+            # 1 = eligible + attack succeeded — full per-window pairing
+            # across the genie/mask arms (shared eval windows)
+            elig = (clean_preds == y)
+            win = ((out["preds"] != y) & elig).long()
+            flags = torch.where(elig, win, torch.full_like(win, -1))
+            cell_rec["win_flags"] = [int(v) for v in flags.tolist()]
+        results["runs"].setdefault(key, {})[pk] = cell_rec
         results.setdefault("elapsed_s", 0)
         results["elapsed_s"] = round(results["elapsed_s"] +
                                      (time.time() - t0), 1)
-        with open(fname, "w") as f:
+        _tmp = fname + ".tmp"
+        with open(_tmp, "w") as f:
             json.dump(results, f, indent=2)
+        os.replace(_tmp, fname)
         print(f"    [cell] {key} {pk}: cond-ASR {100*c_asr:5.2f}%  "
               f"robust {100*rob:5.2f}%  zero-init wins "
               f"{n_r0}/{n_elig}", flush=True)
@@ -232,8 +250,10 @@ def main():
             "genie_curve": g, "mask_curve": m,
             "psr_genie": have["genie"], "psr_mask": have["cv2x_mask"],
         }
-        with open(fname, "w") as f:
+        _tmp = fname + ".tmp"
+        with open(_tmp, "w") as f:
             json.dump(results, f, indent=2)
+        os.replace(_tmp, fname)
         print(f"[adaptive] MEAP genie {mg} ({cg})  mask {mm} ({cm})  "
               f"PoC {poc} dB {cnotes or ''}", flush=True)
 

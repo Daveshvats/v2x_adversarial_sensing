@@ -1,0 +1,377 @@
+{
+  "experiment": "paired-bootstrap CIs for MEAP/PoC from per-window outcomes (35-b-11, council 34-d iii)",
+  "method": {
+    "bootstrap": "percentile, B=2000, rng default_rng(20260907)",
+    "pairing": "genie and mask arms attack the SAME windows \u2014 the same resampled indices are applied to both arms (paired difference), replacing the conservative worst-case bound propagation",
+    "meap": "meap_curve (20% threshold, censoring-aware) per resample; reps where a curve fails to cross 20% are dropped and counted",
+    "seeds": "canonical protocol is MODEL-seed replication (retrained checkpoints, attack eval seed 7); the 3-seed mean resamples each seed independently"
+  },
+  "canonical": {
+    "model_seed_7": {
+      "checkpoint": null,
+      "meap_genie_db": -44.225,
+      "meap_mask_db": -37.083,
+      "poc_db": 7.142,
+      "n_reps": 2000,
+      "dropped_no_crossing": 0,
+      "meap_genie_boot_mean_db": -44.219,
+      "meap_mask_boot_mean_db": -37.011,
+      "meap_genie_ci95_db": [
+        -45.0,
+        -43.33
+      ],
+      "meap_mask_ci95_db": [
+        -38.6,
+        -35.0
+      ],
+      "poc_ci95_db": [
+        5.66,
+        9.18
+      ],
+      "poc_boot_mean_db": 7.208
+    },
+    "model_seed_123": {
+      "checkpoint": "checkpoint_dual_s123.pt",
+      "meap_genie_db": -45.0,
+      "meap_mask_db": -38.148,
+      "poc_db": 6.852,
+      "n_reps": 2000,
+      "dropped_no_crossing": 0,
+      "meap_genie_boot_mean_db": -44.996,
+      "meap_mask_boot_mean_db": -38.123,
+      "meap_genie_ci95_db": [
+        -45.0,
+        -45.0
+      ],
+      "meap_mask_ci95_db": [
+        -39.2,
+        -37.0
+      ],
+      "poc_ci95_db": [
+        5.78,
+        8.0
+      ],
+      "poc_boot_mean_db": 6.873
+    },
+    "model_seed_456": {
+      "checkpoint": "checkpoint_dual_s456.pt",
+      "meap_genie_db": -45.0,
+      "meap_mask_db": -37.895,
+      "poc_db": 7.105,
+      "n_reps": 2000,
+      "dropped_no_crossing": 0,
+      "meap_genie_boot_mean_db": -44.934,
+      "meap_mask_boot_mean_db": -37.881,
+      "meap_genie_ci95_db": [
+        -45.0,
+        -44.42
+      ],
+      "meap_mask_ci95_db": [
+        -39.48,
+        -36.25
+      ],
+      "poc_ci95_db": [
+        5.45,
+        8.71
+      ],
+      "poc_boot_mean_db": 7.054
+    },
+    "three_seed_mean": {
+      "point_pocs_db": [
+        7.142,
+        6.852,
+        7.105
+      ],
+      "point_mean_db": 7.033,
+      "point_spread_db": 0.29,
+      "t_ci95_db": [
+        6.641,
+        7.426
+      ],
+      "boot_mean_ci95_db": [
+        6.19,
+        7.91
+      ],
+      "n_reps": 2000
+    }
+  },
+  "adaptive": {
+    "dual": {
+      "attack_seed_7": {
+        "source": "w14b_perwindow_adaptive_dual_s7.json",
+        "continuity_all_match": true,
+        "meap_genie_db": -45.472,
+        "meap_mask_db": -39.432,
+        "poc_db": 6.04,
+        "n_reps": 2000,
+        "dropped_no_crossing": 0,
+        "meap_genie_boot_mean_db": -45.454,
+        "meap_mask_boot_mean_db": -39.426,
+        "meap_genie_ci95_db": [
+          -46.48,
+          -44.5
+        ],
+        "meap_mask_ci95_db": [
+          -40.83,
+          -38.02
+        ],
+        "poc_ci95_db": [
+          4.57,
+          7.61
+        ],
+        "poc_boot_mean_db": 6.028
+      },
+      "attack_seed_11": {
+        "source": "adaptive_dual_s11_r5.json",
+        "meap_genie_db": -46.293,
+        "meap_mask_db": -40.326,
+        "poc_db": 5.967,
+        "n_reps": 2000,
+        "dropped_no_crossing": 0,
+        "meap_genie_boot_mean_db": -46.246,
+        "meap_mask_boot_mean_db": -40.314,
+        "meap_genie_ci95_db": [
+          -47.16,
+          -45.09
+        ],
+        "meap_mask_ci95_db": [
+          -41.6,
+          -39.07
+        ],
+        "poc_ci95_db": [
+          4.44,
+          7.56
+        ],
+        "poc_boot_mean_db": 5.932
+      },
+      "attack_seed_22": {
+        "source": "adaptive_dual_s22_r5.json",
+        "meap_genie_db": -46.522,
+        "meap_mask_db": -39.881,
+        "poc_db": 6.641,
+        "n_reps": 2000,
+        "dropped_no_crossing": 0,
+        "meap_genie_boot_mean_db": -46.465,
+        "meap_mask_boot_mean_db": -39.817,
+        "meap_genie_ci95_db": [
+          -47.2,
+          -45.52
+        ],
+        "meap_mask_ci95_db": [
+          -41.14,
+          -38.33
+        ],
+        "poc_ci95_db": [
+          5.33,
+          8.17
+        ],
+        "poc_boot_mean_db": 6.648
+      },
+      "three_seed_mean": {
+        "point_pocs_db": [
+          6.04,
+          5.967,
+          6.641
+        ],
+        "point_mean_db": 6.216,
+        "point_spread_db": 0.674,
+        "t_ci95_db": [
+          5.297,
+          7.134
+        ],
+        "boot_mean_ci95_db": [
+          5.36,
+          7.09
+        ],
+        "n_reps": 2000
+      }
+    },
+    "at": {
+      "attack_seed_7": {
+        "source": "w14b_perwindow_adaptive_at_s7.json",
+        "continuity_all_match": true,
+        "meap_genie_db": -39.615,
+        "meap_mask_db": -32.7,
+        "poc_db": 6.915,
+        "n_reps": 2000,
+        "dropped_no_crossing": 0,
+        "meap_genie_boot_mean_db": -39.651,
+        "meap_mask_boot_mean_db": -32.686,
+        "meap_genie_ci95_db": [
+          -40.6,
+          -38.94
+        ],
+        "meap_mask_ci95_db": [
+          -33.81,
+          -31.43
+        ],
+        "poc_ci95_db": [
+          6.06,
+          8.01
+        ],
+        "poc_boot_mean_db": 6.965
+      },
+      "attack_seed_11": {
+        "source": "adaptive_at_s11_r5.json",
+        "meap_genie_db": -39.339,
+        "meap_mask_db": -32.266,
+        "poc_db": 7.073,
+        "n_reps": 2000,
+        "dropped_no_crossing": 0,
+        "meap_genie_boot_mean_db": -39.342,
+        "meap_mask_boot_mean_db": -32.236,
+        "meap_genie_ci95_db": [
+          -39.84,
+          -38.87
+        ],
+        "meap_mask_ci95_db": [
+          -33.08,
+          -31.27
+        ],
+        "poc_ci95_db": [
+          6.31,
+          7.98
+        ],
+        "poc_boot_mean_db": 7.106
+      },
+      "attack_seed_22": {
+        "source": "adaptive_at_s22_r5.json",
+        "meap_genie_db": -38.979,
+        "meap_mask_db": -32.0,
+        "poc_db": 6.979,
+        "n_reps": 2000,
+        "dropped_no_crossing": 0,
+        "meap_genie_boot_mean_db": -38.983,
+        "meap_mask_boot_mean_db": -31.955,
+        "meap_genie_ci95_db": [
+          -39.61,
+          -38.4
+        ],
+        "meap_mask_ci95_db": [
+          -32.91,
+          -30.83
+        ],
+        "poc_ci95_db": [
+          6.12,
+          8.08
+        ],
+        "poc_boot_mean_db": 7.028
+      },
+      "three_seed_mean": {
+        "point_pocs_db": [
+          6.915,
+          7.073,
+          6.979
+        ],
+        "point_mean_db": 6.989,
+        "point_spread_db": 0.158,
+        "t_ci95_db": [
+          6.792,
+          7.187
+        ],
+        "boot_mean_ci95_db": [
+          6.53,
+          7.59
+        ],
+        "n_reps": 2000
+      }
+    },
+    "trades": {
+      "attack_seed_7": {
+        "source": "w14b_perwindow_adaptive_trades_s7.json",
+        "continuity_all_match": true,
+        "meap_genie_db": -40.024,
+        "meap_mask_db": -29.564,
+        "poc_db": 10.46,
+        "n_reps": 2000,
+        "dropped_no_crossing": 0,
+        "meap_genie_boot_mean_db": -40.116,
+        "meap_mask_boot_mean_db": -29.624,
+        "meap_genie_ci95_db": [
+          -41.41,
+          -39.13
+        ],
+        "meap_mask_ci95_db": [
+          -31.09,
+          -28.45
+        ],
+        "poc_ci95_db": [
+          9.25,
+          11.62
+        ],
+        "poc_boot_mean_db": 10.492
+      },
+      "attack_seed_11": {
+        "source": "adaptive_trades_s11_r5.json",
+        "meap_genie_db": -40.714,
+        "meap_mask_db": -30.698,
+        "poc_db": 10.017,
+        "n_reps": 2000,
+        "dropped_no_crossing": 0,
+        "meap_genie_boot_mean_db": -40.669,
+        "meap_mask_boot_mean_db": -30.647,
+        "meap_genie_ci95_db": [
+          -41.8,
+          -39.46
+        ],
+        "meap_mask_ci95_db": [
+          -31.98,
+          -29.22
+        ],
+        "poc_ci95_db": [
+          8.74,
+          11.38
+        ],
+        "poc_boot_mean_db": 10.022
+      },
+      "attack_seed_22": {
+        "source": "adaptive_trades_s22_r5.json",
+        "meap_genie_db": -39.152,
+        "meap_mask_db": -30.079,
+        "poc_db": 9.073,
+        "n_reps": 2000,
+        "dropped_no_crossing": 0,
+        "meap_genie_boot_mean_db": -39.163,
+        "meap_mask_boot_mean_db": -30.061,
+        "meap_genie_ci95_db": [
+          -39.95,
+          -38.45
+        ],
+        "meap_mask_ci95_db": [
+          -31.55,
+          -28.53
+        ],
+        "poc_ci95_db": [
+          7.77,
+          10.45
+        ],
+        "poc_boot_mean_db": 9.102
+      },
+      "three_seed_mean": {
+        "point_pocs_db": [
+          10.46,
+          10.017,
+          9.073
+        ],
+        "point_mean_db": 9.85,
+        "point_spread_db": 1.387,
+        "t_ci95_db": [
+          8.09,
+          11.61
+        ],
+        "boot_mean_ci95_db": [
+          9.14,
+          10.64
+        ],
+        "n_reps": 2000
+      }
+    }
+  },
+  "comparison": {
+    "conservative_headline_poc_ci95": [
+      4.37,
+      10.12
+    ],
+    "note": "the w12 conservative propagation (mask_lo - genie_hi, mask_hi - genie_lo) worst-cases each arm separately; the paired bootstrap above uses the shared-window correlation"
+  }
+}

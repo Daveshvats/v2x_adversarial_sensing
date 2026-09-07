@@ -185,6 +185,51 @@ window of every PSR cell. The PoC headline is robust across all three
 enforcement domains within ±0.5 dB. `results/conformance_results.json` +
 `src/conformance.py`.
 
+**US 95.3205-shaped domain — the fourth enforcement regime (Wave 14, C42)**:
+the C-V2X OBU unwanted-emissions limits (47 CFR 95.3205, archived eCFR
+text) enforced in the mean-power measurement domain (100-kHz RBW near the
+band edge, 1-MHz elsewhere): compliant MEAP **−37.89 dB / PoC 6.33** —
+the most permissive of the four domains for the attacker (0.81 dB below
+flat; the region-flat −13 dBm/MHz middle region permits in-band
+concentration). Post-PA worst excess 0.00 dBr on every window/cell.
+**PoC headline robust across all four enforcement domains: 6.33–7.50 dB.**
+`results/conformance_us_results.json`.
+
+**Attack-seed replication (Wave 14, C44 — council 34-d blocker i)**: the
+adaptive margins are now replicated across attack seeds {7, 11, 22} on the
+canonical seed-42 trio with per-arm grid identity and per-window capture
+(6 grids, 68 cells, all uncensored; plus a 34-cell seed-7 re-capture that
+reproduces every stored cond-ASR exactly). **Margins over attack seeds:
+AT +7.56 ± 0.72 dB, TRADES +9.77 ± 0.12 dB — 4–23× smaller than the
+defense-seed spreads (±2.80 / ±1.75)**: the certification-relevant seed
+lottery is the defense training seed, not the attack seed. Adaptive PoC
+3-seed means: undefended 6.22 / AT 6.99 / TRADES 9.85 dB, with
+paired-bootstrap + t CIs. `results/w14_attack_seed_margins.json` +
+`results/w14b_bootstrap_cis.json` + the six
+`adaptive_{dual,at,trades}_s{11,22}_r5.json` grids.
+
+**Cooperative-sensing fusion baseline (Wave 14, C43 — council 34-c)**:
+K-receiver majority vote (independent chains, same compliant delta;
+attacker CSI single-receiver, fusion-adaptive attacker disclosed as NOT
+evaluated). **K=1 control reproduces the canonical MEAPs exactly; K=3
+raises the compliant MEAP by +25.3 dB (−37.08 → −11.80), K=5 +26.6 dB,
+while the PoC stays 6.3–7.3 dB across K** — fusion buys 25 dB of
+detection headroom but leaves the price of compliance (and every
+compliance conclusion) unchanged. `results/w14b_fusion_baseline.json`.
+
+**PGD-10 defense readings now 3-seed (Wave 14, item 13)**: PGD-10 on
+AT/TRADES defense seeds 43/53 — AT mask MEAP −23.1/−19.7/−20.9 dB,
+TRADES −19.1/−19.2/−18.5 dB across seeds {42,43,53}; the
+naive-vs-adaptive gap (6.9–10.4 dB) holds on every seed.
+`results/{at,trades}_defense_results_s{43,53}.json`.
+
+**Honest real-WiFi floors (Wave 14, item 14)**: genie grids extended to
+−55 dB resolve the floor censoring — real-signal PoC is 11.91 dB (frozen)
+/ 10.23 dB (finetuned) with genie floors at −47.8/−47.9 dB (3.6 dB deeper
+than synthetic): **synthetic evaluation understates what compliance buys
+against real captures**. `results/w12_confidence_intervals.json`
+(C21 pairs, un-censored).
+
 **Harm chain (Wave 12, C35)**: disclosed-parameter link budget anchored to the
 measured targeted-noise ASR curve: at the 20% false-IDLE point the attacker
 stays under the 33 dBm ITS EIRP cap to ~650 m (cloaked TX at 100 m);
@@ -192,10 +237,14 @@ synchronized worst-case timing costs 9.5 pp of BSM PRR at 100 m (~95 extra
 lost BSMs/1000); random-timing average case 0.2 pp. `results/harm_chain.json`
 + `paper/figs/harm_chain.png`.
 
-**Error bars (Wave 12, C36)**: Wilson 95% binomial CIs on every conditional-ASR
-cell across 15 result files; headline PoC 7.1 dB carries CI [4.4, 9.8] (wider
-than the 1.06 dB 3-seed spread — the stability argument needed this
-context). `results/w12_confidence_intervals.json`.
+**Error bars (Wave 12, C36 + Wave 14, C45)**: Wilson 95% binomial CIs on
+every conditional-ASR cell across 15 result files; headline PoC 7.1 dB
+carries conservative CI [4.4, 10.1] (genie floor un-censored via the
+−55 dB grid extension) and a **paired-bootstrap CI [5.66, 9.18]**
+(B=2000, genie/mask arms resampled on shared windows — 39% narrower than
+the conservative bound propagation; 3-seed model-mean 7.03 dB, t-CI
+[6.64, 7.43]). `results/w12_confidence_intervals.json` +
+`results/w14b_bootstrap_cis.json`.
 
 **P1-c closure (Wave 13, C4/C38/C39)**: the C4 SNR-sweep train/eval leakage is
 fixed and quantified (2/1000 realized waveform overlap, clean re-run with
