@@ -45,7 +45,7 @@ jobs:
           print("all 5 release checkpoints present:", needed)
           EOF
 
-      - name: Gate: clean acc + mask-projection invariant on shipped victim
+      - name: "Gate: clean acc + mask-projection invariant on shipped victim"
         env:
           OMP_NUM_THREADS: "2"
           MKL_NUM_THREADS: "2"
