@@ -885,6 +885,30 @@ learned coexistence sensor trained on synthetic waveforms must be
 red-teamed against real captures before its robustness claims are
 believed.
 
+\paragraph{Margin-stratified reporting and a first detection baseline}
+Applying the same lens to the synthetic headline preempts the symmetric
+objection---that MEAP quietly measures the weakest windows of a
+100\%-accuracy CNN. Stratifying the canonical protocol by clean-decision
+margin (top1 minus top2 logit gap, eligible windows split into
+tertiles): the low-margin tertile crosses 20\% conditional ASR at
+$-38.8$\,dB and the mid tertile at $-38.5$\,dB, while the high-margin
+tertile crosses at $-27.0$\,dB---10\,dB \emph{above} the headline MEAP
+of $-37.1$\,dB (which this run re-derives exactly, a continuity check).
+At the MEAP point the low tertile sits at 25.9\% and the high tertile at
+11.3\%: the attack does preferentially harvest low-margin windows first,
+but it is not merely a weak-window phenomenon---by $-20$\,dB it already
+flips 48\% of the strongest-margin windows. We also evaluated the
+simplest deployable adversarial-input detector, a max-softmax confidence
+gate, in both tail directions at 1\% false-positive rate: in the regime
+where the compliant attacker matters (PSR $\le -30$\,dB) it catches only
+16--36\% of attacks (direction-free AUROC 0.69--0.76), is nearly blind
+around $-15$\,dB (AUROC 0.57), and only becomes useful at PSR $\ge
+-5$\,dB---where energy detection is trivial anyway. The simplest
+detector is not a defense against this threat; stronger
+adversarial-input detection remains future work.
+Repro: results/w13\_margin\_stratified.json (per-PSR per-tertile ASR +
+both detector directions).
+
 \subsection{A second victim and surrogate-model transfer}
 \label{sec:victim2}
 
@@ -1133,6 +1157,23 @@ compliant ASR rises beyond tolerance, catching silent robustness
 regressions across model releases. Requires differentiable model export;
 minutes of CPU per run at prototype scale.
 \end{itemize}
+
+\paragraph{Where such a sensor would actually sit, and at what latency}
+Two placement facts must be stated before any deployment claim. First,
+no deployed 2026 radio uses learned spectrum sensing: C-V2X Mode-4
+resource selection is RSRP/SCI-based and 802.11p channel access is
+energy/preamble-based CCA---the threat model of this paper targets
+\emph{proposed} sensing architectures (DAA and coexistence receivers,
+O-RAN xApps, conformance extensions), and reads as forward-looking risk
+analysis, not as a vulnerability of shipping radios. Second, the sensing
+decision itself is cheap: re-measured on the Phase-1 pipeline (front-end
+STFT included, 86{,}052-parameter victim), median latency is 2.6\,ms per
+window on this project's shared 2-vCPU sandbox---about 37 sensing
+decisions per 100\,ms TR~37.885 latency budget, and 2.2\,ms amortized at
+batch 8. The earlier Phase-0 benchmark of the same architecture measured
+0.985\,ms model-only on faster hardware; both numbers are released with
+machine context (results/latency\_phase1.json). Latency is not the
+bottleneck for this threat model; robustness is.
 
 \paragraph{Responsible disclosure} The attack operates within existing
 regulatory power limits and cannot create spectrum violations; the released

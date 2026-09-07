@@ -1,0 +1,181 @@
+{
+  "experiment": "Margin-stratified cond-ASR + confidence-gate detection (council P1-c item 5)",
+  "config": {
+    "protocol": "identical to attack_results_merged.json urban/untargeted/cv2x_mask: PGD-10 zero-init, alpha 0.25, psd_margin 2.0, band [0,10] MHz, seed 7, n=100/class",
+    "psr_db": [
+      -45.0,
+      -40.0,
+      -35.0,
+      -30.0,
+      -25.0,
+      -20.0,
+      -15.0,
+      -10.0,
+      -5.0,
+      0.0,
+      5.0,
+      10.0
+    ],
+    "margin_def": "top1 - top2 logit gap on the clean pass (eligible windows only)",
+    "strata": "tertiles of the eligible margin distribution",
+    "tertile_cuts": [
+      2.8632,
+      3.3904
+    ],
+    "n_eligible": 300,
+    "n_per_tertile": [
+      100,
+      100,
+      100
+    ],
+    "detector": "max-softmax confidence gate, both directions (high-conf and low-conf tails) at 1% FPR; attacked = positive, clean = negative; direction-free AUROC = max(A, 1-A)"
+  },
+  "clean_acc_active": 1.0,
+  "per_psr": {
+    "psr=-45dB": {
+      "cond_asr_all": 3.0,
+      "cond_asr_low": 5.0,
+      "cond_asr_mid": 3.0,
+      "cond_asr_high": 1.0,
+      "detector_auroc_direction_free": 0.698,
+      "detector_auroc_high_dir": 0.302,
+      "detector_tpr_at_fpr1pct_high_dir": 0.0033,
+      "detector_tpr_at_fpr1pct_low_dir": 0.16,
+      "detector_tpr_at_fpr1pct_best": 0.16
+    },
+    "psr=-40dB": {
+      "cond_asr_all": 13.0,
+      "cond_asr_low": 16.0,
+      "cond_asr_mid": 17.0,
+      "cond_asr_high": 6.0,
+      "detector_auroc_direction_free": 0.7602,
+      "detector_auroc_high_dir": 0.2398,
+      "detector_tpr_at_fpr1pct_high_dir": 0.0033,
+      "detector_tpr_at_fpr1pct_low_dir": 0.2167,
+      "detector_tpr_at_fpr1pct_best": 0.2167
+    },
+    "psr=-35dB": {
+      "cond_asr_all": 25.0,
+      "cond_asr_low": 33.0,
+      "cond_asr_mid": 27.0,
+      "cond_asr_high": 15.0,
+      "detector_auroc_direction_free": 0.7291,
+      "detector_auroc_high_dir": 0.2709,
+      "detector_tpr_at_fpr1pct_high_dir": 0.0533,
+      "detector_tpr_at_fpr1pct_low_dir": 0.28,
+      "detector_tpr_at_fpr1pct_best": 0.28
+    },
+    "psr=-30dB": {
+      "cond_asr_all": 39.33,
+      "cond_asr_low": 65.0,
+      "cond_asr_mid": 36.0,
+      "cond_asr_high": 17.0,
+      "detector_auroc_direction_free": 0.6914,
+      "detector_auroc_high_dir": 0.3086,
+      "detector_tpr_at_fpr1pct_high_dir": 0.1733,
+      "detector_tpr_at_fpr1pct_low_dir": 0.36,
+      "detector_tpr_at_fpr1pct_best": 0.36
+    },
+    "psr=-25dB": {
+      "cond_asr_all": 58.33,
+      "cond_asr_low": 87.0,
+      "cond_asr_mid": 66.0,
+      "cond_asr_high": 22.0,
+      "detector_auroc_direction_free": 0.6626,
+      "detector_auroc_high_dir": 0.3374,
+      "detector_tpr_at_fpr1pct_high_dir": 0.27,
+      "detector_tpr_at_fpr1pct_low_dir": 0.4267,
+      "detector_tpr_at_fpr1pct_best": 0.4267
+    },
+    "psr=-20dB": {
+      "cond_asr_all": 78.0,
+      "cond_asr_low": 99.0,
+      "cond_asr_mid": 87.0,
+      "cond_asr_high": 48.0,
+      "detector_auroc_direction_free": 0.5963,
+      "detector_auroc_high_dir": 0.4037,
+      "detector_tpr_at_fpr1pct_high_dir": 0.31,
+      "detector_tpr_at_fpr1pct_low_dir": 0.3367,
+      "detector_tpr_at_fpr1pct_best": 0.3367
+    },
+    "psr=-15dB": {
+      "cond_asr_all": 88.33,
+      "cond_asr_low": 99.0,
+      "cond_asr_mid": 94.0,
+      "cond_asr_high": 72.0,
+      "detector_auroc_direction_free": 0.565,
+      "detector_auroc_high_dir": 0.565,
+      "detector_tpr_at_fpr1pct_high_dir": 0.37,
+      "detector_tpr_at_fpr1pct_low_dir": 0.1833,
+      "detector_tpr_at_fpr1pct_best": 0.37
+    },
+    "psr=-10dB": {
+      "cond_asr_all": 96.67,
+      "cond_asr_low": 100.0,
+      "cond_asr_mid": 100.0,
+      "cond_asr_high": 90.0,
+      "detector_auroc_direction_free": 0.7484,
+      "detector_auroc_high_dir": 0.7484,
+      "detector_tpr_at_fpr1pct_high_dir": 0.5267,
+      "detector_tpr_at_fpr1pct_low_dir": 0.1167,
+      "detector_tpr_at_fpr1pct_best": 0.5267
+    },
+    "psr=-5dB": {
+      "cond_asr_all": 99.67,
+      "cond_asr_low": 100.0,
+      "cond_asr_mid": 100.0,
+      "cond_asr_high": 99.0,
+      "detector_auroc_direction_free": 0.8763,
+      "detector_auroc_high_dir": 0.8763,
+      "detector_tpr_at_fpr1pct_high_dir": 0.7367,
+      "detector_tpr_at_fpr1pct_low_dir": 0.0333,
+      "detector_tpr_at_fpr1pct_best": 0.7367
+    },
+    "psr=+0dB": {
+      "cond_asr_all": 100.0,
+      "cond_asr_low": 100.0,
+      "cond_asr_mid": 100.0,
+      "cond_asr_high": 100.0,
+      "detector_auroc_direction_free": 0.9586,
+      "detector_auroc_high_dir": 0.9586,
+      "detector_tpr_at_fpr1pct_high_dir": 0.8767,
+      "detector_tpr_at_fpr1pct_low_dir": 0.0,
+      "detector_tpr_at_fpr1pct_best": 0.8767
+    },
+    "psr=+5dB": {
+      "cond_asr_all": 100.0,
+      "cond_asr_low": 100.0,
+      "cond_asr_mid": 100.0,
+      "cond_asr_high": 100.0,
+      "detector_auroc_direction_free": 0.9793,
+      "detector_auroc_high_dir": 0.9793,
+      "detector_tpr_at_fpr1pct_high_dir": 0.9567,
+      "detector_tpr_at_fpr1pct_low_dir": 0.0167,
+      "detector_tpr_at_fpr1pct_best": 0.9567
+    },
+    "psr=+10dB": {
+      "cond_asr_all": 100.0,
+      "cond_asr_low": 100.0,
+      "cond_asr_mid": 100.0,
+      "cond_asr_high": 100.0,
+      "detector_auroc_direction_free": 0.9934,
+      "detector_auroc_high_dir": 0.9934,
+      "detector_tpr_at_fpr1pct_high_dir": 0.99,
+      "detector_tpr_at_fpr1pct_low_dir": 0.0,
+      "detector_tpr_at_fpr1pct_best": 0.99
+    }
+  },
+  "summary": {
+    "cond_asr_all_meap_db": -37.08333333333358,
+    "cond_asr_all_censor": null,
+    "cond_asr_low_meap_db": -38.823529411764774,
+    "cond_asr_low_censor": null,
+    "cond_asr_mid_meap_db": -38.50000000000015,
+    "cond_asr_mid_censor": null,
+    "cond_asr_high_meap_db": -27.0000000000006,
+    "cond_asr_high_censor": null,
+    "margin_gap_low_minus_high_at_meap": 14.67,
+    "cond_asr_low_at_all_meap": 25.92,
+    "cond_asr_high_at_all_meap": 11.25
+  }
+}

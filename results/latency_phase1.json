@@ -1,0 +1,74 @@
+{
+  "experiment": "Phase-1 CPU inference latency, full pipeline (waveform -> FrontEnd STFT -> DualStreamModel -> argmax)",
+  "model": "DualStreamModel (Phase-1 victim, checkpoint_dual.pt)",
+  "num_parameters": 86052,
+  "window_samples": 2048,
+  "sample_rate_msps": 20.0,
+  "window_duration_us": 102.4,
+  "device": "cpu",
+  "torch_version": "2.14.0+cpu",
+  "torch_threads": 2,
+  "machine": {
+    "platform": "Linux-5.10.134-013.8.3.kangaroo.al8.x86_64-x86_64-with-glibc2.41",
+    "processor": "unknown",
+    "cpu_count": 2
+  },
+  "benchmarks": {
+    "full_pipeline_bs1": {
+      "mean_ms": 3.7566,
+      "std_ms": 5.278,
+      "min_ms": 2.4297,
+      "max_ms": 30.2927,
+      "median_ms": 2.6368,
+      "p95_ms": 3.1726,
+      "p99_ms": 29.4588,
+      "iterations": 200
+    },
+    "model_only_bs1": {
+      "mean_ms": 3.5129,
+      "std_ms": 4.9919,
+      "min_ms": 2.2648,
+      "max_ms": 30.321,
+      "median_ms": 2.4822,
+      "p95_ms": 3.3945,
+      "p99_ms": 29.9594,
+      "iterations": 200
+    },
+    "full_pipeline_bs4": {
+      "mean_ms": 10.0983,
+      "std_ms": 8.0169,
+      "min_ms": 6.9429,
+      "max_ms": 34.8902,
+      "median_ms": 7.3762,
+      "p95_ms": 33.9744,
+      "p99_ms": 34.7241,
+      "iterations": 100,
+      "per_window_ms": 2.5246
+    },
+    "full_pipeline_bs8": {
+      "mean_ms": 17.6436,
+      "std_ms": 10.2999,
+      "min_ms": 12.1187,
+      "max_ms": 43.4899,
+      "median_ms": 12.8167,
+      "p95_ms": 39.4255,
+      "p99_ms": 40.3796,
+      "iterations": 100,
+      "per_window_ms": 2.2054
+    }
+  },
+  "legacy_phase0_reference": {
+    "mean_ms": 0.9854,
+    "source": "results/legacy/latency_results.json (fb8cf0b; same 86,052-param DualStreamModel, model-only on pre-shaped [1,1,65,15] inputs, torch 2.11 CPU, unknown hardware, 200 iters)",
+    "note": "not comparable 1:1 \u2014 excludes the front end and ran on different hardware; kept for lineage"
+  },
+  "feasibility": {
+    "per_window_ms_median": 2.6368,
+    "per_window_ms_mean": 3.7566,
+    "note_stats": "median/p95 are the honest statistics here: the mean is inflated by scheduler spikes on this shared sandbox (max 30 ms)",
+    "tr37885_latency_budget_ms": 100.0,
+    "windows_affordable_per_budget_median": 37,
+    "realtime_multiple_median": 25.75,
+    "statement": "median 2.6368 ms/window full-pipeline (front end included) on this shared 2-vCPU sandbox -> ~37 sensing decisions per 100-ms TR 37.885 budget; amortized 2.2054 ms/window at batch 8; model-only 2.4822 ms/window vs the Phase-0 legacy 0.985 ms (same architecture, different hardware/torch)"
+  }
+}

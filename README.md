@@ -183,6 +183,18 @@ cell across 15 result files; headline PoC 7.1 dB carries CI [4.4, 9.8] (wider
 than the 1.06 dB 3-seed spread — the stability argument needed this
 context). `results/w12_confidence_intervals.json`.
 
+**P1-c closure (Wave 13, C4/C38/C39)**: the C4 SNR-sweep train/eval leakage is
+fixed and quantified (2/1000 realized waveform overlap, clean re-run with
+fresh eval seed, all conclusions unchanged); real-time feasibility is
+re-measured on the full Phase-1 pipeline (median 2.64 ms/window including the
+front end on this 2-vCPU sandbox → ~37 decisions per 100 ms TR 37.885
+budget; Phase-0's 0.985 ms kept as hardware-different lineage); the canonical
+headline is now margin-stratified (tertile MEAPs −38.8/−38.5/−27.0 dB — the
+attack is not merely a weak-window phenomenon), and the simplest
+adversarial-input detector (max-softmax gate) FAILS in the regime that
+matters (16–36% TPR @1% FPR at PSR ≤ −30 dB). `results/snr_sweep_clean.json`
++ `latency_phase1.json` + `w13_margin_stratified.json`.
+
 Key findings: (1) an *undefended* sensing CNN is broken by a compliant attacker
 tens of dB below the victim signal level; (2) emission-mask compliance costs the
 attacker ~5–7 dB (untargeted) and 16–18 dB (targeted cloaking); (3) compliance
