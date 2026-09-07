@@ -1,0 +1,86 @@
+{
+  "experiment": "C4 SNR sweep, CLEAN eval seed (leakage fix)",
+  "config": {
+    "n_per_class": 250,
+    "eval_seed": 777,
+    "train_seed": 42,
+    "scenario": "urban",
+    "snr_ranges": [
+      [
+        -10.0,
+        0.0
+      ],
+      [
+        0.0,
+        10.0
+      ],
+      [
+        10.0,
+        20.0
+      ],
+      [
+        5.0,
+        25.0
+      ]
+    ]
+  },
+  "leakage_diagnostic": {
+    "train_corpus_waveforms": 4000,
+    "old_eval_seed": 42,
+    "old_eval_overlap_count": 250,
+    "old_eval_overlap_fraction": 0.25,
+    "new_eval_seed": 777,
+    "new_eval_overlap_count": 0,
+    "new_eval_overlap_fraction": 0.0,
+    "hash": "sha256 of raw baseband (pre-channel, pre-noise) bytes",
+    "old_eval_realized_overlap_exact": 2,
+    "old_eval_realized_overlap_fraction": 0.002,
+    "new_eval_realized_overlap_exact": 0,
+    "new_eval_realized_overlap_fraction": 0.0,
+    "note": "realized waveforms: old sweep interleaves channel draws between gen_signal calls, so realized overlap (below) is smaller than the pure-stream bound; both measured exactly by replay + sha256 of raw baseband bytes."
+  },
+  "per_range": {
+    "snr=[-10.0,0.0]": {
+      "cnn_acc": 24.3,
+      "cnn_pc5_11p_pair_acc": 36.8,
+      "energy_lr_acc": 25.0
+    },
+    "snr=[0.0,10.0]": {
+      "cnn_acc": 71.8,
+      "cnn_pc5_11p_pair_acc": 63.2,
+      "energy_lr_acc": 61.3
+    },
+    "snr=[10.0,20.0]": {
+      "cnn_acc": 99.9,
+      "cnn_pc5_11p_pair_acc": 100.0,
+      "energy_lr_acc": 86.1
+    },
+    "snr=[5.0,25.0]": {
+      "cnn_acc": 99.9,
+      "cnn_pc5_11p_pair_acc": 100.0,
+      "energy_lr_acc": 86.0
+    }
+  },
+  "ab_vs_leaky_seed42": {
+    "snr=[-10.0,0.0]": {
+      "cnn_acc": -1.3,
+      "cnn_pc5_11p_pair_acc": -1.0,
+      "energy_lr_acc": 0.0
+    },
+    "snr=[0.0,10.0]": {
+      "cnn_acc": -1.2,
+      "cnn_pc5_11p_pair_acc": -0.4,
+      "energy_lr_acc": -1.3
+    },
+    "snr=[10.0,20.0]": {
+      "cnn_acc": 0.0,
+      "cnn_pc5_11p_pair_acc": 0.0,
+      "energy_lr_acc": 0.0
+    },
+    "snr=[5.0,25.0]": {
+      "cnn_acc": 0.1,
+      "cnn_pc5_11p_pair_acc": 0.2,
+      "energy_lr_acc": -0.3
+    }
+  }
+}

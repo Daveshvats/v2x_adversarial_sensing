@@ -578,10 +578,16 @@ difference stream contributes nothing (dual = mag-only), retiring the
 ``phase-aware'' framing of our prior work~\cite{dhankhar2026}---an honest
 negative result, pre-registered as an ablation. An SNR sweep below the training
 range bounds the noise-floor regime honestly: the CNN's advantage over the
-energy baseline persists down to 0\,dB SNR (73.0\% vs 62.6\% at
-$[0,10]$\,dB, 63.6\% on the hard pair) and vanishes at negative SNR
-(25.6\% vs 25.0\% at $[-10,0]$\,dB)---both models starve; deep learning
-does not rescue a task with no signal.
+energy baseline persists down to 0\,dB SNR (71.8\% vs 61.3\% at
+$[0,10]$\,dB, 63.2\% on the hard pair) and vanishes at negative SNR
+(24.3\% vs 25.0\% at $[-10,0]$\,dB)---both models starve; deep learning
+does not rescue a task with no signal. (The first version of this sweep
+drew its evaluation baseband from the training seed's RNG stream; a
+hash-level audit found $2/1000$ realized waveforms bit-identical to
+training-corpus members. The numbers above use a fresh evaluation seed
+verified at $0/1000$ overlap; every accuracy moved by at most
+$1.3$\,pp, within sampling noise at $n{=}1000$---the leak was real but
+immaterial, and both the audit and the clean re-run are released.)
 
 \subsection{The price of compliance}
 \label{sec:poc}

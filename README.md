@@ -63,7 +63,9 @@ scripts/                  experiment runners + independent audit checkers
   run_csi_mismatch.py       CSI/no-CSI attack variants
   run_at_defense.py         mask-matched adversarial training (resumable)
   run_at_eval.py            defense evaluation
-  run_snr_sweep.py          clean-task SNR sweep (honest negative)
+  run_snr_sweep.py          clean-task SNR sweep (honest negative; leaky A-arm)
+  run_snr_sweep_clean.py    the leakage-fixed re-run (eval seed 777) + overlap audit
+  w13_seed_replication.py   defense-seed aggregation + gate; w13_check.py audits it
   run_plot.py               merge + physical metrics + money figure
   debug_attack.py           surgical attack verification (run after any change)
   w6_check.py, w6b_check.py     Wave-6 physics gates + independent exit-gate checker
