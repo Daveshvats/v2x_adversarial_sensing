@@ -91,7 +91,11 @@ def main():
                     help="restrict this invocation to a subset of settings "
                          "(the two settings can use different PSR grids)")
     ap.add_argument("--max-time-sec", type=float, default=420.0)
-    ap.add_argument("--force", action="store_true")
+    ap.add_argument("--force", action="store_true",
+                    help="recompute the cells selected by --settings/--psr "
+                         "even if already stored (OTHER stored cells are "
+                         "PRESERVED — the file is never silently reset; "
+                         "delete it for a clean slate)")
     ap.add_argument("--store-per-window", action="store_true",
                     help="store per-window attack outcomes per cell "
                          "(win_flags: 1 = eligible+success, 0 = eligible+"
@@ -102,6 +106,10 @@ def main():
     args = ap.parse_args()
 
     t0 = time.time()
+    t_wall = time.time()   # wall clock from process start — the per-cell t0
+                           # below resets every cell, so the old check could
+                           # never trigger between cells (chunked re-invoke
+                           # runs died on the shell timeout instead)
     psr_grid = args.psr if args.psr else DEFAULT_PSR[args.defense]
 
     # ---- load defense ----
@@ -131,7 +139,11 @@ def main():
           flush=True)
 
     fname = res_path(args.defense, args.seed, args.restarts, args.tag)
-    if os.path.exists(fname) and not args.force:
+    # ALWAYS resume from the stored file when it exists, even with --force:
+    # --force recomputes only the cells selected by THIS invocation's
+    # --settings/--psr and preserves the rest (the old fresh-dict behavior
+    # silently dropped the other setting's stored cells on write).
+    if os.path.exists(fname):
         results = json.load(open(fname))
     else:
         results = {
@@ -173,9 +185,9 @@ def main():
         if key in results["runs"] and pk in results["runs"][key] \
                 and not args.force:
             continue
-        if time.time() - t0 > args.max_time_sec and done > 0:
-            print(f"[adaptive] time budget reached — flushing and exiting "
-                  f"(re-invoke to continue)", flush=True)
+        if time.time() - t_wall > args.max_time_sec and done > 0:
+            print(f"[adaptive] wall-clock budget reached — flushing and "
+                  f"exiting (re-invoke to continue)", flush=True)
             break
 
         sband = None if setting == "genie" else band
@@ -257,12 +269,18 @@ def main():
         print(f"[adaptive] MEAP genie {mg} ({cg})  mask {mm} ({cm})  "
               f"PoC {poc} dB {cnotes or ''}", flush=True)
 
-    n_cells = sum(len(v) for v in results["runs"].values())
+    # count ONLY the cells inside this invocation's scope (settings x psr
+    # grid): the old check compared ALL stored cells against the scope, so
+    # a per-setting chunked run printed a false COMPLETE while the other
+    # setting was still incomplete.
+    n_scope = sum(
+        1 for s in args.settings for p in psr_grid
+        if f"psr={p:+.0f}dB" in results["runs"].get(f"untargeted/{s}", {}))
     n_need = len(args.settings) * len(psr_grid)
-    if n_cells >= n_need:
+    if n_scope >= n_need:
         print("COMPLETE", flush=True)
     else:
-        print(f"PROGRESS {n_cells}/{n_need} cells — re-invoke to continue",
+        print(f"PROGRESS {n_scope}/{n_need} cells — re-invoke to continue",
               flush=True)
 
 

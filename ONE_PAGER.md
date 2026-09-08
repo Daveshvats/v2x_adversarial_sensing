@@ -62,8 +62,13 @@ attack power does compliance cost, compared to an unconstrained one?
 4. **The standard defense works, with an honest boundary.** Training the
    sensor against these attacks (adversarial training with the same mask
    constraints) shifts the break-point by +14 dB at zero cost to normal
-   accuracy, and a variant buys +18.6 dB for a 0.75-point accuracy cost.
-   But the protection only covers the power range it was trained for.
+   accuracy, and a variant buys +18.6 dB for a 0.75-point accuracy cost —
+   but those numbers are from the same 10-step attack used in evaluation,
+   and a patient adversary running a converged 50-step attack with random
+   restarts claws most of it back: the honest margins are +7.6 dB and
+   +9.8 dB (verified across three independent attack runs, 95% confidence
+   ±1.8 dB or less). But the protection only covers the power range it
+   was trained for.
 
 5. **This is not about our specific neural network.** We attacked a second,
    architecturally different network: its break-point shifted by 11.6–15.1 dB,
