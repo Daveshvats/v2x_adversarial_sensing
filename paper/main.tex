@@ -530,8 +530,8 @@ the threat: \emph{MEAP} (Minimum Effective Attack Power) is the PSR at which
 conditional ASR crosses 20\% (linear interpolation, with explicit censoring
 flags when the grid does not resolve the crossing); \emph{Price of
 Compliance} is $\mathrm{PoC} = \mathrm{MEAP}_{\mathrm{compliant}} -
-\mathrm{MEAP}_{\mathrm{genie}}$: the power a rule-abiding attacker must
-additionally spend to achieve the same attack success. PoC is
+\mathrm{MEAP}_{\mathrm{genie}}$: the extra power a rule-abiding attacker must
+spend to achieve the same attack success. PoC is
 budget-matched, attacker-agnostic, and---unlike ASR at a fixed
 $\epsilon$---directly interpretable in link-budget terms.
 
@@ -552,7 +552,7 @@ success count and eligibility, and headline MEAP/PoC numbers carry
 Wilson binomial 95\% confidence intervals (sampling noise at fixed
 model/protocol; model-seed spread is reported separately); because the
 genie and mask arms attack the \emph{same} windows, headline PoCs
-additionally carry paired-bootstrap 95\% CIs
+carry paired-bootstrap 95\% CIs as well
 (Section~\ref{sec:adaptive}) that propagate the shared sampling noise
 instead of worst-casing each arm separately. The honesty box records the prototype scale; the
 three-seed statistics, PGD-50 convergence, adaptive (multi-restart)
@@ -1124,14 +1124,15 @@ price-of-compliance headline is an artifact of that self-defined shape.
 We therefore re-ran the canonical experiment (urban, untargeted, PGD-10,
 seed 7, same eval sets and budgets) with the projection replaced by the
 \emph{real} European ITS unwanted-emissions template: ETSI EN 302 571
-V1.2.1, Table~7 (10\,MHz channel), i.e.\ a flat $23$\,dBm/MHz in-channel
-PSD held flat to $\pm$4.5$\,$MHz that steps down to $-3$, $-9$, $-17$, $-27$\,dBm/MHz at $\pm$5,
-$\pm$5.5, $\pm$10, $\pm$15\,MHz offsets from the attacker's carrier,
-interpolated linearly in dB (values extracted from the official ETSI PDF
-and committed as machine-readable tables with provenance and file hash;
-see \texttt{data/standards/en302571\_tables.json}; the archived
+V1.2.1, Table~7 (10\,MHz channel). The template is a flat
+$23$\,dBm/MHz in-channel PSD held flat to $\pm$4.5$\,$MHz that steps down
+to $-3$, $-9$, $-17$, $-27$\,dBm/MHz at $\pm$5, $\pm$5.5, $\pm$10,
+$\pm$15\,MHz offsets from the attacker's carrier, interpolated linearly
+in dB. Values were extracted from the official ETSI PDF and committed as
+machine-readable tables with provenance and file hash
+(see \texttt{data/standards/en302571\_tables.json}); the archived
 ``standard'' in our earlier search corpus turned out to be a
-WAF block page, not the document). For the US regime we also record the
+WAF block page, not the document. For the US regime we also record the
 C-V2X OBU unwanted-emissions limits of 47 CFR 95.3205
 ($-16$\,dBm/100\,kHz within $\pm$1\,MHz of the band edge,
 $-13$\,dBm/MHz to $\pm$5\,MHz, $-16$\,dBm/MHz to $\pm$30\,MHz) in the
@@ -1347,7 +1348,7 @@ Doppler coherence, but approximate.
 (4)~The prototype attacker is white-box with perfect CSI and exact knowledge
 of the received realization (worst-case upper bound; the CSI-mismatch
 variant is released); the canonical numbers use zero-initialized PGD-10,
-while the defenses are additionally evaluated under converged adaptive
+while the defenses are also evaluated under converged adaptive
 attack (PGD-50 with 5 restarts, Section~\ref{sec:adaptive})---reported
 ASRs at PGD-10 remain lower bounds on the attack side and upper bounds on
 the defense side.
