@@ -9,12 +9,15 @@ live-web pass; Crossref coverage for standards is unreliable).
 
 Verdict per reference:
   VERIFIED   - title similarity >= 85 and |year diff| <= 1
+  SELF_UNPUBLISHED - the authors own unpublished manuscript (archived
+                     in paper/legacy/) - correctly absent from Crossref
   MISMATCH   - best candidate differs in title or year (needs human eyes)
   NOT_FOUND  - no plausible candidate
   STANDARD   - standards/regulatory doc, out of Crossref scope
 Output: scripts/toolcheck/citation_verify_results.json
 """
 import json
+import os
 import re
 import time
 
@@ -22,8 +25,10 @@ import requests
 from habanero import Crossref
 from rapidfuzz import fuzz
 
-TEX = "/home/z/my-project/v2x_repo/paper/main.tex"
-OUT = "/home/z/my-project/scripts/toolcheck/citation_verify_results.json"
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(os.path.dirname(HERE))
+TEX = os.path.join(ROOT, "paper", "main.tex")
+OUT = os.path.join(HERE, "results", "citation_verify_results.json")
 CR = Crossref(mailto="precheck@example.org")
 
 STANDARD_PAT = re.compile(
@@ -109,6 +114,13 @@ def main():
     results = []
     for ref in refs:
         rec = dict(ref)
+        if "unpublished manuscript" in ref["raw"].lower():
+            rec["verdict"] = ("SELF_UNPUBLISHED (own unpublished preprint, "
+                              "archived in paper/legacy/ - not expected in "
+                              "Crossref)")
+            results.append(rec)
+            print(f"[SELF] {ref['key']:18s} {ref['title'][:70]}")
+            continue
         if STANDARD_PAT.search(ref["raw"]) or not ref["title"]:
             rec["verdict"] = "STANDARD_OR_REGULATORY (out of Crossref scope; prior live-web verification stands)"
             results.append(rec)
@@ -143,6 +155,7 @@ def main():
         v = r["verdict"].split(" ")[0]
         verdicts[v] = verdicts.get(v, 0) + 1
     print("\nSummary:", verdicts)
+    os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w") as f:
         json.dump(results, f, indent=1)
     print(f"saved -> {OUT}")

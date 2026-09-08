@@ -72,7 +72,9 @@ scripts/                  experiment runners + independent audit checkers
   w11_check1..5_*.py            Wave-11 independent audit checkers (43 assertions)
 results/                  checkpoints + JSONs (all embed config/seed; archive inside)
 data/real_wifi/           9 raw USRP captures (CC BY-NC-SA; see ATTRIBUTION.md)
-paper/                    main.tex + main.pdf + CLAIMS.md + figs/
+paper/                    main.tex + main.pdf + CLAIMS.md + figs/ + legacy/
+                          (legacy/ = the unpublished ICE2CT-2026 manuscript,
+                          editable, with figure sources)
 ONE_PAGER.md              plain-language summary for engineers and regulators
 REGULATORY_COMMENT_DRAFT.md   filable-form draft public comment (filer block, CFR/FR cites, PUEA lineage, CI-carrying numbers)
 ```
@@ -342,11 +344,15 @@ All shipped results were produced on CPU with fixed seeds.
 
 The first release of this repository (tag
 [`v2.0.0`](https://github.com/Daveshvats/v2x_adversarial_sensing/releases/tag/v2.0.0))
-was the Phase-0 honest re-release of the ICE2CT-2026 paper pipeline
+was the Phase-0 honest re-release of the ICE2CT-2026 submission pipeline
 (*Dual-Stream Phase-Aware Inception-Time CNN for Adversarially Robust Spectrum
-Sensing in V2X Networks*, Dhankhar & Vats): its source, legacy results, and the
-full honesty audit (`AUDIT.md`, `results/legacy/`) are preserved under that tag
-and its GitHub release. The current tree is the Phase-1 research framework,
+Sensing in V2X Networks*, D. Vats). That manuscript was **never presented or
+published**: the ICE2CT-2026 submission did not result in a publication. The
+editable manuscript, its figures, and its figure-generation scripts are archived
+at [`paper/legacy/`](paper/legacy/); the Phase-0 source, legacy results, and the
+full honesty audit (`AUDIT.md`, `results/legacy/`) are preserved under the
+`v2.0.0` tag and its GitHub release. The current tree is the Phase-1 research
+framework,
 which supersedes the Phase-0 pipeline and adds the compliance-constrained
 threat model, physical-layer realism, defenses, and the audit protocol
 described above.
@@ -355,8 +361,8 @@ described above.
 
 ```bibtex
 @software{vats_v2x_phase1_2026,
-  author = {Dhankhar, Parveen and Vats, Davesh},
-  title  = {The Compliant Attacker: emission-mask-constrained adversarial attacks
+  author = {Vats, Davesh},
+  title  = {The Price of Compliance: emission-mask-constrained adversarial attacks
             on deep learning spectrum sensing in the 5.9 GHz ITS band
             (research framework)},
   year   = {2026},
@@ -370,7 +376,7 @@ See also [`CITATION.cff`](CITATION.cff) (software) and the manuscript draft in
 
 ## License
 
-- **Code:** [MIT License](LICENSE) — Copyright (c) 2026 Parveen Dhankhar, Davesh Vats.
+- **Code:** [MIT License](LICENSE) — Copyright (c) 2026 Davesh Vats.
 - **Data:** the 9 over-the-air 802.11 captures in `data/real_wifi/` are
   redistributed under **CC BY-NC-SA 4.0** — see
   [`data/real_wifi/ATTRIBUTION.md`](data/real_wifi/ATTRIBUTION.md) for source,

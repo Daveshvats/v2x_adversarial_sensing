@@ -339,22 +339,12 @@
   "verdict": "STANDARD_OR_REGULATORY (out of Crossref scope; prior live-web verification stands)"
  },
  {
-  "key": "dhankhar2026",
-  "authors": "P. Dhankhar, D. Vats,",
+  "key": "vats2026legacy",
+  "authors": "D. Vats,",
   "title": "Dual-stream phase-aware Inception-Time CNN for adversarially robust spectrum sensing in V2X networks",
-  "venue": "Proc. Int. Conf. Computing, Communication, and Technologies (ICE2CT)",
+  "venue": "",
   "year": 2026,
-  "raw": "{dhankhar2026} P. Dhankhar, D. Vats, ``Dual-stream phase-aware Inception-Time CNN for adversarially robust spectrum sensing in V2X networks,'' in \\emph{Proc. Int. Conf. Computing, Communication, and Technologies (ICE2CT)}, 2026.",
-  "crossref": {
-   "crossref_title": "Dual-Stream Hybrid Attention Network for Robust Intelligent Spectrum Sensing",
-   "title_score": 56.81818181818181,
-   "crossref_year": 2026,
-   "doi": "10.3390/computers15020120",
-   "container": "Computers",
-   "author": "Song",
-   "status": "MISMATCH",
-   "year_diff": 0
-  },
-  "verdict": "MISMATCH"
+  "raw": "{vats2026legacy} D. Vats, ``Dual-stream phase-aware Inception-Time CNN for adversarially robust spectrum sensing in V2X networks,'' unpublished manuscript, 2026 (preprint archived in this repository, \\texttt{paper/legacy/}).",
+  "verdict": "SELF_UNPUBLISHED (own unpublished preprint, archived in paper/legacy/ - not expected in Crossref)"
  }
 ]

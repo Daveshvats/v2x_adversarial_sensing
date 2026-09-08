@@ -9,13 +9,15 @@ Application: living related-work list for the cover letter, reviewer
 responses, and 'what's new since submission' checks.
 """
 import json
+import os
 import re
 import time
 import xml.etree.ElementTree as ET
 
 import requests
 
-OUT = "/home/z/my-project/scripts/toolcheck/related_work_watchlist.json"
+HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(HERE, "results", "related_work_watchlist.json")
 
 QUERIES = [
     "adversarial machine learning spectrum sensing wireless",

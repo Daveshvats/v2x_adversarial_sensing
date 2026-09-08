@@ -3,9 +3,6 @@ message: "If you use this software or build on the experiments, please cite both
 title: "The Price of Compliance: emission-mask-constrained adversarial attacks on deep learning spectrum sensing in the 5.9 GHz ITS band (research framework)"
 type: software
 authors:
-  - family-names: "Dhankhar"
-    given-names: "Parveen"
-    affiliation: "Department of Computer Science and Engineering, Vaish College of Engineering, Rohtak, India"
   - family-names: "Vats"
     given-names: "Davesh"
     affiliation: "Department of Computer Science and Engineering, Vaish College of Engineering, Rohtak, India"
@@ -36,15 +33,12 @@ keywords:
   - "PyTorch"
   - "reproducibility"
 license: "MIT"
-version: "phase1-1.2.0"
-date-released: "2026-09-05"
+version: "phase1-1.4.1"
+date-released: "2026-09-09"
 preferred-citation:
   type: article
   title: "The Price of Compliance: emission-mask-constrained adversarial attacks on deep learning spectrum sensing in the 5.9 GHz ITS band"
   authors:
-    - family-names: "Dhankhar"
-      given-names: "Parveen"
-      affiliation: "Department of Computer Science and Engineering, Vaish College of Engineering, Rohtak, India"
     - family-names: "Vats"
       given-names: "Davesh"
       affiliation: "Department of Computer Science and Engineering, Vaish College of Engineering, Rohtak, India"

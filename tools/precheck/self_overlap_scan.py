@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Pre-submission self-overlap scan (iThenate-style proxy, local & free).
 
-Compares the journal manuscript (paper_plain.txt, from paper/main.tex @ 8db4a5c)
-against:
-  A. the PRIOR PUBLISHED conference paper (ICE2CT-2026, v2x_paper_v8.tex)
-     -> the author self-overlap source iThenticate actually indexes
+Compares the journal manuscript (paper/main.tex) against:
+  A. the prior UNPUBLISHED ICE2CT-2026 manuscript
+     (paper/legacy/v2x_paper_v8.tex) -> the author self-overlap source
+     iThenticate would index if it ever appears online
   B. public repo docs (README, ONE_PAGER, RESEARCH_COUNCIL,
      REGULATORY_COMMENT_DRAFT, paper/COVER_LETTER)
 
@@ -17,22 +17,43 @@ plus longest shared contiguous word run (binary-search on k-gram sets).
 Output: console report + JSON evidence (scripts/toolcheck/self_overlap_results.json)
 """
 import json
+import os
 import re
+import subprocess
+import sys
 from rapidfuzz import fuzz, process
 
 from winnowing import winnow
 
-PAPER = "/home/z/my-project/scripts/paper_plain.txt"
-OLD = "/home/z/my-project/scripts/old_paper_plain.txt"
-OUT = "/home/z/my-project/scripts/toolcheck/self_overlap_results.json"
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(os.path.dirname(HERE))      # repository root
+WORK = os.path.join(HERE, "work")                   # runtime extracts
+os.makedirs(WORK, exist_ok=True)
+
+PAPER = os.path.join(WORK, "paper_plain.txt")
+OLD = os.path.join(WORK, "old_paper_plain.txt")
+OUT = os.path.join(HERE, "results", "self_overlap_results.json")
+
+
+def _extract(tex_path, txt_path):
+    """LaTeX -> plain text via the shared extractor in this directory."""
+    subprocess.run(
+        [sys.executable, os.path.join(HERE, "extract_tex_generic.py"),
+         tex_path, txt_path], check=True)
+
+
+_extract(os.path.join(ROOT, "paper", "main.tex"), PAPER)
+_extract(os.path.join(ROOT, "paper", "legacy", "v2x_paper_v8.tex"), OLD)
 
 SOURCES = {
-    "ICE2CT2026_conference_paper": OLD,
-    "repo_README": "/home/z/my-project/v2x_repo/README.md",
-    "repo_ONE_PAGER": "/home/z/my-project/v2x_repo/ONE_PAGER.md",
-    "repo_RESEARCH_COUNCIL": "/home/z/my-project/v2x_repo/RESEARCH_COUNCIL.md",
-    "repo_REGULATORY_COMMENT_DRAFT": "/home/z/my-project/v2x_repo/REGULATORY_COMMENT_DRAFT.md",
-    "repo_paper_COVER_LETTER": "/home/z/my-project/v2x_repo/paper/COVER_LETTER.md",
+    "ICE2CT2026_unpublished_manuscript": OLD,
+    "repo_README": os.path.join(ROOT, "README.md"),
+    "repo_ONE_PAGER": os.path.join(ROOT, "ONE_PAGER.md"),
+    "repo_RESEARCH_COUNCIL": os.path.join(ROOT, "RESEARCH_COUNCIL.md"),
+    "repo_REGULATORY_COMMENT_DRAFT":
+        os.path.join(ROOT, "REGULATORY_COMMENT_DRAFT.md"),
+    "repo_paper_COVER_LETTER":
+        os.path.join(ROOT, "paper", "COVER_LETTER.md"),
 }
 
 PLACEHOLDER = re.compile(r"\[(cite|ref|math|url|link|float)\]", re.I)
@@ -167,11 +188,12 @@ def main():
     # detail for the conference paper (the critical one)
     conf = next((r for r in results if "ICE2CT" in r["source"]), None)
     if conf:
-        print("\n--- vs PRIOR CONFERENCE PAPER: near-verbatim (>=75) passages ---")
+        print("\n--- vs PRIOR UNPUBLISHED ICE2CT-2026 MANUSCRIPT: near-verbatim (>=75) passages ---")
         for ex in conf["near_verbatim_examples"]:
             print(f"\n  [{ex['score']:.0f}] PAPER: {ex['paper_sentence'][:180]}")
             print(f"        OLD  : {ex['source_sentence'][:180]}")
 
+    os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w") as f:
         json.dump(results, f, indent=1)
     print(f"\nsaved -> {OUT}")

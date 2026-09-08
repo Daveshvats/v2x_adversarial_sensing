@@ -1,13 +1,13 @@
 [
  {
-  "source": "ICE2CT2026_conference_paper",
-  "paper_words": 11481,
-  "source_words": 5663,
-  "shared_5grams": 6,
-  "pct_of_paper_5grams": 0.05,
-  "pct_of_source_5grams": 0.11,
-  "longest_shared_word_run": 6,
-  "winnowing_jaccard": 0.2195,
+  "source": "ICE2CT2026_unpublished_manuscript",
+  "paper_words": 11476,
+  "source_words": 5705,
+  "shared_5grams": 11,
+  "pct_of_paper_5grams": 0.1,
+  "pct_of_source_5grams": 0.2,
+  "longest_shared_word_run": 10,
+  "winnowing_jaccard": 0.221,
   "near_verbatim_sentences_75plus": 0,
   "suspect_sentences_58_74": 1,
   "near_verbatim_examples": [],
@@ -21,15 +21,15 @@
  },
  {
   "source": "repo_README",
-  "paper_words": 11481,
-  "source_words": 3523,
+  "paper_words": 11476,
+  "source_words": 3569,
   "shared_5grams": 204,
   "pct_of_paper_5grams": 1.82,
-  "pct_of_source_5grams": 5.89,
+  "pct_of_source_5grams": 5.82,
   "longest_shared_word_run": 22,
-  "winnowing_jaccard": 0.2046,
+  "winnowing_jaccard": 0.2051,
   "near_verbatim_sentences_75plus": 0,
-  "suspect_sentences_58_74": 5,
+  "suspect_sentences_58_74": 6,
   "near_verbatim_examples": [],
   "suspect_examples": [
    {
@@ -53,6 +53,11 @@
     "source_sentence": "margins over attack seeds at 7 56 0 72 db trades 9 77 0 12 db 4 23 smaller than the defense seed spreads 2 80 1 75 the certification relevant seed lottery is the defense training seed not the attack seed"
    },
    {
+    "score": 59.22330097087378,
+    "paper_sentence": "frontmatter title the price of compliance emission mask constrained adversarial attacks on deep learning spectrum sensing in the 5 9 ghz its band davesh vats cor1 vatsdavesh gmail com corresponding author",
+    "source_sentence": "citation bibtex software vats v2x phase1 2026 author vats davesh title the price of compliance emission mask constrained adversarial attacks on deep learning spectrum sensing in the 5 9 ghz its band research framework ye"
+   },
+   {
     "score": 58.06451612903225,
     "paper_sentence": "post amplifier compliance is again verified by measurement worst excess dbr on every window of every cell",
     "source_sentence": "post pa worst excess 0 00 dbr on every window cell"
@@ -61,7 +66,7 @@
  },
  {
   "source": "repo_ONE_PAGER",
-  "paper_words": 11481,
+  "paper_words": 11476,
   "source_words": 882,
   "shared_5grams": 17,
   "pct_of_paper_5grams": 0.15,
@@ -75,13 +80,13 @@
  },
  {
   "source": "repo_RESEARCH_COUNCIL",
-  "paper_words": 11481,
+  "paper_words": 11476,
   "source_words": 18765,
   "shared_5grams": 149,
   "pct_of_paper_5grams": 1.33,
   "pct_of_source_5grams": 0.82,
   "longest_shared_word_run": 21,
-  "winnowing_jaccard": 0.2989,
+  "winnowing_jaccard": 0.2991,
   "near_verbatim_sentences_75plus": 0,
   "suspect_sentences_58_74": 2,
   "near_verbatim_examples": [],
@@ -100,13 +105,13 @@
  },
  {
   "source": "repo_REGULATORY_COMMENT_DRAFT",
-  "paper_words": 11481,
+  "paper_words": 11476,
   "source_words": 2407,
   "shared_5grams": 98,
   "pct_of_paper_5grams": 0.87,
   "pct_of_source_5grams": 4.11,
   "longest_shared_word_run": 15,
-  "winnowing_jaccard": 0.177,
+  "winnowing_jaccard": 0.1769,
   "near_verbatim_sentences_75plus": 0,
   "suspect_sentences_58_74": 3,
   "near_verbatim_examples": [],
@@ -130,13 +135,13 @@
  },
  {
   "source": "repo_paper_COVER_LETTER",
-  "paper_words": 11481,
-  "source_words": 624,
+  "paper_words": 11476,
+  "source_words": 630,
   "shared_5grams": 47,
   "pct_of_paper_5grams": 0.42,
-  "pct_of_source_5grams": 7.64,
+  "pct_of_source_5grams": 7.57,
   "longest_shared_word_run": 21,
-  "winnowing_jaccard": 0.0677,
+  "winnowing_jaccard": 0.0687,
   "near_verbatim_sentences_75plus": 0,
   "suspect_sentences_58_74": 2,
   "near_verbatim_examples": [],
@@ -147,8 +152,8 @@
     "source_sentence": "the defense seed spread 3 5 5 5 db exceeds the undefended training seed spread 3 5 disqualifying single seed defense evaluation for certification style claims"
    },
    {
-    "score": 61.93771626297577,
-    "paper_sentence": "frontmatter title the price of compliance emission mask constrained adversarial attacks on deep learning spectrum sensing in the 5 9 ghz its band parveen dhankhar cor1 parveendhankhar2005 gmail com davesh vats vatsdavesh",
+    "score": 62.14689265536724,
+    "paper_sentence": "frontmatter title the price of compliance emission mask constrained adversarial attacks on deep learning spectrum sensing in the 5 9 ghz its band davesh vats cor1 vatsdavesh gmail com corresponding author",
     "source_sentence": "cover letter vehicular communications submission draft manuscript the price of compliance emission mask constrained adversarial attacks on deep learning spectrum sensing in the 5 9 ghz its band target window december 202"
    }
   ]

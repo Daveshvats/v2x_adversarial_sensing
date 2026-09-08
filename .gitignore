@@ -24,3 +24,9 @@ results/dataset_cache/
 Thumbs.db
 *.swp
 paper/main.log
+
+# legacy paper figure-generator runtime output (regenerable)
+paper/legacy/scripts/transfer_data/
+
+# precheck pipeline runtime extracts (regenerable)
+tools/precheck/work/

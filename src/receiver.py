@@ -10,7 +10,7 @@ This is what makes the physically-realizable attack (attacker transmits a wavefo
 it propagates through the attacker->victim channel, the receiver senses the sum)
 differentiable end-to-end.
 
-Models (reuse of the ICE2CT-2026 v3 architecture, input-size agnostic):
+Models (reuse of the unpublished ICE2CT-2026 submission's v3 architecture, input-size agnostic):
   DualStreamModel : log-mag stream || IF stream   (86,052 params on 256x15 inputs)
   MagOnlyModel    : log-mag stream only           (ablation / honesty baseline)
 
