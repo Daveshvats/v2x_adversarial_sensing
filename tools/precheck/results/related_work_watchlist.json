@@ -1,0 +1,221 @@
+{
+ "crossref": [
+  {
+   "source": "crossref",
+   "doi": "10.1109/ojvt.2024.3368240",
+   "title": "Towards 6G V2X Sidelink: Survey of Resource Allocation\u2014Mathematical Formulations, Challenges, and Proposed Solutions",
+   "venue": "IEEE Open Journal of Vehicular Technology",
+   "year": 2024,
+   "cited_by": 74,
+   "query": "C-V2X security jamming sidelink"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.3390/s24247907",
+   "title": "Deep Learning-Based Spectrum Sensing for Cognitive Radio Applications",
+   "venue": "Sensors",
+   "year": 2024,
+   "cited_by": 51,
+   "query": "spectrum sensing deep learning V2X safety"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.1016/j.asej.2024.102784",
+   "title": "Spectrum sensing using deep learning for proficient data transmission in wireless sensor networks for wireless communication",
+   "venue": "Ain Shams Engineering Journal",
+   "year": 2024,
+   "cited_by": 26,
+   "query": "adversarial machine learning spectrum sensing wireless"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.1109/lcomm.2023.3348848",
+   "title": "A Reliable Spectrum Sensing Method Based on Deep Learning for Primary User Emulation Attack Detection in Cognitive Radio Network",
+   "venue": "IEEE Communications Letters",
+   "year": 2024,
+   "cited_by": 18,
+   "query": "primary user emulation attack detection"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.3390/s25020302",
+   "title": "Reinforcement Learning-Based Resource Allocation Scheme of NR-V2X Sidelink for Joint Communication and Sensing",
+   "venue": "Sensors",
+   "year": 2025,
+   "cited_by": 15,
+   "query": "C-V2X security jamming sidelink"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.1007/s11042-025-20638-z",
+   "title": "Spectrum sensing beyond 5G system: deep learning and conventional techniques analysis",
+   "venue": "Multimedia Tools and Applications",
+   "year": 2025,
+   "cited_by": 14,
+   "query": "spectrum sensing deep learning V2X safety"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.1109/tmlcn.2024.3366161",
+   "title": "Stealthy Adversarial Attacks on Machine Learning-Based Classifiers of Wireless Signals",
+   "venue": "IEEE Transactions on Machine Learning in Communications and Networking",
+   "year": 2024,
+   "cited_by": 12,
+   "query": "adversarial machine learning spectrum sensing wireless"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.1016/j.dsp.2024.104636",
+   "title": "Adversarial training for signal modulation classification based on Ulam stability theory",
+   "venue": "Digital Signal Processing",
+   "year": 2024,
+   "cited_by": 12,
+   "query": "adversarial attacks radio signal classification modulation"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.1038/s41598-025-00890-x",
+   "title": "A multi-layered defense against adversarial attacks in brain tumor classification using ensemble adversarial training and feature squeezing",
+   "venue": "Scientific Reports",
+   "year": 2025,
+   "cited_by": 11,
+   "query": "adversarial attacks radio signal classification modulation"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.1016/j.vehcom.2023.100710",
+   "title": "Performance analysis of IEEE 802.11p preamble insertion in C-V2X sidelink signals for co-channel coexistence",
+   "venue": "Vehicular Communications",
+   "year": 2024,
+   "cited_by": 11,
+   "query": "C-V2X security jamming sidelink"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.1016/j.comnet.2024.110763",
+   "title": "Full duplex based collision detection to enhance the V2X sidelink autonomous mode",
+   "venue": "Computer Networks",
+   "year": 2024,
+   "cited_by": 9,
+   "query": "C-V2X security jamming sidelink"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.3390/rs16040674",
+   "title": "Prediction of Atmospheric Duct Conditions from a Clutter Power Spectrum Using Deep Learning",
+   "venue": "Remote Sensing",
+   "year": 2024,
+   "cited_by": 7,
+   "query": "spectrum sensing deep learning V2X safety"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.1016/j.procs.2024.04.051",
+   "title": "Precise lesion analysis to detect diabetic retinopathy using Generative Adversarial Network(GAN) and Mask-RCNN",
+   "venue": "Procedia Computer Science",
+   "year": 2024,
+   "cited_by": 6,
+   "query": "regulatory emission mask compliant adversarial"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.1007/s11276-024-03720-6",
+   "title": "Discrimination of primary user emulation attack on cognitive radio networks using machine learning based spectrum sensing scheme",
+   "venue": "Wireless Networks",
+   "year": 2024,
+   "cited_by": 5,
+   "query": "adversarial machine learning spectrum sensing wireless"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.1016/j.comnet.2024.110901",
+   "title": "Deep reinforcement learning for autonomous SideLink radio resource management in platoon-based C-V2X networks: An overview",
+   "venue": "Computer Networks",
+   "year": 2024,
+   "cited_by": 5,
+   "query": "C-V2X security jamming sidelink"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.1109/tnsm.2024.3386617",
+   "title": "Defense Management Mechanism for Primary User Emulation Attack Based on Evolutionary Game in Energy Harvesting Cognitive Industrial Internet of Things",
+   "venue": "IEEE Transactions on Network and Service Management",
+   "year": 2024,
+   "cited_by": 5,
+   "query": "primary user emulation attack detection"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.1016/j.vehcom.2025.100902",
+   "title": "5G NR sidelink time domain based resource allocation in C-V2X",
+   "venue": "Vehicular Communications",
+   "year": 2025,
+   "cited_by": 4,
+   "query": "C-V2X security jamming sidelink"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.1080/21642583.2023.2300835",
+   "title": "An automatic and unsupervised image mask acquisition method based on generative adversarial networks",
+   "venue": "Systems Science &amp; Control Engineering",
+   "year": 2024,
+   "cited_by": 4,
+   "query": "regulatory emission mask compliant adversarial"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.1109/access.2025.3577663",
+   "title": "Metaheuristic-Based Cepstral Sensing Technique for Prolonging Network Lifetime and Mitigating Primary User Emulation Attacks in Cognitive Radio Sensor Network",
+   "venue": "IEEE Access",
+   "year": 2025,
+   "cited_by": 4,
+   "query": "primary user emulation attack detection"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.1109/lcomm.2024.3482552",
+   "title": "Frequency-Constrained Iterative Adversarial Attacks for Automatic Modulation Classification",
+   "venue": "IEEE Communications Letters",
+   "year": 2024,
+   "cited_by": 3,
+   "query": "adversarial attacks radio signal classification modulation"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.23919/jcc.fa.2024-0506.202508",
+   "title": "AoI and TTC based resource allocation in C-V2X sidelink via multi-agent reinforcement learning",
+   "venue": "China Communications",
+   "year": 2025,
+   "cited_by": 3,
+   "query": "C-V2X security jamming sidelink"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.3390/s24175601",
+   "title": "SpecRep: Adversary Emulation Based on Attack Objective Specification in Heterogeneous Infrastructures",
+   "venue": "Sensors",
+   "year": 2024,
+   "cited_by": 3,
+   "query": "primary user emulation attack detection"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.52783/jes.4849",
+   "title": "A Hybrid Deep Learning Model for Efficient Spectrum Sensing in Cognitive Radio",
+   "venue": "Journal of Electrical Systems",
+   "year": 2024,
+   "cited_by": 3,
+   "query": "spectrum sensing deep learning V2X safety"
+  },
+  {
+   "source": "crossref",
+   "doi": "10.62110/sciencein.jist.2024.v12.778",
+   "title": "Deep Learning approach for Co-operative Spectrum Sensing under Congested Cognitive IoT networks",
+   "venue": "Journal of Integrated Science and Technology",
+   "year": 2024,
+   "cited_by": 3,
+   "query": "spectrum sensing deep learning V2X safety"
+  }
+ ],
+ "arxiv": []
+}

@@ -1,0 +1,360 @@
+[
+ {
+  "key": "o2018",
+  "authors": "T. J. O'Shea, T. Roy, T. C. Clancy,",
+  "title": "Over-the-air deep learning based radio signal classification",
+  "venue": "IEEE J. Sel. Topics Signal Process.",
+  "year": 2018,
+  "raw": "{o2018} T. J. O'Shea, T. Roy, T. C. Clancy, ``Over-the-air deep learning based radio signal classification,'' \\emph{IEEE J. Sel. Topics Signal Process.}, vol. 12, no. 1, pp. 168--179, Feb. 2018, doi: 10.1109/JSTSP.2018.2797022.",
+  "crossref": {
+   "crossref_title": "Over-the-Air Deep Learning Based Radio Signal Classification",
+   "title_score": 100.0,
+   "crossref_year": 2018,
+   "doi": "10.1109/jstsp.2018.2797022",
+   "container": "IEEE Journal of Selected Topics in Signal Processing",
+   "author": "O'Shea",
+   "status": "VERIFIED",
+   "year_diff": 0
+  },
+  "verdict": "VERIFIED"
+ },
+ {
+  "key": "girmay2023",
+  "authors": "M. Girmay, V. Maglogiannis, D. Naudts, M. Aslam, A. Shahid, I. Moerman,",
+  "title": "Technology recognition and traffic characterization for wireless technologies in ITS band",
+  "venue": "Vehicular Communications",
+  "year": 2022,
+  "raw": "{girmay2023} M. Girmay, V. Maglogiannis, D. Naudts, M. Aslam, A. Shahid, I. Moerman, ``Technology recognition and traffic characterization for wireless technologies in ITS band,'' \\emph{Vehicular Communications}, vol. 39, art. 100563, Feb. 2023, doi: 10.1016/j.vehcom.2022.100563.",
+  "crossref": {
+   "crossref_title": "Technology recognition and traffic characterization for wireless technologies in ITS band",
+   "title_score": 100.0,
+   "crossref_year": 2023,
+   "doi": "10.1016/j.vehcom.2022.100563",
+   "container": "Vehicular Communications",
+   "author": "Girmay",
+   "status": "VERIFIED",
+   "year_diff": 1
+  },
+  "verdict": "VERIFIED"
+ },
+ {
+  "key": "sadeghi2019",
+  "authors": "M. Sadeghi, E. G. Larsson,",
+  "title": "Adversarial attacks on deep-learning based radio signal classification",
+  "venue": "IEEE Wireless Commun. Lett.",
+  "year": 2018,
+  "raw": "{sadeghi2019} M. Sadeghi, E. G. Larsson, ``Adversarial attacks on deep-learning based radio signal classification,'' \\emph{IEEE Wireless Commun. Lett.}, vol. 8, no. 1, pp. 213--216, Feb. 2019, doi: 10.1109/LWC.2018.2867459.",
+  "crossref": {
+   "crossref_title": "Adversarial Attacks on Deep-Learning Based Radio Signal Classification",
+   "title_score": 100.0,
+   "crossref_year": 2019,
+   "doi": "10.1109/lwc.2018.2867459",
+   "container": "IEEE Wireless Communications Letters",
+   "author": "Sadeghi",
+   "status": "VERIFIED",
+   "year_diff": 1
+  },
+  "verdict": "VERIFIED"
+ },
+ {
+  "key": "kim2020",
+  "authors": "B. Kim, Y. E. Sagduyu, K. Davaslioglu, T. Erpek, S. Ulukus,",
+  "title": "Over-the-air adversarial attacks on deep learning based modulation classifier over wireless channels",
+  "venue": "Proc. 54th Annu. Conf. Information Sciences and Systems (CISS)",
+  "year": 2020,
+  "raw": "{kim2020} B. Kim, Y. E. Sagduyu, K. Davaslioglu, T. Erpek, S. Ulukus, ``Over-the-air adversarial attacks on deep learning based modulation classifier over wireless channels,'' in \\emph{Proc. 54th Annu. Conf. Information Sciences and Systems (CISS)}, 2020, pp. 1--6, doi: 10.1109/CISS48834.2020.157061",
+  "crossref": {
+   "crossref_title": "Over-the-Air Adversarial Attacks on Deep Learning Based Modulation Classifier over Wireless Channels",
+   "title_score": 100.0,
+   "crossref_year": 2020,
+   "doi": "10.1109/ciss48834.2020.1570617416",
+   "container": "2020 54th Annual Conference on Information Sciences and Systems (CISS)",
+   "author": "Kim",
+   "status": "VERIFIED",
+   "year_diff": 0
+  },
+  "verdict": "VERIFIED"
+ },
+ {
+  "key": "sagduyu2021",
+  "authors": "B. Kim, Y. E. Sagduyu, K. Davaslioglu, T. Erpek, S. Ulukus,",
+  "title": "Channel-aware adversarial attacks against deep learning-based wireless signal classifiers",
+  "venue": "IEEE Trans. Wireless Commun.",
+  "year": 2021,
+  "raw": "{sagduyu2021} B. Kim, Y. E. Sagduyu, K. Davaslioglu, T. Erpek, S. Ulukus, ``Channel-aware adversarial attacks against deep learning-based wireless signal classifiers,'' \\emph{IEEE Trans. Wireless Commun.}, vol. 21, no. 6, pp. 3868--3880, Jun. 2022, doi: 10.1109/TWC.2021.3124855.",
+  "crossref": {
+   "crossref_title": "Channel-Aware Adversarial Attacks Against Deep Learning-Based Wireless Signal Classifiers",
+   "title_score": 100.0,
+   "crossref_year": 2022,
+   "doi": "10.1109/twc.2021.3124855",
+   "container": "IEEE Transactions on Wireless Communications",
+   "author": "Kim",
+   "status": "VERIFIED",
+   "year_diff": 1
+  },
+  "verdict": "VERIFIED"
+ },
+ {
+  "key": "liu2022",
+  "authors": "M. Liu, H. Zhang, Z. Liu, N. Zhao,",
+  "title": "Attacking spectrum sensing with adversarial deep learning in cognitive radio-enabled Internet of Things",
+  "venue": "IEEE Trans. Rel.",
+  "year": 2022,
+  "raw": "{liu2022} M. Liu, H. Zhang, Z. Liu, N. Zhao, ``Attacking spectrum sensing with adversarial deep learning in cognitive radio-enabled Internet of Things,'' \\emph{IEEE Trans. Rel.}, vol. 72, no. 2, pp. 431--444, Jun. 2023, doi: 10.1109/TR.2022.3179491.",
+  "crossref": {
+   "crossref_title": "Attacking Spectrum Sensing With Adversarial Deep Learning in Cognitive Radio-Enabled Internet of Things",
+   "title_score": 100.0,
+   "crossref_year": 2023,
+   "doi": "10.1109/tr.2022.3179491",
+   "container": "IEEE Transactions on Reliability",
+   "author": "Liu",
+   "status": "VERIFIED",
+   "year_diff": 1
+  },
+  "verdict": "VERIFIED"
+ },
+ {
+  "key": "zheng2026",
+  "authors": "S. Zheng, Z. Ye, L. Zhang, K. Yue, Z. Zhao,",
+  "title": "Targeted adversarial attacks against deep learning-based wideband spectrum sensing",
+  "venue": "IEEE Trans. Mach. Learn. Commun. Netw.",
+  "year": 2026,
+  "raw": "{zheng2026} S. Zheng, Z. Ye, L. Zhang, K. Yue, Z. Zhao, ``Targeted adversarial attacks against deep learning-based wideband spectrum sensing,'' \\emph{IEEE Trans. Mach. Learn. Commun. Netw.}, vol. 4, pp. 950--965, 2026, doi: 10.1109/TMLCN.2026.3694666.",
+  "crossref": {
+   "crossref_title": "Targeted Adversarial Attacks Against Deep Learning-Based Wideband Spectrum Sensing",
+   "title_score": 100.0,
+   "crossref_year": 2026,
+   "doi": "10.1109/tmlcn.2026.3694666",
+   "container": "IEEE Transactions on Machine Learning in Communications and Networking",
+   "author": "Zheng",
+   "status": "VERIFIED",
+   "year_diff": 0
+  },
+  "verdict": "VERIFIED"
+ },
+ {
+  "key": "radioshock2026",
+  "authors": "W. Li, C. Li, G. Zhang, Z. Huang, G. Qu, X. Cheng, J. Luo, P. Hu,",
+  "title": "RadioShock: over-the-air adversarial attacks on wireless communication",
+  "venue": "IEEE Trans. Dependable Secur. Comput.",
+  "year": 2026,
+  "raw": "{radioshock2026} W. Li, C. Li, G. Zhang, Z. Huang, G. Qu, X. Cheng, J. Luo, P. Hu, ``RadioShock: over-the-air adversarial attacks on wireless communication,'' \\emph{IEEE Trans. Dependable Secur. Comput.}, vol. 23, no. 4, pp. 8874--8890, 2026, doi: 10.1109/TDSC.2026.3689592.",
+  "crossref": {
+   "crossref_title": "RadioShock: Over-the-Air Adversarial Attacks on Wireless Communication",
+   "title_score": 100.0,
+   "crossref_year": 2026,
+   "doi": "10.1109/tdsc.2026.3689592",
+   "container": "IEEE Transactions on Dependable and Secure Computing",
+   "author": "Li",
+   "status": "VERIFIED",
+   "year_diff": 0
+  },
+  "verdict": "VERIFIED"
+ },
+ {
+  "key": "zhao2024",
+  "authors": "W. Zhao, X. Li, S. Zhao, J. Xu, Y. Liu, Z. Lu,",
+  "title": "Detecting adversarial spectrum attacks via distance to decision boundary statistics",
+  "venue": "Proc. IEEE INFOCOM",
+  "year": 2024,
+  "raw": "{zhao2024} W. Zhao, X. Li, S. Zhao, J. Xu, Y. Liu, Z. Lu, ``Detecting adversarial spectrum attacks via distance to decision boundary statistics,'' in \\emph{Proc. IEEE INFOCOM}, 2024, pp. 691--700, doi: 10.1109/INFOCOM52122.2024.10621153.",
+  "crossref": {
+   "crossref_title": "Detecting Adversarial Spectrum Attacks via Distance to Decision Boundary Statistics",
+   "title_score": 100.0,
+   "crossref_year": 2024,
+   "doi": "10.1109/infocom52122.2024.10621153",
+   "container": "IEEE INFOCOM 2024 - IEEE Conference on Computer Communications",
+   "author": "Zhao",
+   "status": "VERIFIED",
+   "year_diff": 0
+  },
+  "verdict": "VERIFIED"
+ },
+ {
+  "key": "croce2020",
+  "authors": "F. Croce, M. Hein,",
+  "title": "Reliable evaluation of adversarial robustness with an ensemble of diverse parameter-free attacks",
+  "venue": "Proc. 37th Int. Conf. Machine Learning (ICML)",
+  "year": 2020,
+  "raw": "{croce2020} F. Croce, M. Hein, ``Reliable evaluation of adversarial robustness with an ensemble of diverse parameter-free attacks,'' in \\emph{Proc. 37th Int. Conf. Machine Learning (ICML)}, PMLR, vol. 119, 2020, pp. 2206--2216.",
+  "crossref": {
+   "crossref_title": "ROBUSTNESS EVALUATION OF MACHINE LEARNING-BASED INTRUSION DETECTION SYSTEMS UNDER ADVERSARIAL ATTACKS",
+   "title_score": 54.82233502538071,
+   "crossref_year": 2025,
+   "doi": "10.36227/techrxiv.176703967.72285079/v1",
+   "container": "",
+   "author": "Armand",
+   "status": "MISMATCH",
+   "year_diff": 5
+  },
+  "verdict": "MISMATCH"
+ },
+ {
+  "key": "habler2025",
+  "authors": "E. Habler, R. Bitton, D. Avraham, E. Klevansky, D. Mimran, O. Brodt, H. Lehmann, Y. Elovici, A. Shabtai,",
+  "title": "Adversarial machine learning threat analysis and remediation in Open Radio Access Network (O-RAN)",
+  "venue": "J. Netw. Comput. Appl.",
+  "year": 2024,
+  "raw": "{habler2025} E. Habler, R. Bitton, D. Avraham, E. Klevansky, D. Mimran, O. Brodt, H. Lehmann, Y. Elovici, A. Shabtai, ``Adversarial machine learning threat analysis and remediation in Open Radio Access Network (O-RAN),'' \\emph{J. Netw. Comput. Appl.}, vol. 236, art. 104090, Apr. 2025, doi: 10.1016/j",
+  "crossref": {
+   "crossref_title": "Adversarial Machine Learning Threat Analysis and Remediation in Open Radio Access Network (O-Ran)",
+   "title_score": 100.0,
+   "crossref_year": 2024,
+   "doi": "10.2139/ssrn.4746138",
+   "container": "",
+   "author": "Habler",
+   "status": "VERIFIED",
+   "year_diff": 0
+  },
+  "verdict": "VERIFIED"
+ },
+ {
+  "key": "fcc2020",
+  "authors": "Federal Communications Commission,",
+  "title": "Use of the 5.850--5.925~GHz Band",
+  "venue": "",
+  "year": 2021,
+  "raw": "{fcc2020} Federal Communications Commission, ``Use of the 5.850--5.925~GHz Band,'' First Report and Order, FCC 20-164, ET Docket No. 19-138, adopted Nov. 18, 2020 (published at 86 FR 23281, May 3, 2021).",
+  "verdict": "STANDARD_OR_REGULATORY (out of Crossref scope; prior live-web verification stands)"
+ },
+ {
+  "key": "fcc2024",
+  "authors": "Federal Communications Commission,",
+  "title": "Use of the 5.850--5.925~GHz Band",
+  "venue": "",
+  "year": 2025,
+  "raw": "{fcc2024} Federal Communications Commission, ``Use of the 5.850--5.925~GHz Band,'' Second Report and Order, FCC 24-123, ET Docket No. 19-138, adopted Nov. 20, 2024 (published at 89 FR 100838, Dec. 13, 2024; effective Feb. 11, 2025).",
+  "verdict": "STANDARD_OR_REGULATORY (out of Crossref scope; prior live-web verification stands)"
+ },
+ {
+  "key": "itsa2024",
+  "authors": "ITS America,",
+  "title": "Future of V2X in 5.9~GHz Report",
+  "venue": "",
+  "year": 2024,
+  "raw": "{itsa2024} ITS America, ``Future of V2X in 5.9~GHz Report,'' May 2024. [Online]. Available: https://itsa.org/wp-content/uploads/2024/05/ITS-America-Future-of-V2X-in-5.9-GHz-Report.pdf",
+  "crossref": {
+   "crossref_title": "Joint use of DSRC and C\u2010V2X for V2X communications in the 5.9 GHz ITS band",
+   "title_score": 41.9047619047619,
+   "crossref_year": 2020,
+   "doi": "10.1049/itr2.12015",
+   "container": "IET Intelligent Transport Systems",
+   "author": "Ansari",
+   "status": "MISMATCH",
+   "year_diff": 4
+  },
+  "verdict": "MISMATCH"
+ },
+ {
+  "key": "5gaa2024",
+  "authors": "5G Automotive Association (5GAA),",
+  "title": "C-V2X roadmap update",
+  "venue": "",
+  "year": 2024,
+  "raw": "{5gaa2024} 5G Automotive Association (5GAA), ``C-V2X roadmap update,'' Dec. 2024.",
+  "crossref": {
+   "crossref_title": "Radio Resource Allocation in C-V2X : From LTE-V2X to 5G-V2X",
+   "title_score": 30.379746835443033,
+   "crossref_year": null,
+   "doi": "10.70675/2846b164z65fbz4824z9ce4z0d5fb34026ee",
+   "container": "",
+   "author": "Khabaz",
+   "status": "MISMATCH",
+   "year_diff": null
+  },
+  "verdict": "MISMATCH"
+ },
+ {
+  "key": "anand2008",
+  "authors": "S. Anand, Z. Jin, K. P. Subbalakshmi,",
+  "title": "An analytical model for primary user emulation attacks in cognitive radio networks",
+  "venue": "",
+  "year": 2008,
+  "raw": "{anand2008} S. Anand, Z. Jin, K. P. Subbalakshmi, ``An analytical model for primary user emulation attacks in cognitive radio networks,'' in Proc. 3rd IEEE Symp. New Frontiers in Dynamic Spectrum Access Networks (DySPAN), Chicago, IL, Oct. 2008, pp. 1--12.",
+  "crossref": {
+   "crossref_title": "An Analytical Model for Primary User Emulation Attacks in Cognitive Radio Networks",
+   "title_score": 100.0,
+   "crossref_year": 2008,
+   "doi": "10.1109/dyspan.2008.16",
+   "container": "2008 3rd IEEE Symposium on New Frontiers in Dynamic Spectrum Access Networks",
+   "author": "Anand",
+   "status": "VERIFIED",
+   "year_diff": 0
+  },
+  "verdict": "VERIFIED"
+ },
+ {
+  "key": "ambhika2024",
+  "authors": "C. Ambhika,",
+  "title": "Discrimination of primary user emulation attack on cognitive radio networks using machine learning based spectrum sensing scheme",
+  "venue": "",
+  "year": 2024,
+  "raw": "{ambhika2024} C. Ambhika, ``Discrimination of primary user emulation attack on cognitive radio networks using machine learning based spectrum sensing scheme,'' Wireless Networks, vol. 30, no. 5, Oct. 2024.",
+  "crossref": {
+   "crossref_title": "Discrimination of primary user emulation attack on cognitive radio networks using machine learning based spectrum sensing scheme",
+   "title_score": 100.0,
+   "crossref_year": 2024,
+   "doi": "10.1007/s11276-024-03720-6",
+   "container": "Wireless Networks",
+   "author": "Ambhika",
+   "status": "VERIFIED",
+   "year_diff": 0
+  },
+  "verdict": "VERIFIED"
+ },
+ {
+  "key": "etsi302571",
+  "authors": "ETSI,",
+  "title": "Intelligent Transport Systems (ITS); Radiocommunications equipment operating in the 5~855~MHz to 5~925~MHz frequency band; Harmonised Standard covering the essential requirements of article 3.2 of Directive 2014/53/EU",
+  "venue": "",
+  "year": 2013,
+  "raw": "{etsi302571} ETSI, ``Intelligent Transport Systems (ITS); Radiocommunications equipment operating in the 5~855~MHz to 5~925~MHz frequency band; Harmonised Standard covering the essential requirements of article 3.2 of Directive 2014/53/EU,'' ETSI EN 302 571, V1.2.1, Sep. 2013. Mask values used in Se",
+  "verdict": "STANDARD_OR_REGULATORY (out of Crossref scope; prior live-web verification stands)"
+ },
+ {
+  "key": "tr37885",
+  "authors": "3GPP,",
+  "title": "Study on evaluation methodology of new Vehicle-to-Everything (V2X) use cases for LTE and NR",
+  "venue": "",
+  "year": 2019,
+  "raw": "{tr37885} 3GPP, ``Study on evaluation methodology of new Vehicle-to-Everything (V2X) use cases for LTE and NR,'' 3GPP TR 37.885, V15.3.0, Release 15, Jun. 2019.",
+  "verdict": "STANDARD_OR_REGULATORY (out of Crossref scope; prior live-web verification stands)"
+ },
+ {
+  "key": "ts36211",
+  "authors": "3GPP,",
+  "title": "Evolved Universal Terrestrial Radio Access (E-UTRA); Physical channels and modulation",
+  "venue": "",
+  "year": 2021,
+  "raw": "{ts36211} 3GPP, ``Evolved Universal Terrestrial Radio Access (E-UTRA); Physical channels and modulation,'' 3GPP TS 36.211, V15.14.0, Release 15, Oct. 2021.",
+  "verdict": "STANDARD_OR_REGULATORY (out of Crossref scope; prior live-web verification stands)"
+ },
+ {
+  "key": "ieee80211",
+  "authors": "IEEE,",
+  "title": "IEEE Standard for Information technology---Telecommunications and information exchange between systems---Local and metropolitan area networks---Specific requirements---Part 11: Wireless LAN Medium Access Control (MAC) and Physical Layer (PHY) Specifications",
+  "venue": "",
+  "year": 2012,
+  "raw": "{ieee80211} IEEE, ``IEEE Standard for Information technology---Telecommunications and information exchange between systems---Local and metropolitan area networks---Specific requirements---Part 11: Wireless LAN Medium Access Control (MAC) and Physical Layer (PHY) Specifications,'' IEEE Std 802.11-201",
+  "verdict": "STANDARD_OR_REGULATORY (out of Crossref scope; prior live-web verification stands)"
+ },
+ {
+  "key": "dhankhar2026",
+  "authors": "P. Dhankhar, D. Vats,",
+  "title": "Dual-stream phase-aware Inception-Time CNN for adversarially robust spectrum sensing in V2X networks",
+  "venue": "Proc. Int. Conf. Computing, Communication, and Technologies (ICE2CT)",
+  "year": 2026,
+  "raw": "{dhankhar2026} P. Dhankhar, D. Vats, ``Dual-stream phase-aware Inception-Time CNN for adversarially robust spectrum sensing in V2X networks,'' in \\emph{Proc. Int. Conf. Computing, Communication, and Technologies (ICE2CT)}, 2026.",
+  "crossref": {
+   "crossref_title": "Dual-Stream Hybrid Attention Network for Robust Intelligent Spectrum Sensing",
+   "title_score": 56.81818181818181,
+   "crossref_year": 2026,
+   "doi": "10.3390/computers15020120",
+   "container": "Computers",
+   "author": "Song",
+   "status": "MISMATCH",
+   "year_diff": 0
+  },
+  "verdict": "MISMATCH"
+ }
+]

@@ -524,7 +524,7 @@ artifact, not a transmit violation.
 \label{sec:metrics}
 
 Raw ASR conflates attack success with the classifier's base error; we
-report \emph{conditional ASR} over clean-correctly-classified windows, and
+report \emph{conditional ASR} over clean-correctly classified windows, and
 \emph{robust accuracy} over all windows. Two power-domain metrics summarize
 the threat: \emph{MEAP} (Minimum Effective Attack Power) is the PSR at which
 conditional ASR crosses 20\% (linear interpolation, with explicit censoring
@@ -942,7 +942,7 @@ honest statement is the point spread, not a tight match). Synthetic
 evaluation understates what compliance buys against real captures. \textbf{(R3) Synthetic-only evaluation
 overstates robustness.} At $-45$\,dB PSR---an attack three and a half
 orders of magnitude below the signal---synthetic windows flip at 0.0\%
-while real WiFi windows flip at 67.35\%: the model's correctly-classified
+while real WiFi windows flip at 67.35\%: the model's correctly classified
 real windows sit essentially on the decision boundary (near-zero margin),
 so gradient-aligned perturbations of almost any power flip them.
 Conditional-ASR at ultra-low power therefore measures \emph{decision-margin
@@ -1165,9 +1165,9 @@ projections can exceed the Table-7 limits at the steep knot transitions by
 more than $12$\,dB (the 1-MHz measurement averages across the $-26$\,dB
 cliff at $\pm$5\,MHz). We therefore re-ran the canonical experiment a third
 time with the feasible set defined \emph{directly in the measurement
-domain}: for every overlapping 1-MHz measurement band (centres every
+domain}: for every overlapping 1-MHz measurement band (centers every
 0.5\,MHz, linear-in-dB interpolated limits), the mean per-bin FFT power
-must stay within the Table-7 value at that centre offset; the projection is
+must stay within the Table-7 value at that center offset; the projection is
 a per-band water-filling shrink with residual violation below
 $0.005$\,dBr, and the same budget and normalization conventions as the
 other arms. The result: compliant MEAP $-37.4$\,dB, PoC $6.9$\,dB. The
@@ -1192,8 +1192,8 @@ imposes region-flat OBU unwanted-emissions limits ($-16$\,dBm/100\,kHz
 within 1\,MHz of the band edge, $-13$\,dBm/MHz to 5\,MHz,
 $-16$\,dBm/MHz to 30\,MHz; archived eCFR text, 89~FR~100855 with the
 90~FR~5724 correction). Projecting into the same mean-power measurement
-domain (100-kHz RBW for centres within 1\,MHz of the channel edge,
-1-MHz RBW elsewhere, overlapping centres), the compliant MEAP is
+domain (100-kHz RBW for centers within 1\,MHz of the channel edge,
+1-MHz RBW elsewhere, overlapping centers), the compliant MEAP is
 $-37.9$\,dB and the PoC $6.3$\,dB: of the four enforcement domains now
 evaluated (flat idealization, per-bin ETSI, ETSI RBW/mean-power, US
 95.3205-shaped) this is the most permissive for the attacker ($0.8$\,dB
@@ -1368,7 +1368,7 @@ paired-bootstrap MEAP/PoC CIs; model-seed variance (1.1\,dB undefended,
 remain: five defense seeds and a fusion-adaptive attacker are not run.
 (6)~The phase-difference stream contributes nothing on this task; the
 ``phase-aware'' framing of our prior work is retired honestly.
-(7)~The adversarially-trained defense's robustness is confined to its
+(7)~The adversarially trained defense's robustness is confined to its
 training power range ($-25$ to $-5$\,dB); attacks at parity or above still
 succeed. The rural transfer and the PGD-10 TRADES reading are single-seed
 (the adaptive margins are 3-seed).

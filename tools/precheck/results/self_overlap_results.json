@@ -1,0 +1,156 @@
+[
+ {
+  "source": "ICE2CT2026_conference_paper",
+  "paper_words": 11481,
+  "source_words": 5663,
+  "shared_5grams": 6,
+  "pct_of_paper_5grams": 0.05,
+  "pct_of_source_5grams": 0.11,
+  "longest_shared_word_run": 6,
+  "winnowing_jaccard": 0.2195,
+  "near_verbatim_sentences_75plus": 0,
+  "suspect_sentences_58_74": 1,
+  "near_verbatim_examples": [],
+  "suspect_examples": [
+   {
+    "score": 65.46762589928056,
+    "paper_sentence": "adversarial attacks on wireless dl sadeghi and larsson demonstrated white box attacks on modulation classifiers in feature space",
+    "source_sentence": "adversarial attacks in wireless communications sadeghi and larsson demonstrated adversarial perturbations against dl based wireless signal classifiers"
+   }
+  ]
+ },
+ {
+  "source": "repo_README",
+  "paper_words": 11481,
+  "source_words": 3523,
+  "shared_5grams": 204,
+  "pct_of_paper_5grams": 1.82,
+  "pct_of_source_5grams": 5.89,
+  "longest_shared_word_run": 22,
+  "winnowing_jaccard": 0.2046,
+  "near_verbatim_sentences_75plus": 0,
+  "suspect_sentences_58_74": 5,
+  "near_verbatim_examples": [],
+  "suspect_examples": [
+   {
+    "score": 71.76470588235294,
+    "paper_sentence": "artifacts results w14 attack seed margins json results w14b bootstrap cis json the six results adaptive dual at trades s 11 22 r5 json grids win flags per cell and results w14b perwindow adaptive dual at trades s7 json",
+    "source_sentence": "results w14 attack seed margins json results w14b bootstrap cis json the six adaptive dual at trades s 11 22 r5 json grids"
+   },
+   {
+    "score": 69.44444444444444,
+    "paper_sentence": "the pgd 10 defense readings now span three defense seeds at mask meap db trades db the naive vs adaptive gap of db holds on every seed",
+    "source_sentence": "pgd 10 defense readings now 3 seed wave 14 item 13 pgd 10 on at trades defense seeds 43 53 at mask meap 23 1 19 7 20 9 db trades 19 1 19 2 18 5 db across seeds 42 43 53 the naive vs adaptive gap 6 9 10 4 db holds on ever"
+   },
+   {
+    "score": 62.355658198614314,
+    "paper_sentence": "we evaluate receiver majority fusion independent receiver chains the same compliant delta reaching all through their own attacker channels attacker csi remains single receiver a fusion adaptive attacker is disclosed futu",
+    "source_sentence": "cooperative sensing fusion baseline wave 14 c43 council 34 c k receiver majority vote independent chains same compliant delta attacker csi single receiver fusion adaptive attacker disclosed as not evaluated"
+   },
+   {
+    "score": 61.44578313253012,
+    "paper_sentence": "the margins are far more stable across attack seeds than across defense seeds at db and trades db per seed ranges 1 3 and 0 24 db versus the defense seed spreads of and db above a smaller spread i e the seed lottery that",
+    "source_sentence": "margins over attack seeds at 7 56 0 72 db trades 9 77 0 12 db 4 23 smaller than the defense seed spreads 2 80 1 75 the certification relevant seed lottery is the defense training seed not the attack seed"
+   },
+   {
+    "score": 58.06451612903225,
+    "paper_sentence": "post amplifier compliance is again verified by measurement worst excess dbr on every window of every cell",
+    "source_sentence": "post pa worst excess 0 00 dbr on every window cell"
+   }
+  ]
+ },
+ {
+  "source": "repo_ONE_PAGER",
+  "paper_words": 11481,
+  "source_words": 882,
+  "shared_5grams": 17,
+  "pct_of_paper_5grams": 0.15,
+  "pct_of_source_5grams": 1.94,
+  "longest_shared_word_run": 7,
+  "winnowing_jaccard": 0.0871,
+  "near_verbatim_sentences_75plus": 0,
+  "suspect_sentences_58_74": 0,
+  "near_verbatim_examples": [],
+  "suspect_examples": []
+ },
+ {
+  "source": "repo_RESEARCH_COUNCIL",
+  "paper_words": 11481,
+  "source_words": 18765,
+  "shared_5grams": 149,
+  "pct_of_paper_5grams": 1.33,
+  "pct_of_source_5grams": 0.82,
+  "longest_shared_word_run": 21,
+  "winnowing_jaccard": 0.2989,
+  "near_verbatim_sentences_75plus": 0,
+  "suspect_sentences_58_74": 2,
+  "near_verbatim_examples": [],
+  "suspect_examples": [
+   {
+    "score": 62.0,
+    "paper_sentence": "adaptive attacks step starved evaluations overstate defenses the db headline above is measured under pgd 10 the same budget as the undefended baseline",
+    "source_sentence": "adaptive attack evaluation of the defense the at trades models are attacked with the same pgd 10 zero init no restart protocol as the undefended model"
+   },
+   {
+    "score": 61.9718309859155,
+    "paper_sentence": "10 the pa study uses a memoryless rapp model with per window backoff and output power control no measured pa or transmitter chain is involved papr is computed without oversampling and the strict lenient gates are per fft",
+    "source_sentence": "our real study replays received captures wifi class only 74 eval windows 5 24 ghz u nii 2 5 9 ghz no attacker side channel applied to the real class the pa is a memoryless rapp papr computed without oversampling disclose"
+   }
+  ]
+ },
+ {
+  "source": "repo_REGULATORY_COMMENT_DRAFT",
+  "paper_words": 11481,
+  "source_words": 2407,
+  "shared_5grams": 98,
+  "pct_of_paper_5grams": 0.87,
+  "pct_of_source_5grams": 4.11,
+  "longest_shared_word_run": 15,
+  "winnowing_jaccard": 0.177,
+  "near_verbatim_sentences_75plus": 0,
+  "suspect_sentences_58_74": 3,
+  "near_verbatim_examples": [],
+  "suspect_examples": [
+   {
+    "score": 66.45367412140575,
+    "paper_sentence": "second the db defense seed spread is the db training seed spread of the undefended headline single seed defense evaluation is not certification grade and we label ours accordingly",
+    "source_sentence": "the 3 5 5 5 db seed to seed spread in the defense margin is itself a finding single seed defense evaluation is not certification grade"
+   },
+   {
+    "score": 62.03208556149733,
+    "paper_sentence": "prior wireless adversarial ml evaluations however either perturb receiver side features directly a threat no radio transmitter can realize or transmit without regard for spectrum rules",
+    "source_sentence": "prior adversarial ml work in wireless either perturbs data inside the receiver physically unrealizable or transmits without regard for spectrum rules illegal already addressed by enforcement"
+   },
+   {
+    "score": 58.20105820105821,
+    "paper_sentence": "the simplest detector is not a defense against this threat stronger adversarial input detection remains future work",
+    "source_sentence": "simple detectors are not a defense worst case receiver testing is required"
+   }
+  ]
+ },
+ {
+  "source": "repo_paper_COVER_LETTER",
+  "paper_words": 11481,
+  "source_words": 624,
+  "shared_5grams": 47,
+  "pct_of_paper_5grams": 0.42,
+  "pct_of_source_5grams": 7.64,
+  "longest_shared_word_run": 21,
+  "winnowing_jaccard": 0.0677,
+  "near_verbatim_sentences_75plus": 0,
+  "suspect_sentences_58_74": 2,
+  "near_verbatim_examples": [],
+  "suspect_examples": [
+   {
+    "score": 67.06231454005935,
+    "paper_sentence": "second the db defense seed spread is the db training seed spread of the undefended headline single seed defense evaluation is not certification grade and we label ours accordingly",
+    "source_sentence": "the defense seed spread 3 5 5 5 db exceeds the undefended training seed spread 3 5 disqualifying single seed defense evaluation for certification style claims"
+   },
+   {
+    "score": 61.93771626297577,
+    "paper_sentence": "frontmatter title the price of compliance emission mask constrained adversarial attacks on deep learning spectrum sensing in the 5 9 ghz its band parveen dhankhar cor1 parveendhankhar2005 gmail com davesh vats vatsdavesh",
+    "source_sentence": "cover letter vehicular communications submission draft manuscript the price of compliance emission mask constrained adversarial attacks on deep learning spectrum sensing in the 5 9 ghz its band target window december 202"
+   }
+  ]
+ }
+]
